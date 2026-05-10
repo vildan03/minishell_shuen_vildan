@@ -1,6 +1,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <stdlib.h>
+#include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
 typedef enum e_node_type {
    NODE_COMMAND,
    NODE_PIPE,
@@ -31,5 +37,7 @@ typedef struct s_ast_node {
    struct s_ast_node *left;
    struct s_ast_node *right;
 } t_ast_node;
+
+# include "parser.h"
 
 #endif
