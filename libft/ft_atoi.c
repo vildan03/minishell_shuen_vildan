@@ -1,0 +1,29 @@
+
+#include "libft.h"
+
+int	ft_atoi(const char *str)
+{
+	long	result;
+	int		negative;
+
+	result = 0;
+	negative = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (!(*(str + 1) >= '0' && *(str + 1) <= '9'))
+			return (0);
+		if (*str == '-')
+			negative = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9' && *str != '\0')
+	{
+		result *= 10;
+		result += *str - '0';
+		str++;
+	}
+	result *= negative;
+	return ((int)result);
+}

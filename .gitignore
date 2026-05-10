@@ -1,0 +1,11 @@
+# Object files
+*.o
+
+# Executables and Archives
+minishell
+a.out
+*.a
+
+# OS generated files
+.DS_Store
+.vscode/
