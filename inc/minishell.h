@@ -40,6 +40,6 @@ typedef struct s_shell
 {
 	char **envp;
 	int	last_exit_status;
-} t_Shell;
+} t_shell;
 
 #endif

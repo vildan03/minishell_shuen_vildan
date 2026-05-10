@@ -1,72 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:09:07 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/23 13:26:26 by vildan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
-#include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "libft.h"
 
-static bool	in_set(char const *set, char current)
-{
-	while (*set)
-	{
-		if (current == *set)
-			return (true);
-		set++;
-	}
-	return (false);
-}
-
-static int	in_set_front(char const *str, char const *set)
+int	in_charset(char c, const char *charset)
 {
 	int	i;
-	int	count;
 
-	i = 0;
-	count = 0;
-	while (str[i] && in_set(set, str[i]))
+	i = -1;
+	while (charset[++i])
 	{
-		count++;
-		i++;
+		if (charset[i] == c)
+			return (1);
 	}
-	return (count);
-}
-
-static int	in_set_back(char const *str, char const *set)
-{
-	int	i;
-	int	count;
-
-	i = ft_strlen(str) - 1;
-	count = 0;
-	while (in_set(set, str[i]) && i > -1)
-	{
-		count++;
-		i--;
-	}
-	return (count);
+	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		i;
+	size_t	i;
 	size_t	j;
-	size_t	remove_front;
-	size_t	remove_back;
+	size_t	r;
 	char	*result;
 
 	i = 0;
-	remove_front = in_set_front(s1, set);
-	remove_back = in_set_back(s1, set);
-	if (remove_front == ft_strlen(s1) || remove_back == ft_strlen(s1))
-		return (ft_strdup(""));
-	else if (remove_front == 0 && remove_back == 0)
-		return (ft_strdup(s1));
-	result = malloc(sizeof(char) * (ft_strlen(s1) - (remove_front + remove_back)
-				+ 1));
+	r = 0;
+	while (s1[i] && (in_charset(s1[i], set) == 1))
+		++i;
+	if (s1[i] == '\0')
+		return ((ft_strdup("")));
+	j = ft_strlen(s1) - 1;
+	while ((in_charset(s1[j], set) == 1))
+		--j;
+	result = malloc (j - i + 2);
 	if (!result)
 		return (NULL);
-	j = remove_front;
-	while (s1[j] != '\0' && j != ft_strlen(s1) - remove_back)
-		result[i++] = s1[j++];
-	result[i] = '\0';
+	while (i <= j)
+		result[r++] = s1[i++];
+	result[r] = '\0';
 	return (result);
 }

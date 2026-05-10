@@ -1,35 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:08:50 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/23 13:43:57 by vildan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
-#include <stddef.h>
-#include <stdint.h>
 
-static size_t	get_length(const char *str)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	i;
+	size_t	src_len;
 
 	i = 0;
-	while (*str)
+	src_len = 0;
+	if (size != 0)
 	{
-		i++;
-		str++;
+		while (i < size - 1 && src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
 	}
-	return (i);
+	while (src[src_len] != '\0')
+	{
+		src_len++;
+	}
+	return (src_len);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
-{
-	size_t	i;
-	size_t	src_length;
+/*
+int main() {
+    char dest[8];
+    const char *src = "bonjour";
 
-	i = 0;
-	src_length = get_length(src);
-	if (destsize == 0)
-		return (src_length);
-	while (i != destsize - 1 && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (src_length);
+    ft_strlcpy(dest, src, sizeof(dest));
+
+    printf("destination: %s\n", dest);
+
+
+    return 0;
 }
+*/

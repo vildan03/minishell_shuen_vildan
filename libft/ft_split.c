@@ -1,107 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 16:58:16 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/24 15:56:25 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
-#include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-static bool	is_char(char a, char c)
+char	**allocate_substrings(char const *s, char c)
 {
-	if (a == c)
-		return (true);
-	return (false);
-}
-
-static int	count_split(char const *s, char c)
-{
-	int	i;
-	int	split_count;
-	int	not_char_count;
+	int		count;
+	int		i;
+	int		in_word;
+	char	**substrings;
 
 	i = 0;
-	split_count = 0;
-	not_char_count = 0;
-	while (s[i] != '\0')
+	in_word = 0;
+	count = 0;
+	while (s[i])
 	{
-		if (is_char(s[i], c) == false)
-			not_char_count++;
-		if (is_char(s[i], c) == true && not_char_count > 0)
+		if (s[i] == c)
+			in_word = 0;
+		else if (in_word == 0)
 		{
-			split_count++;
-			not_char_count = 0;
+			in_word = 1;
+			++ count;
 		}
 		i++;
 	}
-	if (not_char_count != 0)
-		split_count++;
-	return (split_count);
+	substrings = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!substrings)
+		return (NULL);
+	return (substrings);
 }
 
-static void	free_splits(char **split, int count)
+int	word_len(char const *s, int i, char c)
 {
-	int	i;
+	int	length;
 
-	i = 0;
-	while (i < count)
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
-
-static void	find_splits(char **all_split, char const *s, char c, int *j)
-{
-	int		k;
-	int		length;
-	char	*str;
-
-	while (*s != '\0')
-	{
-		while (*s == c)
-			s++;
-		if (*s == '\0')
-			break ;
-		length = 0;
-		while (s[length] != c && s[length] != '\0')
-			length++;
-		str = malloc(sizeof(char) * (length + 1));
-		if (!str)
-			return ;
-		k = 0;
-		while (k < length)
-		{
-			str[k++] = *s;
-			s++;
-		}
-		str[k] = '\0';
-		all_split[(*j)++] = str;
-	}
+	length = 0;
+	while (s[i + length] && (s[i + length] != c))
+		++length;
+	return (length);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**all_split;
+	char	**substrings;
+	char	**result;
+	int		i;
 	int		j;
 
-	j = 0;
-	if (count_split(s, c) == 0)
+	(1 && (substrings = allocate_substrings(s, c), result = substrings));
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
 	{
-		all_split = malloc(sizeof(char *));
-		if (!all_split)
+		while ((s[i] == c) && s[i])
+			++i;
+		if (s[i] == '\0')
+			break ;
+		*substrings = (char *)malloc(sizeof(char) * word_len(s, i, c) + 1);
+		if (!(*substrings))
 			return (NULL);
+		j = 0;
+		while (s[i] && (s[i] != c))
+			(*substrings)[j++] = s[i++];
+		(*substrings++)[j] = '\0';
 	}
-	else
-	{
-		all_split = malloc(sizeof(char *) * (count_split(s, c) + 1));
-		if (!all_split)
-			return (NULL);
-		find_splits(all_split, s, c, &j);
-		if (j != count_split(s, c))
-		{
-			free_splits(all_split, j);
-			return (NULL);
-		}
-	}
-	all_split[j] = NULL;
-	return (all_split);
+	*substrings = NULL;
+	return (result);
 }
+
+// #include <stdlib.h>
+// int main(void)
+// {
+//     char const *s = "hicju";
+//     char **substrings = ft_split(s, 'c');
+//     if (!substrings) {
+//         printf("ft_split returned NULL\n");
+//         return 1;
+//     }
+//     for (int i = 0; substrings[i] != NULL; i++)
+//         printf("sub[%d] = %s\n", i, substrings[i]);
+//     return 0;
+// }

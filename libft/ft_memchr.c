@@ -1,21 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:07:55 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/20 18:37:39 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
-#include <stddef.h>
 #include <stdio.h>
+#include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char			*str;
-	unsigned char	uc;
+	size_t			i;
+	unsigned char	*str;
 
-	str = (char *)s;
-	uc = (unsigned char)c;
-	while (n != 0)
+	c = (unsigned char) c;
+	str = (unsigned char *) s;
+	i = 0;
+	while (i < n)
 	{
-		if ((unsigned char)*str == uc % 256)
-			return (str);
-		str++;
-		n--;
+		if (str[i] == c)
+			return ((void *)(str + i));
+		i++;
 	}
-	return (NULL);
+	return ((void *) NULL);
 }
+
+/*
+int main()
+{
+    char *s = "hello";
+    size_t n = 5;
+    void *result = ft_memchr(s,'e',n);
+    if (result != NULL)
+    {
+    printf("it found the byte and here is the adress:%p\n", result);
+    printf("here is the pointer:%s\n", (unsigned char *)result);
+
+    }
+    else
+    printf("could not find it"); 
+
+
+
+}*/

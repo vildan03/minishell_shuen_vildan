@@ -1,19 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:06:53 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/24 13:36:06 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
-#include <stdint.h>
+#include <stddef.h>
 #include <stdlib.h>
+#include "libft.h"
 
-void	*ft_calloc(size_t n, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	size_t	array_size;
-	char	*array_location;
+	void	*result;
 
-	if ((size != 0 && n != 0) && size > (SIZE_MAX / n))
+	if (nmemb == 0 || size == 0)
+	{
+		result = malloc(0);
+		if (!result)
+			return (NULL);
+		return (result);
+	}
+	result = malloc(nmemb * size);
+	if (!result)
 		return (NULL);
-	array_size = n * size;
-	array_location = malloc(array_size);
-	if (!array_location)
-		return (NULL);
-	ft_memset(array_location, 0, array_size);
-	return (array_location);
+	ft_bzero (result, (nmemb * size));
+	return (result);
 }

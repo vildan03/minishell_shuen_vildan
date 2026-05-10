@@ -1,59 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:08:18 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/20 18:08:19 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-#include <unistd.h>
-
-static int	count_int_length(long n)
-{
-	int	count;
-
-	count = 0;
-	while (n != 0)
-	{
-		n /= 10;
-		count++;
-	}
-	return (count);
-}
-
-static int	position(int count)
-{
-	int	position;
-
-	position = 1;
-	while (count != 0)
-	{
-		position *= 10;
-		count--;
-	}
-	return (position);
-}
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long	n_plus;
-	char	a;
-	int		count;
-
-	n_plus = (long)n;
-	if (n_plus == 0)
-		write(fd, "0", 1);
-	if (n_plus < 0)
+	if (n == -2147483648)
+		ft_putstr_fd("-2147483648", fd);
+	else if (n < 0)
 	{
-		n_plus *= -1;
-		write(fd, "-", 1);
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(-n, fd);
 	}
-	count = count_int_length(n_plus);
-	while (count > 0)
+	else if (n > 9)
 	{
-		if (count > 1)
-		{
-			a = n_plus / position(count - 1) + '0';
-			n_plus %= position(count - 1);
-		}
-		else
-			a = n_plus + '0';
-		write(fd, &a, 1);
-		count--;
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
 	}
+	else
+		ft_putchar_fd(n + '0', fd);
 }

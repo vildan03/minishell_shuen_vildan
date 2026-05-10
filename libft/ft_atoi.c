@@ -1,29 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 16:28:38 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/20 16:28:39 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdio.h>
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *nptr)
 {
-	long	result;
-	int		negative;
+	int	i;
+	int	number;
+	int	sign;
 
-	result = 0;
-	negative = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 0;
+	number = 0;
+	sign = 1;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		++i;
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		if (!(*(str + 1) >= '0' && *(str + 1) <= '9'))
-			return (0);
-		if (*str == '-')
-			negative = -1;
-		str++;
+		if (nptr[i] == '-')
+			sign = -sign;
+		++i;
 	}
-	while (*str >= '0' && *str <= '9' && *str != '\0')
+	while (nptr[i])
 	{
-		result *= 10;
-		result += *str - '0';
-		str++;
+		if (!(nptr[i] >= '0' && nptr[i] <= '9'))
+			return (number * sign);
+		else
+			number = number * 10 + (nptr[i] - '0');
+		++i;
 	}
-	result *= negative;
-	return ((int)result);
+	return (number * sign);
 }
