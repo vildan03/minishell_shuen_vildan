@@ -1,7 +1,7 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 int	exec_ast(t_ast_node *node, t_shell *shell);
 int	exec_command(t_ast_node *node, t_shell *shell);
