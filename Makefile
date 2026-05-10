@@ -12,7 +12,9 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS        = #add files in parser/executor
+SRCS        = main.c \
+              src/executor/execute_ast.c \
+              src/executor/builtin.c
 
 OBJS        = $(SRCS:.c=.o)
 

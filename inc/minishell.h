@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
+
 typedef enum e_node_type
 {
 	NODE_COMMAND,
