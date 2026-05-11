@@ -6,7 +6,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (!node || !node->args || !node->args[0])
 		return (1);
 	if (ft_strncmp(node->args[0], "pwd", 4) == 0)
-		return (exec_builtin_pwd(node->args, shell));
+		return (exec_builtin_pwd());
 	if (ft_strncmp(node->args[0], "cd", 3) == 0)
 		return (exec_builtin_cd(node->args,shell));
 	if (ft_strncmp(node->args[0], "echo", 5) == 0)
@@ -22,18 +22,20 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	return (1);
 }
 
-int	exec_builtin_pwd(char **args, t_shell *shell)
+int	exec_builtin_pwd(void)
 {
 	char	*cwd;
 
-	(void)args;
-	(void)shell;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (1);
 	ft_putendl_fd(cwd, 1);
 	free(cwd);
 	return (0);
+}
+int	exec_builtin_echo(char **args, t_shell *shell)
+{
+
 }
 
 int	exec_builtin_cd(char **args, t_shell *shell)
@@ -43,12 +45,6 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	return (0);
 }
 
-int	exec_builtin_echo(char **args, t_shell *shell)
-{
-	(void)args;
-	(void)shell;
-	return (0);
-}
 
 int	exec_external(t_ast_node *node, t_shell *shell)
 {
@@ -56,3 +52,4 @@ int	exec_external(t_ast_node *node, t_shell *shell)
 	(void)shell;
 	return (0);
 }
+

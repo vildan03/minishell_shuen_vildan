@@ -8,7 +8,7 @@ int	main(void)
 
 	shell.envp = NULL;
 	shell.last_exit_status = 0;
-	status = exec_builtin_pwd(NULL, &shell);
+	status = exec_builtin_pwd();
 	if (status != 0)
 		return (printf("FAIL: exec_builtin_pwd returned %d\n", status), 1);
 	printf("PASS: exec_builtin_pwd\n");
