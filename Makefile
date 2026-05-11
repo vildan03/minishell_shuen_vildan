@@ -12,12 +12,14 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS        = main.c \
+SRCS        = src/main.c \
               src/executor/execute_ast.c \
               src/executor/execute_nods.c \
               src/executor/builtin_utils.c \
               src/executor/builtin_exec.c \
               src/executor/builtin_exec_extra.c \
+	      src/parser/parser_main.c \
+	      src/parser/error_handling.c \
 
 OBJS        = $(SRCS:.c=.o)
 TEST_COMMON = src/executor/execute_ast.c \
