@@ -14,7 +14,10 @@ INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS        = main.c \
               src/executor/execute_ast.c \
-              src/executor/builtin.c
+              src/executor/execute_nods.c \
+              src/executor/builtin_utils.c \
+              src/executor/builtin_exec.c \
+              src/executor/builtin_exec_extra.c \
 
 OBJS        = $(SRCS:.c=.o)
 
