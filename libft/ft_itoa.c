@@ -1,50 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:07:17 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/20 18:07:18 by vikaradu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "libft.h"
 
-static int	count_int_length(long n)
+int	count_digits(long c)
 {
-	int	count;
+	int	digits;
 
-	count = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		n *= -1;
-	while (n != 0)
+	digits = 1;
+	while (c > 9)
 	{
-		n /= 10;
-		count++;
+		++digits;
+		c = c / 10;
 	}
-	return (count);
+	return (digits);
+}
+
+char	*ft_itoa_negative(long n)
+{
+	char	*result;
+	int		digits;
+
+	n = -n;
+	digits = (count_digits(n));
+	result = malloc(digits + 2);
+	if (!result)
+		return (NULL);
+	result[0] = '-';
+	result[digits + 1] = '\0';
+	while (n > 0)
+	{
+		result[digits--] = (n % 10) + '0';
+		n = n / 10;
+	}
+	return (result);
 }
 
 char	*ft_itoa(int n)
 {
 	char	*result;
-	int		int_length;
-	long	n_plus;
+	int		digits;
+	long	long_num;
 
-	n_plus = (long)n;
-	int_length = count_int_length(n);
-	result = malloc(sizeof(char) * (int_length + 1 + ((n < 0) * 1)));
+	long_num = n;
+	if (long_num < 0)
+		return (ft_itoa_negative(long_num));
+	digits = count_digits(long_num);
+	result = malloc(digits + 1);
 	if (!result)
 		return (NULL);
-	if (n < 0)
+	result[digits] = '\0';
+	if (long_num == 0)
+		result[0] = '0';
+	while (long_num > 0)
 	{
-		n_plus *= -1;
-		result[0] = '-';
-		result[int_length + 1] = '\0';
-	}
-	else
-		result[int_length--] = '\0';
-	if (n == 0)
-		result[int_length] = '0';
-	while (n_plus != 0)
-	{
-		result[int_length--] = n_plus % 10 + '0';
-		n_plus /= 10;
+		result[--digits] = (long_num % 10) + '0';
+		long_num = long_num / 10;
 	}
 	return (result);
 }
+
+/*
+int main()
+{
+    printf("result:%s\n",ft_itoa(-2147483648));
+}
+    */

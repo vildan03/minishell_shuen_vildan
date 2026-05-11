@@ -6,6 +6,7 @@
 #include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libft/libft.h"
 
 typedef enum e_node_type
 {
@@ -46,7 +47,7 @@ typedef struct s_shell
 {
 	char **envp;
 	int	last_exit_status;
-} t_Shell;
+} t_shell;
 
 # include "parser.h"
 

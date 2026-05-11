@@ -1,26 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 18:09:04 by vikaradu          #+#    #+#             */
+/*   Updated: 2025/11/23 13:42:30 by vildan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *str, int c)
 {
-	char			*location;
-	int				found;
-	unsigned char	uc;
+	int	len;
 
-	found = 0;
-	uc = (unsigned char)c;
-	while (*s)
+	len = 0;
+	c = (unsigned char)c;
+	while (str[len])
 	{
-		if (*s == uc % 256)
-		{
-			location = (char *)s;
-			found = 1;
-		}
-		s++;
+		len++;
 	}
-	if (*s == '\0' && uc == '\0')
-		return ((char *)s);
-	if (found == 0)
-		return (NULL);
-	return (location);
+	while (len >= 0)
+	{
+		if (str[len] == c)
+		{
+			return ((char *)(str + len));
+		}
+		len--;
+	}
+	return ((char *) NULL);
 }
+
+/*
+int main()
+{
+    char *s = "true";
+    char *p = ft_strrchr(s, 't' + 256);
+
+    if (p != NULL)
+    {
+        printf("last char is: %c\n", *p);
+    }
+    else
+    {
+        printf("Character not found.\n");
+    }
+
+    return (0);
+}
+*/
