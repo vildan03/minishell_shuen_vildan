@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft.h"
 
 int	count_digits(long c)
 {
@@ -72,8 +72,8 @@ char	*ft_itoa(int n)
 }
 
 /*
-int main()
+int	main(void)
 {
-    printf("result:%s\n",ft_itoa(-2147483648));
+	printf("result:%s\n",ft_itoa(-2147483648));
 }
-    */
+	*/

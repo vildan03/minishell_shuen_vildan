@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 #include <string.h>
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
@@ -21,7 +21,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	len_of_little;
 
 	if (!*little)
-		return ((char *) big);
+		return ((char *)big);
 	len_of_little = ft_strlen(little);
 	b = 0;
 	while (b < len && big[b] && b + len_of_little <= len)
@@ -37,15 +37,15 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		}
 		++b;
 	}
-	return ((char *) NULL);
+	return ((char *)NULL);
 }
 
 /*
-int main()
+int	main(void)
 {
-    const char *big = "lolovlove you";
-    const char *little = "love";
-    size_t len = 13;
-    printf("my function:%s\n", ft_strnstr(big, little, len));
-    return 0;
+	const char *big = "lolovlove you";
+	const char *little = "love";
+	size_t len = 13;
+	printf("my function:%s\n", ft_strnstr(big, little, len));
+	return (0);
 }*/

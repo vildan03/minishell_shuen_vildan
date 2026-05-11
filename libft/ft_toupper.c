@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_toupper(int c)
 {
@@ -23,16 +23,17 @@ int	ft_toupper(int c)
 }
 
 /*
-int main() 
+int	main(void)
 {
-    char str[] = "nAabiyoN2?!";
-    int i = 0;
-    while (str[i] != '\0') {
-        str[i] = ft_toupper(str[i]);
-        i++;
-    }
+	char	str[] = "nAabiyoN2?!";
+	int		i;
 
-    printf("Upper verison: %s\n", str);
-    return 0;
+	i = 0;
+	while (str[i] != '\0') {
+		str[i] = ft_toupper(str[i]);
+		i++;
+	}
+	printf("Upper verison: %s\n", str);
+	return (0);
 }
 */

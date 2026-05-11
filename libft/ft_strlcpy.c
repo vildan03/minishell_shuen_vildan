@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
@@ -37,15 +37,15 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 }
 
 /*
-int main() {
-    char dest[8];
-    const char *src = "bonjour";
+int	main(void) {
+	char dest[8];
+	const char *src = "bonjour";
 
-    ft_strlcpy(dest, src, sizeof(dest));
+	ft_strlcpy(dest, src, sizeof(dest));
 
-    printf("destination: %s\n", dest);
+	printf("destination: %s\n", dest);
 
 
-    return 0;
+	return (0);
 }
 */

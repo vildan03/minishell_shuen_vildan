@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-
 #include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int	ft_atoi(const char *nptr)
 {

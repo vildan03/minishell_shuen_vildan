@@ -32,19 +32,23 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 }
 
 /*
-#include <string.h>
 #include <stdio.h>
-int main(void)
+#include <string.h>
+
+int	main(void)
 {
-    char src[5] = "hello";
-    char dest[6];
-    size_t n = 5;
-    int i = 0;
+	char	src[5] = "hello";
+	char	dest[6];
+	size_t	n;
+	int		i;
+
+	n = 5;
+	i = 0;
 				memcpy(dest, src, NULL);
-    while(i < 6)
-    {
-    printf("%c",dest[i]);
-    ++i;
-    }
+	while(i < 6)
+	{
+	printf("%c",dest[i]);
+	++i;
+	}
 }
 */

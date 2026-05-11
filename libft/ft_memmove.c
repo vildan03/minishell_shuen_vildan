@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 #include <stdio.h>
-#include "libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
@@ -49,5 +49,5 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 //     int i;
 //     i = 0;
 //     memmove(dest, NULL, 6 * sizeof(int));
-//     return 0;
+//     return (0);
 // }

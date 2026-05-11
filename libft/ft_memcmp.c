@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
@@ -33,8 +33,8 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 /*
 int main ()
 {
-    const unsigned char *s1 = (const unsigned char *)"hi";
-    const unsigned char *s2 = (const unsigned char *)"hello";
-    size_t n = 5;
-    printf("%d",ft_memcmp(s1,s2,n));
+	const unsigned char *s1 = (const unsigned char *)"hi";
+	const unsigned char *s2 = (const unsigned char *)"hello";
+	size_t n = 5;
+	printf("%d",ft_memcmp(s1,s2,n));
 }*/
