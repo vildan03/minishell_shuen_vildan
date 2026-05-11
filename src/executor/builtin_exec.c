@@ -22,17 +22,17 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	return (1);
 }
 
-int	exec_external(t_ast_node *node, t_shell *shell)
-{
-	(void)node;
-	(void)shell;
-	return (0);
-}
-
 int	exec_builtin_pwd(char **args, t_shell *shell)
 {
+	char	*cwd;
+
 	(void)args;
 	(void)shell;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (1);
+	ft_putendl_fd(cwd, 1);
+	free(cwd);
 	return (0);
 }
 
@@ -46,6 +46,13 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 int	exec_builtin_echo(char **args, t_shell *shell)
 {
 	(void)args;
+	(void)shell;
+	return (0);
+}
+
+int	exec_external(t_ast_node *node, t_shell *shell)
+{
+	(void)node;
 	(void)shell;
 	return (0);
 }

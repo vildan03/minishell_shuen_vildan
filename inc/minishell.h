@@ -2,6 +2,9 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef enum e_node_type
 {
