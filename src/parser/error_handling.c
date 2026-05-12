@@ -1,9 +1,4 @@
-# include "parser.h";
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	(void)write(fd, s, ft_strlen(s));
-}
+# include "parser.h"
 
 void print_syntax_err(char *error_msg)
 {
