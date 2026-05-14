@@ -19,5 +19,6 @@ int	exec_builtin_export(char **args, t_shell *shell);
 int	exec_builtin_unset(char **args, t_shell *shell);
 int	exec_builtin_env(char **args, t_shell *shell);
 int	exec_builtin_exit(char **args, t_shell *shell);
+int	is_n_flag(char *arg);
 
 #endif

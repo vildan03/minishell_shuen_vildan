@@ -10,7 +10,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (ft_strncmp(node->args[0], "cd", 3) == 0)
 		return (exec_builtin_cd(node->args,shell));
 	if (ft_strncmp(node->args[0], "echo", 5) == 0)
-		return (exec_builtin_echo(node->args,shell));
+		return (exec_builtin_echo(node->args));
 	if (ft_strncmp(node->args[0], "export", 7) == 0)
 		return (exec_builtin_export(node->args,shell));
 	if (ft_strncmp(node->args[0], "unset", 6) == 0)
@@ -33,9 +33,28 @@ int	exec_builtin_pwd(void)
 	free(cwd);
 	return (0);
 }
-int	exec_builtin_echo(char **args, t_shell *shell)
+int	exec_builtin_echo(char **args)
 {
+	int	i;
+	int	newline;
 
+	i = 1;
+	newline = 1;
+	if (args[1] && is_n_flag(args[i]))
+	{
+		newline = 0;
+		i++;
+	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
+	if (newline)
+		ft_putchar_fd('\n', 1);
+	return (0);
 }
 
 int	exec_builtin_cd(char **args, t_shell *shell)
@@ -44,12 +63,3 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	(void)shell;
 	return (0);
 }
-
-
-int	exec_external(t_ast_node *node, t_shell *shell)
-{
-	(void)node;
-	(void)shell;
-	return (0);
-}
-
