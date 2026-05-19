@@ -10,7 +10,7 @@ int	main(void)
 
 	args[0] = "pwd";
 	args[1] = NULL;
-	shell.envp = NULL;
+	shell.env = NULL;
 	shell.last_exit_status = 0;
 	node.type = NODE_COMMAND;
 	node.args = args;

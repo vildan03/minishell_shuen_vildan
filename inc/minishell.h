@@ -2,9 +2,8 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef enum e_node_type
 {
@@ -43,8 +42,8 @@ typedef struct s_ast_node
 
 typedef struct s_shell
 {
-	char **envp;
-	int	last_exit_status;
-} t_shell;
+	char	**env;
+	int		last_exit_status;
+}	t_shell;
 
 #endif

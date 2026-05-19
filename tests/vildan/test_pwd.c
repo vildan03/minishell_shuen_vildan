@@ -6,7 +6,7 @@ int	main(void)
 	t_shell	shell;
 	int		status;
 
-	shell.envp = NULL;
+	shell.env = NULL;
 	shell.last_exit_status = 0;
 	status = exec_builtin_pwd();
 	if (status != 0)

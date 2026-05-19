@@ -60,4 +60,7 @@ test_pwd: $(LIBFT)
 test_exec_command: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) tests/vildan/test_exec_command.c $(TEST_COMMON) $(LIBFT_FLAGS) -lreadline -o tests/vildan/test_exec_command
 
-.PHONY: all clean fclean re test_is_builtin test_pwd test_exec_command
+test_env: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) tests/vildan/test_env.c $(TEST_COMMON) $(LIBFT_FLAGS) -lreadline -o tests/vildan/test_env
+
+.PHONY: all clean fclean re test_is_builtin test_pwd test_exec_command test_env
