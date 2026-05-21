@@ -22,12 +22,10 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	return (1);
 }
 
-int	exec_builtin_pwd(char **args, t_shell *shell)
+int	exec_builtin_pwd()
 {
 	char	*cwd;
 
-	(void)args;
-	(void)shell;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (1);

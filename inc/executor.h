@@ -12,7 +12,7 @@ int	exec_subshell(t_ast_node *node, t_shell *shell);
 int	exec_builtin(t_ast_node *node, t_shell *shell);
 int	exec_external(t_ast_node *node, t_shell *shell);
 int	is_builtin(char *cmd);
-int	exec_builtin_pwd(char **args, t_shell *shell);
+int	exec_builtin_pwd();
 int	exec_builtin_cd(char **args, t_shell *shell);
 int	exec_builtin_echo(char **args, t_shell *shell);
 int	exec_builtin_export(char **args, t_shell *shell);
