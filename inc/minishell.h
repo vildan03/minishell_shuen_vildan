@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "executor.h"
 # include <unistd.h>
 # include <stdlib.h>
 
