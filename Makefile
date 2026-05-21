@@ -17,6 +17,7 @@ SRCS        = main.c \
               src/executor/execute_nods.c \
               src/executor/builtin_utils.c \
               src/executor/builtin_exec.c \
+              src/executor/builtin_env.c \
               src/executor/builtin_exec_extra.c \
 
 OBJS        = $(SRCS:.c=.o)
