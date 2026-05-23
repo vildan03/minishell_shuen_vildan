@@ -1,6 +1,30 @@
 #include "../../../inc/minishell.h"
 #include "../../../inc/executor.h"
 
+static void	sort_export(char **export)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (export[i])
+	{
+		j = i + 1;
+		while (export[j])
+		{
+			if (ft_strcmp(export[i], export[j]) > 0)
+			{
+				tmp = export[i];
+				export[i] = export[j];
+				export[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 static void	print_export_line(char *entry)
 {
 	char	*eq;
@@ -26,6 +50,7 @@ int	print_export(t_shell *shell)
 
 	if (!shell || !shell->export)
 		return (1);
+	sort_export(shell->export);
 	i = 0;
 	while (shell->export[i])
 	{
@@ -71,8 +96,7 @@ int	handle_export_with_value(char *arg, char *sep, t_shell *shell)
 	status = 0;
 	if (update_export_value(shell, key, sep + 1) == 1)
 		status = 1;
-	if (status == 0
-		&& update_env_value(shell, key, sep + 1) == 1)
+	if (status == 0 && update_env_value(shell, key, sep + 1) == 1)
 		status = 1;
 	free(key);
 	return (status);

@@ -74,3 +74,30 @@ int	exec_builtin_env(char **args, t_shell *shell)
 	}
 	return (0);
 }
+int	exec_builtin_export(char **args, t_shell *shell)
+{
+	char	*sep;
+	int		i;
+	int		status;
+
+	if (!args[1])
+		return (print_export(shell));
+	i = 1;
+	status = 0;
+	while (args[i])
+	{
+		sep = ft_strchr(args[i], '=');
+		if (!sep)
+		{
+			if (handle_export_no_value(args[i], shell) == 1)
+				status = 1;
+		}
+		else
+		{
+			if (handle_export_with_value(args[i], sep, shell) == 1)
+				status = 1;
+		}
+		i++;
+	}
+	return (status);
+}

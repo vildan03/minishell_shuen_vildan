@@ -1,4 +1,3 @@
-
 #include "../../../inc/minishell.h"
 #include "../../../inc/executor.h"
 
@@ -17,8 +16,7 @@ static char	*create_export_entry(char *key, char *value)
 	return (entry);
 }
 
-static int	replace_export_value(t_shell *shell,
-	char *key, char *value)
+static int	replace_export_value(t_shell *shell, char *key, char *value)
 {
 	int		i;
 	int		key_len;
@@ -32,6 +30,8 @@ static int	replace_export_value(t_shell *shell,
 			&& (shell->export[i][key_len] == '='
 			|| shell->export[i][key_len] == '\0'))
 		{
+			if (!value)
+				return (0);
 			entry = create_export_entry(key, value);
 			if (!entry)
 				return (1);
@@ -44,8 +44,7 @@ static int	replace_export_value(t_shell *shell,
 	return (1);
 }
 
-static int	add_export_value(t_shell *shell,
-	char *key, char *value)
+static int	add_export_value(t_shell *shell, char *key, char *value)
 {
 	char	**new_export;
 	char	*entry;
@@ -77,33 +76,4 @@ int	update_export_value(t_shell *shell, char *key, char *value)
 	if (replace_export_value(shell, key, value) == 0)
 		return (0);
 	return (add_export_value(shell, key, value));
-}
-
-int	exec_builtin_export(char **args, t_shell *shell)
-{
-	char	*sep;
-	int		i;
-	int		status;
-
-	if (!args[1])
-		return (print_export(shell));
-	i = 1;
-	status = 0;
-	while (args[i])
-	{
-		sep = ft_strchr(args[i], '=');
-		if (!sep)
-		{
-			if (handle_export_no_value(args[i], shell) == 1)
-				status = 1;
-		}
-		else
-		{
-			if (handle_export_with_value(args[i],
-					sep, shell) == 1)
-				status = 1;
-		}
-		i++;
-	}
-	return (status);
 }
