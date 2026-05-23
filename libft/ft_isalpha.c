@@ -18,7 +18,7 @@ int	ft_isalpha(int c)
 }
 
 //
-//void main(void)
+// void main(void)
 //{
-//printf("%d",ft_isalpha(97));
+// printf("%d",ft_isalpha(97));
 //}

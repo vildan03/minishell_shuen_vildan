@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strrchr(const char *str, int c)
 {
@@ -31,24 +31,25 @@ char	*ft_strrchr(const char *str, int c)
 		}
 		len--;
 	}
-	return ((char *) NULL);
+	return ((char *)NULL);
 }
 
 /*
-int main()
+int	main(void)
 {
-    char *s = "true";
-    char *p = ft_strrchr(s, 't' + 256);
+	char	*s;
+	char	*p;
 
-    if (p != NULL)
-    {
-        printf("last char is: %c\n", *p);
-    }
-    else
-    {
-        printf("Character not found.\n");
-    }
-
-    return (0);
+	s = "true";
+	p = ft_strrchr(s, 't' + 256);
+	if (p != NULL)
+	{
+		printf("last char is: %c\n", *p);
+	}
+	else
+	{
+		printf("Character not found.\n");
+	}
+	return (0);
 }
 */

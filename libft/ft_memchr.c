@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t			i;
 	unsigned char	*str;
 
-	c = (unsigned char) c;
-	str = (unsigned char *) s;
+	c = (unsigned char)c;
+	str = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
@@ -27,23 +27,23 @@ void	*ft_memchr(const void *s, int c, size_t n)
 			return ((void *)(str + i));
 		i++;
 	}
-	return ((void *) NULL);
+	return ((void *)NULL);
 }
 
 /*
-int main()
+int	main(void)
 {
-    char *s = "hello";
-    size_t n = 5;
-    void *result = ft_memchr(s,'e',n);
-    if (result != NULL)
-    {
-    printf("it found the byte and here is the adress:%p\n", result);
-    printf("here is the pointer:%s\n", (unsigned char *)result);
+	char *s = "hello";
+	size_t n = 5;
+	void *result = ft_memchr(s,'e',n);
+	if (result != NULL)
+	{
+	printf("it found the byte and here is the adress:%p\n", result);
+	printf("here is the pointer:%s\n", (unsigned char *)result);
 
-    }
-    else
-    printf("could not find it"); 
+	}
+	else
+	printf("could not find it");
 
 
 

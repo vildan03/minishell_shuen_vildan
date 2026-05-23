@@ -45,9 +45,10 @@ typedef struct s_ast_node
 
 typedef struct s_shell
 {
-	char **envp;
-	int	last_exit_status;
-} t_shell;
+	char	**env;
+	char	**export;
+	int		last_exit_status;
+}	t_shell;
 
 # include "parser.h"
 

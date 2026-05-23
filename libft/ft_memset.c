@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stddef.h>
 #include "libft.h"
+#include <stddef.h>
+#include <stdio.h>
 
 void	*ft_memset(void *ptr, int value, size_t num)
 {
@@ -28,9 +28,10 @@ void	*ft_memset(void *ptr, int value, size_t num)
 }
 
 /*
-void main(void)
+void	main(void)
 {
-int ptr[6] = {0,2,4,1,1,1};
+int		ptr[6] = {0,2,4,1,1,1};
+
 ft_memset(ptr,0,sizeof(ptr));
 for(int i = 0; i < 6; ++i)
 printf("%d",ptr[i]);

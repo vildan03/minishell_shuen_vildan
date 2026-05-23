@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 #include <string.h>
 // alway null terminate dest_len >= size
 // return total len
@@ -48,41 +48,36 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 #include <stdio.h>
 #include <string.h>
 
-int main(void)
+int	main(void)
 {
-    char s1[10];
-    char s2[10];
+	char	s1[10];
+	char	s2[10];
 
-    // size = 0
-    strcpy(s1, "ab");
-    strcpy(s2, "ab");
-    printf("mine:%ld\n", ft_strlcat(s1, "qrs", 0));
-    printf("real:%ld\n", strlcat(s2, "qrs", 0));
-
-    // size = 1
-    strcpy(s1, "ab");
-    strcpy(s2, "ab");
-    printf("mine:%ld\n", ft_strlcat(s1, "qrs", 1));
-    printf("real:%ld\n", strlcat(s2, "qrs", 1));
-
-    // size = 3
-    strcpy(s1, "ab");
-    strcpy(s2, "ab");
-    printf("mine:%ld\n", ft_strlcat(s1, "qrs", 3));
-    printf("real:%ld\n", strlcat(s2, "qrs", 3));
-
-    // size = 6
-    strcpy(s1, "ab");
-    strcpy(s2, "ab");
-    printf("mine:%ld\n", ft_strlcat(s1, "qrs", 6));
-    printf("real:%ld\n", strlcat(s2, "qrs", 6));
-
-    // size = 7
-    strcpy(s1, "ab");
-    strcpy(s2, "ab");
-    printf("mine:%ld\n", ft_strlcat(s1, "qrs", 7));
-    printf("real:%ld\n", strlcat(s2, "qrs", 7));
-
-    return 0;
+	// size = 0
+	strcpy(s1, "ab");
+	strcpy(s2, "ab");
+	printf("mine:%ld\n", ft_strlcat(s1, "qrs", 0));
+	printf("real:%ld\n", strlcat(s2, "qrs", 0));
+	// size = 1
+	strcpy(s1, "ab");
+	strcpy(s2, "ab");
+	printf("mine:%ld\n", ft_strlcat(s1, "qrs", 1));
+	printf("real:%ld\n", strlcat(s2, "qrs", 1));
+	// size = 3
+	strcpy(s1, "ab");
+	strcpy(s2, "ab");
+	printf("mine:%ld\n", ft_strlcat(s1, "qrs", 3));
+	printf("real:%ld\n", strlcat(s2, "qrs", 3));
+	// size = 6
+	strcpy(s1, "ab");
+	strcpy(s2, "ab");
+	printf("mine:%ld\n", ft_strlcat(s1, "qrs", 6));
+	printf("real:%ld\n", strlcat(s2, "qrs", 6));
+	// size = 7
+	strcpy(s1, "ab");
+	strcpy(s2, "ab");
+	printf("mine:%ld\n", ft_strlcat(s1, "qrs", 7));
+	printf("real:%ld\n", strlcat(s2, "qrs", 7));
+	return (0);
 }
 */

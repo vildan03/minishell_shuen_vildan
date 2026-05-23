@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_tolower(int c)
 {
@@ -23,16 +23,17 @@ int	ft_tolower(int c)
 }
 
 /*
-int main() 
+int	main(void)
 {
-    char str[] = "BonJouR234.!";
-    int i = 0;
-    while (str[i] != '\0') {
-        str[i] = ft_tolower(str[i]);
-        i++;
-    }
+	char	str[] = "BonJouR234.!";
+	int		i;
 
-    printf("Lowercase versoin: %s\n", str);
-    return 0;
+	i = 0;
+	while (str[i] != '\0') {
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	printf("Lowercase versoin: %s\n", str);
+	return (0);
 }
 */
