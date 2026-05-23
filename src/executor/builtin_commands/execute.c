@@ -33,19 +33,6 @@ int	exec_builtin_pwd()
 	free(cwd);
 	return (0);
 }
-int	is_n_flag(char *arg)
-{
-	int	i;
-
-	if (!arg || arg[0] != '-' || arg[1] != 'n')
-		return (0);
-	i = 2;
-	while (arg[i] == 'n')
-		i++;
-	if (arg[i] != '\0')
-		return (0);
-	return (1);
-}
 
 int	exec_builtin_echo(char **args, t_shell *shell)
 {
@@ -71,31 +58,19 @@ int	exec_builtin_echo(char **args, t_shell *shell)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
-int	exec_builtin_export(char **args, t_shell *shell)
+int	exec_builtin_env(char **args, t_shell *shell)
 {
-	char	*sep;
-	int		i;
-	int		status;
+	int	i;
 
-	if (!args[1])
-		return (print_export(shell));
-	i = 1;
-	status = 0;
-	while (args[i])
+	if (!shell || !shell->env)
+		return (1);
+	if (args[1])
+		return (1);
+	i = 0;
+	while (shell->env[i])
 	{
-		sep = ft_strchr(args[i], '=');
-		if (!sep)
-		{
-			if (handle_export_no_value(args[i], shell) == 1)
-				status = 1;
-		}
-		else
-		{
-			if (handle_export_with_value(args[i],
-					sep, shell) == 1)
-				status = 1;
-		}
+		ft_putendl_fd(shell->env[i], 1);
 		i++;
 	}
-	return (status);
+	return (0);
 }

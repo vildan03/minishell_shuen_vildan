@@ -17,7 +17,6 @@ SRCS        = main.c \
               src/executor/execute_nods.c \
               src/executor/builtin_commands/utils.c \
               src/executor/builtin_commands/execute.c \
-              src/executor/builtin_commands/env.c \
               src/executor/builtin_commands/cd.c \
               src/executor/builtin_commands/exit.c \
               src/executor/builtin_commands/export_utils.c \

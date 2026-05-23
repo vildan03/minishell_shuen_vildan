@@ -38,4 +38,17 @@ int	is_valid_identifier(char *str)
 		}
 		return (1);
 }
+int	is_n_flag(char *arg)
+{
+	int	i;
+
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
+		return (0);
+	i = 2;
+	while (arg[i] == 'n')
+		i++;
+	if (arg[i] != '\0')
+		return (0);
+	return (1);
+}
 

@@ -28,5 +28,6 @@ int	find_matching_key(char *env_line, char *key);
 int	print_export(t_shell *shell);
 int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
+int	update_export_value(t_shell *shell, char *key, char *value);
 
 #endif
