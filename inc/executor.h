@@ -25,5 +25,8 @@ char	*get_cd_target(char **args, t_shell *shell);
 int	update_env_value(t_shell *shell, char *key, char *value);
 int	is_valid_identifier(char *str);
 int	find_matching_key(char *env_line, char *key);
+int	print_export(t_shell *shell);
+int	handle_export_no_value(char *arg, t_shell *shell);
+int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
 
 #endif

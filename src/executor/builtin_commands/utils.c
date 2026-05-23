@@ -21,29 +21,21 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-int	is_n_flag(char *arg)
-{
-	int	i;
 
-	if (!arg || arg[0] != '-' || arg[1] != 'n')
-		return (0);
-	i = 2;
-	while (arg[i] == 'n')
-		i++;
-	if (arg[i] != '\0')
-		return (0);
-	return (1);
-}
-char	*get_cd_target(char **args, t_shell *shell)
+int	is_valid_identifier(char *str)
 {
-	if (!shell || !shell->env)
-		return (NULL);
-	if (args[1] && args[2])
-		return (NULL);
-	if (!args[1])
-		return (get_env_value(shell->env, "HOME"));
-	if (ft_strncmp(args[1], "-", 2) == 0)
-		return (get_env_value(shell->env, "OLDPWD"));
-	return (args[1]);
+	int i;
+	if (!str || !str[0])
+		return (0);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	i = 1;
+	while (str[i])
+		{
+			if (!ft_isalnum(str[i]) && str[i] != '_')
+				return (0);
+			++i;
+		}
+		return (1);
 }
 

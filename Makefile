@@ -18,10 +18,12 @@ SRCS        = main.c \
               src/executor/builtin_commands/utils.c \
               src/executor/builtin_commands/execute.c \
               src/executor/builtin_commands/env.c \
+              src/executor/builtin_commands/cd.c \
               src/executor/builtin_commands/exit.c \
+              src/executor/builtin_commands/export_utils.c \
               src/executor/builtin_commands/unset.c \
               src/executor/builtin_commands/env_utils.c \
-              src/executor/builtin_commands/execute_2.c \
+              src/executor/builtin_commands/env_utils_2.c \
 
 OBJS        = $(SRCS:.c=.o)
 

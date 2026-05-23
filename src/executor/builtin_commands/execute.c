@@ -33,6 +33,19 @@ int	exec_builtin_pwd()
 	free(cwd);
 	return (0);
 }
+int	is_n_flag(char *arg)
+{
+	int	i;
+
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
+		return (0);
+	i = 2;
+	while (arg[i] == 'n')
+		i++;
+	if (arg[i] != '\0')
+		return (0);
+	return (1);
+}
 
 int	exec_builtin_echo(char **args, t_shell *shell)
 {
@@ -58,35 +71,31 @@ int	exec_builtin_echo(char **args, t_shell *shell)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
-
-static int	update_cd_state(t_shell *shell, char **args,
-	char *old_pwd, char *new_pwd)
+int	exec_builtin_export(char **args, t_shell *shell)
 {
-	if (old_pwd && update_env_value(shell, "OLDPWD", old_pwd) != 0)
-		return (1);
-	if (new_pwd && update_env_value(shell, "PWD", new_pwd) != 0)
-		return (1);
-	if (args[1] && ft_strncmp(args[1], "-", 2) == 0 && new_pwd)
-		ft_putendl_fd(new_pwd, 1);
-	return (0);
-}
+	char	*sep;
+	int		i;
+	int		status;
 
-int	exec_builtin_cd(char **args, t_shell *shell)
-{
-	char	*target;
-	char	*old_pwd;
-	char	*new_pwd;
-
-	target = get_cd_target(args, shell);
-	if (!target)
-		return (1);
-	old_pwd = getcwd(NULL, 0);
-	if (chdir(target) != 0)
-		return (free(old_pwd), 1);
-	new_pwd = getcwd(NULL, 0);
-	if (update_cd_state(shell, args, old_pwd, new_pwd) != 0)
-		return (free(old_pwd), free(new_pwd), 1);
-	free(old_pwd);
-	free(new_pwd);
-	return (0);
+	if (!args[1])
+		return (print_export(shell));
+	i = 1;
+	status = 0;
+	while (args[i])
+	{
+		sep = ft_strchr(args[i], '=');
+		if (!sep)
+		{
+			if (handle_export_no_value(args[i], shell) == 1)
+				status = 1;
+		}
+		else
+		{
+			if (handle_export_with_value(args[i],
+					sep, shell) == 1)
+				status = 1;
+		}
+		i++;
+	}
+	return (status);
 }
