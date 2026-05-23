@@ -13,12 +13,14 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS        = main.c \
-              src/executor/execute_ast.c \
-              src/executor/execute_nods.c \
-              src/executor/builtin_utils.c \
-              src/executor/builtin_exec.c \
-              src/executor/builtin_env.c \
-              src/executor/builtin_exec_extra.c \
+              src/executor/builtin_comamnds/execute_ast.c \
+              src/executor/builtin_commands/execute_nods.c \
+              src/executor/builtin_commands/builtin_utils.c \
+              src/executor/builtin_commands/builtin_exec.c \
+              src/executor/builtin_commands/builtin_env.c \
+              src/executor/builtin_commands/builtin_unset.c \
+              src/executor/builtin_commands/builtin_env_utils.c \
+              src/executor/builtin_commands/builtin_exec_extra.c \
 
 OBJS        = $(SRCS:.c=.o)
 
@@ -46,5 +48,12 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+test_unset: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) \
+		tests/vildan/test_unset.c \
+		src/executor/builtin_commands/builtin_unset.c \
+		$(LIBFT_FLAGS) -lreadline \
+		-o tests/vildan/test_unset
 
 .PHONY: all clean fclean re

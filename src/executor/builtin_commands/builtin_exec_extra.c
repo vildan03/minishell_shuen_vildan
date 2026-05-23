@@ -1,5 +1,5 @@
-#include "../../inc/minishell.h"
-#include "../../inc/executor.h"
+#include "../../../inc/minishell.h"
+#include "../../../inc/executor.h"
 
 static int print_env(t_shell *shell)
 {
@@ -32,7 +32,7 @@ int	exec_builtin_export(char **args, t_shell *shell)
 	}
 	sep = ft_strchr(args[1], '=');
 	if (!sep)
-		return(1); // which means no value so print an error message,invalid
+		return(1);
 	key_len = sep - args[1];
 	if (key_len == 0 || sep[1] == '\0')
 		return (1);
@@ -45,12 +45,7 @@ int	exec_builtin_export(char **args, t_shell *shell)
 	return (free(key),(0));
 }
 
-int	exec_builtin_unset(char **args, t_shell *shell)
-{
-	(void)args;
-	(void)shell;
-	return (0);
-}
+
 
 int	exec_builtin_env(char **args, t_shell *shell)
 {

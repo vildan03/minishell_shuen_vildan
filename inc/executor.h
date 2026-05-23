@@ -23,5 +23,7 @@ int	is_n_flag(char *arg);
 char	*get_env_value(char **envp, char *key);
 char	*get_cd_target(char **args, t_shell *shell);
 int	update_env_value(t_shell *shell, char *key, char *value);
+int	is_valid_identifier(char *str);
+int	find_matching_key(char *env_line, char *key);
 
 #endif

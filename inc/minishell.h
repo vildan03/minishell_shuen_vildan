@@ -2,7 +2,6 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "executor.h"
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -44,6 +43,7 @@ typedef struct s_ast_node
 typedef struct s_shell
 {
 	char	**env;
+	char	**export;
 	int		last_exit_status;
 }	t_shell;
 

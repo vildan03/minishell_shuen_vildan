@@ -1,5 +1,5 @@
-#include "../../inc/minishell.h"
-#include "../../inc/executor.h"
+#include "../../../inc/minishell.h"
+#include "../../../inc/executor.h"
 
 int	exec_builtin(t_ast_node *node, t_shell *shell)
 {
@@ -57,19 +57,6 @@ int	exec_builtin_echo(char **args, t_shell *shell)
 	if (newline)
 		ft_putchar_fd('\n', 1);
 	return (0);
-}
-
-char	*get_cd_target(char **args, t_shell *shell)
-{
-	if (!shell || !shell->env)
-		return (NULL);
-	if (args[1] && args[2])
-		return (NULL);
-	if (!args[1])
-		return (get_env_value(shell->env, "HOME"));
-	if (ft_strncmp(args[1], "-", 2) == 0)
-		return (get_env_value(shell->env, "OLDPWD"));
-	return (args[1]);
 }
 
 static int	update_cd_state(t_shell *shell, char **args,
