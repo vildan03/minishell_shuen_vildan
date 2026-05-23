@@ -1,9 +1,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
-# include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
+#include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
 
 typedef enum e_node_type
 {
@@ -46,5 +49,7 @@ typedef struct s_shell
 	char	**export;
 	int		last_exit_status;
 }	t_shell;
+
+# include "parser.h"
 
 #endif
