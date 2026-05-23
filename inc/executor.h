@@ -29,5 +29,6 @@ int	print_export(t_shell *shell);
 int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
 int	update_export_value(t_shell *shell, char *key, char *value);
+int	ft_strcmp(char *s1, char *s2);
 
 #endif
