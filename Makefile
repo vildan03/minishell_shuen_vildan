@@ -13,14 +13,15 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS        = main.c \
-              src/executor/builtin_comamnds/execute_ast.c \
-              src/executor/builtin_commands/execute_nods.c \
-              src/executor/builtin_commands/builtin_utils.c \
-              src/executor/builtin_commands/builtin_exec.c \
-              src/executor/builtin_commands/builtin_env.c \
-              src/executor/builtin_commands/builtin_unset.c \
-              src/executor/builtin_commands/builtin_env_utils.c \
-              src/executor/builtin_commands/builtin_exec_extra.c \
+              src/executor/execute_ast.c \
+              src/executor/execute_nods.c \
+              src/executor/builtin_commands/utils.c \
+              src/executor/builtin_commands/execute.c \
+              src/executor/builtin_commands/env.c \
+              src/executor/builtin_commands/exit.c \
+              src/executor/builtin_commands/unset.c \
+              src/executor/builtin_commands/env_utils.c \
+              src/executor/builtin_commands/execute_2.c \
 
 OBJS        = $(SRCS:.c=.o)
 

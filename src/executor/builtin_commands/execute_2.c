@@ -64,10 +64,3 @@ int	exec_builtin_env(char **args, t_shell *shell)
 	return (0);
 }
 
-int	exec_builtin_exit(char **args, t_shell *shell)
-{
-	(void)args;
-	(void)shell;
-	return (0);
-}
-
