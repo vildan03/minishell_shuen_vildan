@@ -77,3 +77,19 @@ int	update_export_value(t_shell *shell, char *key, char *value)
 		return (0);
 	return (add_export_value(shell, key, value));
 }
+
+int	print_export(t_shell *shell)
+{
+	int	i;
+
+	if (!shell || !shell->export)
+		return (1);
+	sort_export(shell->export);
+	i = 0;
+	while (shell->export[i])
+	{
+		print_export_line(shell->export[i]);
+		i++;
+	}
+	return (0);
+}

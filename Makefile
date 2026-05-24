@@ -14,6 +14,7 @@ INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS		= src/main.c \
 			  src/executor/execute_ast.c \
+			  src/executor/free.c \
 			  src/executor/execute_nods.c \
 			  src/executor/builtin_commands/utils.c \
 			  src/executor/builtin_commands/execute.c \
@@ -68,3 +69,4 @@ test_unset: $(LIBFT)
 		-o tests/vildan/test_unset
 
 .PHONY: all clean fclean re
+

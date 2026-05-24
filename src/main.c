@@ -24,17 +24,6 @@ static char	**copy_envp(char **envp)
 	return (copy);
 }
 
-static void	free_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
 
 static int	init_shell(t_shell *shell, char **envp)
 {

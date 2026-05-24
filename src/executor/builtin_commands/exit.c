@@ -34,10 +34,14 @@ int	exec_builtin_exit(char **args, t_shell *shell)
 
 	ft_putendl_fd("exit", 1);
 	if (!args[1])
+	{
+		cleanup_shell(shell);
 		exit(shell->last_exit_status);
+	}
 	if (!is_numeric(args[1]))
 	{
 		print_numeric_error(args[1]);
+		cleanup_shell(shell);
 		exit(2);
 	}
 	if (args[2])
@@ -49,5 +53,6 @@ int	exec_builtin_exit(char **args, t_shell *shell)
 	exit_code = ft_atoi(args[1]) % 256;
 	if (exit_code < 0)
 		exit_code += 256;
+	cleanup_shell(shell);
 	exit(exit_code);
 }

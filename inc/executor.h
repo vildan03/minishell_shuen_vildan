@@ -30,5 +30,9 @@ int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
 int	update_export_value(t_shell *shell, char *key, char *value);
 int	ft_strcmp(char *s1, char *s2);
+void	print_export_line(char *entry);
+void	sort_export(char **export);
+void	free_array(char **arr);
+void	cleanup_shell(t_shell *shell);
 
 #endif

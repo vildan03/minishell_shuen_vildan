@@ -1,7 +1,7 @@
 #include "../../../inc/minishell.h"
 #include "../../../inc/executor.h"
 
-static void	sort_export(char **export)
+void	sort_export(char **export)
 {
 	int		i;
 	int		j;
@@ -25,7 +25,7 @@ static void	sort_export(char **export)
 	}
 }
 
-static void	print_export_line(char *entry)
+void	print_export_line(char *entry)
 {
 	char	*eq;
 	int		key_len;
@@ -42,22 +42,6 @@ static void	print_export_line(char *entry)
 	ft_putstr_fd("=\"", 1);
 	ft_putstr_fd(eq + 1, 1);
 	ft_putendl_fd("\"", 1);
-}
-
-int	print_export(t_shell *shell)
-{
-	int	i;
-
-	if (!shell || !shell->export)
-		return (1);
-	sort_export(shell->export);
-	i = 0;
-	while (shell->export[i])
-	{
-		print_export_line(shell->export[i]);
-		i++;
-	}
-	return (0);
 }
 
 static void	print_export_error(char *arg)
