@@ -1,6 +1,6 @@
-#include "../../../inc/minishell.h"
-#include "../../../inc/executor.h"
 
+#include "../../../../inc/minishell.h"
+#include "../../../../inc/executor.h"
 void	sort_export(char **export)
 {
 	int		i;

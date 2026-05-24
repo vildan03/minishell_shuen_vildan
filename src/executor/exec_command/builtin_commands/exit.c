@@ -1,6 +1,6 @@
-#include "../../../inc/minishell.h"
-#include "../../../inc/executor.h"
 
+#include "../../../../inc/minishell.h"
+#include "../../../../inc/executor.h"
 static int	is_numeric(char *str)
 {
 	int	i;

@@ -1,6 +1,6 @@
-#include "../../../inc/minishell.h"
-#include "../../../inc/executor.h"
 
+#include "../../../../inc/minishell.h"
+#include "../../../../inc/executor.h"
 static char	*create_export_entry(char *key, char *value)
 {
 	char	*tmp;

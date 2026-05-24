@@ -2,6 +2,9 @@
 # define EXECUTOR_H
 
 #include "minishell.h"
+#include <sys/wait.h>
+#include <sys/stat.h>
+
 
 int	exec_ast(t_ast_node *node, t_shell *shell);
 int	exec_command(t_ast_node *node, t_shell *shell);
@@ -34,5 +37,9 @@ void	print_export_line(char *entry);
 void	sort_export(char **export);
 void	free_array(char **arr);
 void	cleanup_shell(t_shell *shell);
+char	*find_command_path(char *cmd, char **envp);
+void	print_cmd_error(char *cmd, char *msg);
+void	exit_exec_error(char *cmd, char *path, t_shell *shell);
+int	exec_simple_command(t_ast_node *node, t_shell *shell);
 
 #endif

@@ -1,6 +1,6 @@
-#include "../../../inc/minishell.h"
-#include "../../../inc/executor.h"
 
+#include "../../../../inc/minishell.h"
+#include "../../../../inc/executor.h"
 char	*get_env_value(char **envp, char *key)
 {
 	int		i;

@@ -18,9 +18,3 @@ int	exec_ast(t_ast_node *node, t_shell *shell)
 	return (1);
 } 
 
-int	exec_external(t_ast_node *node, t_shell *shell)
-{
-	(void)node;
-	(void)shell;
-	return (0);
-}
