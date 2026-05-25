@@ -62,11 +62,18 @@ void extract_redirections(t_ast_node *node, t_token *start, t_token *end);
 int count_args(t_token *start, t_token *end);
 char **build_args_array(t_token *start, t_token *end);
 
-// build_ast.c
+// build_ast_utils_2.c
 void append_redir_node(t_redir **head, t_redir *new_node);
 t_ast_node *create_ast_node(t_node_type type);
+
+// build_ast.c
 t_ast_node *parse_command(t_token *start, t_token *end);
 t_ast_node *parse_pipe(t_token *start, t_token *end);
 t_ast_node *parse_logic(t_token *start, t_token *end);
+
+// free_ast.c
+void free_string_array(char **arr);
+void free_redir(t_redir *head);
+void free_ast(t_ast_node *node);
 
 #endif

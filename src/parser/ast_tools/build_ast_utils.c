@@ -55,14 +55,14 @@ void extract_redirections(t_ast_node *node, t_token *start, t_token *end)
 		    return;
             new_redir->type = current->type;
             new_redir->file = ft_strdup(current->next->value);
+	    if(!new_redir->file)
+		    return;
             new_redir->next = NULL;
             append_redir_node(&(node->redir), new_redir);
             current = current->next->next;
         }
         else
-        {
             current = current->next;
-        }
     }
 }
 
@@ -100,11 +100,9 @@ char **build_args_array(t_token *start, t_token *end)
     t_token *current;
 
     arg_count = count_args(start, end);
-    
     args = malloc(sizeof(char *) * (arg_count + 1));
     if (!args)
         return (NULL);
-
     i = 0;
     current = start;
     while (current != end && current != NULL)
@@ -128,6 +126,5 @@ char **build_args_array(t_token *start, t_token *end)
         }
     }
     args[i] = NULL;
-    
     return (args);
 }
