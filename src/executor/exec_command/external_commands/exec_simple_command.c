@@ -6,21 +6,30 @@ int	exec_external(t_ast_node *node, t_shell *shell)
 	//write has_pipe, has_redirs...
 	return (exec_simple_command(node, shell));
 }
-static char	*check_paths(char **paths, char *cmd)
+static char	*join_cmd_path(char *dir, char *cmd)
 {
 	char	*tmp;
+	char	*full_path;
+
+	tmp = ft_strjoin(dir, "/");
+	if (!tmp)
+		return (NULL);
+	full_path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (full_path);
+}
+
+static char	*check_paths(char **paths, char *cmd)
+{
 	char	*full_path;
 	int		i;
 
 	i = 0;
 	while (paths[i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
-		if (!tmp)
-	return (free_array(paths), NULL);
-		full_path = ft_strjoin(tmp, cmd);
-	if (!full_path)
-	return (free(tmp), free_array(paths), NULL);
+		full_path = join_cmd_path(paths[i], cmd);
+		if (!full_path)
+			return (free_array(paths), NULL);
 		if (access(full_path, F_OK) == 0)
 		{
 			free_array(paths);
