@@ -56,7 +56,11 @@ static int	get_child_status(int status)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit (core dumped)", 2);
 		return (128 + WTERMSIG(status));
+	}
 	return (1);
 }
 
@@ -74,6 +78,8 @@ int	exec_simple_command(t_ast_node *node, t_shell *shell)
 		return (free(path), perror("fork"), 1);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		exit_exec_error(node->args[0], path, shell);
 		execve(path, node->args, shell->env);
 		perror(node->args[0]);

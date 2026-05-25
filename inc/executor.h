@@ -3,7 +3,9 @@
 
 #include "minishell.h"
 #include <sys/wait.h>
+#include <signal.h>
 #include <sys/stat.h>
+extern int	g_exit_status;
 
 
 int	exec_ast(t_ast_node *node, t_shell *shell);
@@ -41,5 +43,9 @@ char	*find_command_path(char *cmd, char **envp);
 void	print_cmd_error(char *cmd, char *msg);
 void	exit_exec_error(char *cmd, char *path, t_shell *shell);
 int	exec_simple_command(t_ast_node *node, t_shell *shell);
+void	interactive_signals(void);
+void	execution_signals(void);
+char	**copy_envp(char **envp);
+int	init_shell(t_shell *shell, char **envp);
 
 #endif

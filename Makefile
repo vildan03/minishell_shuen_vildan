@@ -13,6 +13,7 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS		= src/main.c \
+					src/main_helpers.c \
 			  src/executor/execute_ast.c \
 			  src/executor/free.c \
 			  src/executor/execute_nods.c \
