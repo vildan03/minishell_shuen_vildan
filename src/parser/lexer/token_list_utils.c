@@ -28,14 +28,18 @@ void print_tokens(t_token *token_list)
 
 void free_token_list(t_token *token)
 {
-	t_token *current;
-	t_token *buffer;
+    t_token *current;
+    t_token *next_node;
 
-	current = token;
-	while(current->type != TOKEN_EOF)
-	{
-		buffer = current;
-		current = current->next;
-		free(buffer);
-	}
+    current = token;
+    while (current != NULL)
+    {
+        next_node = current->next;
+        
+        if (current->value)
+            free(current->value);
+            
+        free(current);
+        current = next_node;
+    }
 }

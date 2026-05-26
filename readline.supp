@@ -1,0 +1,16 @@
+{
+   Ignore_Readline_Leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
+   ...
+   obj:*/libreadline.so*
+   ...
+}
+{
+   Ignore_Readline_History_Leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
+   ...
+   fun:add_history
+   ...
+}

@@ -38,6 +38,8 @@ int get_word_value(char *input, int *i, t_token *token)
 		(*i)++;
 	}
 	token->value = ft_substr(input, initial_i, length);
+	if(!token->value)
+		return 1;
 	quotes = in_quotes;
 	if(in_quotes != 0)
 		return (token->type = TOKEN_EOF, print_syntax_err("unexpected EOF while looking for matching ", &quotes), 1);
