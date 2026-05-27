@@ -13,18 +13,21 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
 SRCS		= src/main.c \
+					src/main_helpers.c \
 			  src/executor/execute_ast.c \
 			  src/executor/free.c \
 			  src/executor/execute_nods.c \
-			  src/executor/builtin_commands/utils.c \
-			  src/executor/builtin_commands/execute.c \
-			  src/executor/builtin_commands/cd.c \
-			  src/executor/builtin_commands/exit.c \
-			  src/executor/builtin_commands/export.c \
-			  src/executor/builtin_commands/export_utils.c \
-			  src/executor/builtin_commands/unset.c \
-			  src/executor/builtin_commands/env_utils.c \
-			  src/executor/builtin_commands/env_utils_2.c \
+			  src/executor/exec_command//builtin_commands/utils.c \
+			  src/executor/exec_command/builtin_commands/execute.c \
+			  src/executor/exec_command/builtin_commands/cd.c \
+			  src/executor/exec_command/builtin_commands/exit.c \
+			  src/executor/exec_command/builtin_commands/export.c \
+			  src/executor/exec_command/builtin_commands/export_utils.c \
+			  src/executor/exec_command/builtin_commands/unset.c \
+			  src/executor/exec_command/builtin_commands/env_utils.c \
+			  src/executor/exec_command/builtin_commands/env_utils_2.c \
+			  src/executor/exec_command/external_commands/exec_simple_command.c \
+			  src/executor/exec_command/external_commands/error_exit.c \
 			  src/parser/build_ast/build_ast_utils.c \
 			  src/parser/build_ast/build_ast.c \
 			  src/parser/build_ast/print_ast.c \

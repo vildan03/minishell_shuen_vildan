@@ -1,6 +1,5 @@
-#include "../../../inc/minishell.h"
-#include "../../../inc/executor.h"
-
+#include "../../../../inc/minishell.h"
+#include "../../../../inc/executor.h"
 char	*get_cd_target(char **args, t_shell *shell)
 {
 	if (!shell || !shell->env)
