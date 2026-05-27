@@ -55,14 +55,14 @@ void extract_redirections(t_ast_node *node, t_token *start, t_token *end)
 		    return;
             new_redir->type = current->type;
             new_redir->file = ft_strdup(current->next->value);
+	    if(!new_redir->file)
+		    return;
             new_redir->next = NULL;
             append_redir_node(&(node->redir), new_redir);
             current = current->next->next;
         }
         else
-        {
             current = current->next;
-        }
     }
 }
 
@@ -95,39 +95,28 @@ int count_args(t_token *start, t_token *end)
 char **build_args_array(t_token *start, t_token *end)
 {
     char    **args;
-    int     arg_count;
     int     i;
-    t_token *current;
 
-    arg_count = count_args(start, end);
-    
-    args = malloc(sizeof(char *) * (arg_count + 1));
+    args = malloc(sizeof(char *) * (count_args(start, end) + 1));
     if (!args)
         return (NULL);
-
     i = 0;
-    current = start;
-    while (current != end && current != NULL)
+    while (start && start != end)
     {
-        if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_IN ||
-            current->type == TOKEN_APPEND || current->type == TOKEN_HEREDOC)
+        if (is_redir_ast(start->type))
         {
-            if (current->next)
-                current = current->next->next;
-            else
-                current = current->next;
+            start = start->next;
+            if (start)
+                start = start->next;
+            continue ;
         }
-        else
+        if (start->value)
         {
-            if (current->value != NULL)
-            {
-                args[i] = ft_strdup(current->value);
-                i++;
-            }
-            current = current->next;
+            args[i] = ft_strdup(start->value);
+            i++;
         }
+        start = start->next;
     }
     args[i] = NULL;
-    
     return (args);
 }
