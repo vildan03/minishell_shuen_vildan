@@ -31,3 +31,9 @@ t_ast_node *create_ast_node(t_node_type type)
 	node->right = NULL;
 	return node;
 }
+
+int is_redir_ast(int type)
+{
+    return (type == TOKEN_REDIR_OUT || type == TOKEN_REDIR_IN
+        || type == TOKEN_APPEND || type == TOKEN_HEREDOC);
+}

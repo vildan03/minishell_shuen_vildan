@@ -44,16 +44,8 @@ char *expand_string(char *raw, t_env *env, int status)
     res = ft_strdup("");
     while (raw[i])
     {
-        if (raw[i] == '\'' && !dq)
-        {
-            sq = !sq;
-            i++;
-        }
-        else if (raw[i] == '\"' && !sq)
-        {
-            dq = !dq;
-            i++;
-        }
+        if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
+            toggle_quotes(raw[i++], &sq, &dq);
         else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
             res = process_var(res, raw, &i, env, status);
         else
@@ -70,13 +62,9 @@ void expand_redirections(t_redir *redir_list, t_env *env, int status)
     current = redir_list;
     while (current != NULL)
     {
-	printf("  -> [DEBUG] Redir BEFORE: '%s'\n", current->file);
-
         expanded_file = expand_string(current->file, env, status);
         free(current->file);
         current->file = expanded_file;
-	printf("  -> [DEBUG] Redir AFTER:  '%s'\n", current->file);
-        
         current = current->next;
     }
 }

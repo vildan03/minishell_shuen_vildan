@@ -15,34 +15,29 @@ t_token *create_new_token(void)
 
 int get_word_value(char *input, int *i, t_token *token)
 {
-	int in_quotes;
-	int length;
-	int initial_i;
-	char quotes;
+	char    in_quotes;
+	int     len;
+	int     start;
 
 	in_quotes = 0;
-	length = 0;
-	initial_i = *i;
-	while(input[*i] != '\0')
+	len = 0;
+	start = *i;
+	while (input[*i])
 	{
-		if(in_quotes == 0 && is_word(input[*i]) == false)
-			break;
-		if(input[*i] == '"' || input[*i] == '\'')
-		{
-			if(in_quotes == 0)
-				in_quotes = input[*i];
-			else if(in_quotes == input[*i])
-				in_quotes = 0;
-		}
-		length++;
+		if (!in_quotes && !is_word(input[*i]))
+		    break ;
+		if (!in_quotes && (input[*i] == '"' || input[*i] == '\''))
+		    in_quotes = input[*i];
+		else if (in_quotes == input[*i])
+		    in_quotes = 0;
+		len++;
 		(*i)++;
 	}
-	token->value = ft_substr(input, initial_i, length);
-	if(!token->value)
-		return 1;
-	quotes = in_quotes;
-	if(in_quotes != 0)
-		return (token->type = TOKEN_EOF, print_syntax_err("unexpected EOF while looking for matching ", &quotes), 1);
+	token->value = ft_substr(input, start, len);
+	if (!token->value)
+		return (1);
+	if(in_quotes)
+		return (token->type = TOKEN_EOF, print_syntax_err("unexpected EOF while looking for matching ", &in_quotes), 1);
 	return 0;
 }
 
