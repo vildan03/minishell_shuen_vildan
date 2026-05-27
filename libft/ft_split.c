@@ -30,7 +30,7 @@ char	**allocate_substrings(char const *s, char c)
 		else if (in_word == 0)
 		{
 			in_word = 1;
-			++ count;
+			++count;
 		}
 		i++;
 	}
@@ -86,9 +86,9 @@ char	**ft_split(char const *s, char c)
 //     char **substrings = ft_split(s, 'c');
 //     if (!substrings) {
 //         printf("ft_split returned NULL\n");
-//         return 1;
+//         return (1);
 //     }
 //     for (int i = 0; substrings[i] != NULL; i++)
 //         printf("sub[%d] = %s\n", i, substrings[i]);
-//     return 0;
+//     return (0);
 // }

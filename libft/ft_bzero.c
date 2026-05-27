@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 #include <stdio.h>
-#include "libft.h"
 
 void	ft_bzero(void *ptr, size_t num)
 {
 	unsigned char	*p;
 
-	p = (unsigned char *) ptr;
+	p = (unsigned char *)ptr;
 	while (num > 0)
 	{
 		p[num - 1] = 0;
@@ -26,9 +26,9 @@ void	ft_bzero(void *ptr, size_t num)
 	}
 }
 /*
-void main(void)
+void	main(void)
 {
-int ptr[7] = {0,2,4,1,1,1,2};
+int		ptr[7] = {0,2,4,1,1,1,2};
 ft_bzero(ptr,sizeof(ptr));
 for(int i = 0; i < 7; ++i)
 printf("%d",ptr[i]);

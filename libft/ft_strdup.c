@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
+#include <stdlib.h>
+#include <unistd.h>
+
 // static int	str_len(char *str)
 // {
 // 	int	i;
@@ -39,8 +40,8 @@ void	str_cpy(char *dest, char *src)
 
 char	*ft_strdup(char *src)
 {
-	size_t		src_len;
-	char		*duplicate;
+	size_t	src_len;
+	char	*duplicate;
 
 	src_len = ft_strlen(src);
 	duplicate = malloc(src_len * sizeof(char) + 1);
@@ -63,12 +64,14 @@ void	write_str(char *str)
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	char src[] = "hello";
-	int src_len;
+	char	src[] = "hello";
+	int		src_len;
+	char	*dup;
+
 	src_len = str_len(src);
-	char	*dup = malloc(src_len * sizeof(char) + 1);
+	dup = malloc(src_len * sizeof(char) + 1);
 	dup = ft_strdup(src);
 	write_str(dup);
 }

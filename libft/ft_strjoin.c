@@ -14,11 +14,11 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int					i;
-	int					s;
-	const size_t		len_s1 = ft_strlen(s1);
-	const size_t		len_s2 = ft_strlen(s2);
-	char				*result;
+	int				i;
+	int				s;
+	const size_t	len_s1 = ft_strlen(s1);
+	const size_t	len_s2 = ft_strlen(s2);
+	char			*result;
 
 	i = 0;
 	s = 0;

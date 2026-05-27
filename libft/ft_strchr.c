@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strchr(const char *str, int c)
 {
@@ -34,20 +34,21 @@ char	*ft_strchr(const char *str, int c)
 }
 
 /*
-int main()
+int	main(void)
 {
-    char *s = "find the letter z";
-    char *p = ft_strchr(s, 'z');
+	char	*s;
+	char	*p;
 
-    if (p != NULL)
-    {
-        printf("char is: %c\n", *p);
-    }
-    else
-    {
-        printf("Character not found.\n");
-    }
-
-    return (0);
+	s = "find the letter z";
+	p = ft_strchr(s, 'z');
+	if (p != NULL)
+	{
+		printf("char is: %c\n", *p);
+	}
+	else
+	{
+		printf("Character not found.\n");
+	}
+	return (0);
 }
 */

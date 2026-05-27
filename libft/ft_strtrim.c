@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int	in_charset(char c, const char *charset)
 {
@@ -43,7 +43,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	j = ft_strlen(s1) - 1;
 	while ((in_charset(s1[j], set) == 1))
 		--j;
-	result = malloc (j - i + 2);
+	result = malloc(j - i + 2);
 	if (!result)
 		return (NULL);
 	while (i <= j)

@@ -12,21 +12,29 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS        = src/main.c \
-              src/executor/execute_ast.c \
-              src/executor/execute_nods.c \
-              src/executor/builtin_utils.c \
-              src/executor/builtin_exec.c \
-              src/executor/builtin_exec_extra.c \
-	      src/parser/parser_main.c \
-	      src/parser/error_handling.c \
+SRCS		= src/main.c \
+			  src/executor/execute_ast.c \
+			  src/executor/free.c \
+			  src/executor/execute_nods.c \
+			  src/executor/builtin_commands/utils.c \
+			  src/executor/builtin_commands/execute.c \
+			  src/executor/builtin_commands/cd.c \
+			  src/executor/builtin_commands/exit.c \
+			  src/executor/builtin_commands/export.c \
+			  src/executor/builtin_commands/export_utils.c \
+			  src/executor/builtin_commands/unset.c \
+			  src/executor/builtin_commands/env_utils.c \
+			  src/executor/builtin_commands/env_utils_2.c \
+			  src/parser/build_ast/build_ast_utils.c \
+			  src/parser/build_ast/build_ast.c \
+			  src/parser/build_ast/print_ast.c \
+			  src/parser/lexer/build_token_list.c \
+			  src/parser/lexer/error_handling.c \
+			  src/parser/lexer/token_list_utils.c \
+			  src/parser/syntax_checker/check_syntax_utils.c \
+			  src/parser/syntax_checker/check_syntax.c
 
 OBJS        = $(SRCS:.c=.o)
-TEST_COMMON = src/executor/execute_ast.c \
-              src/executor/execute_nods.c \
-              src/executor/builtin_utils.c \
-              src/executor/builtin_exec.c \
-              src/executor/builtin_exec_extra.c
 
 all: $(LIBFT) $(NAME)
 
@@ -53,13 +61,12 @@ fclean: clean
 
 re: fclean all
 
-test_is_builtin: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) tests/vildan/test_is_builtin.c $(TEST_COMMON) $(LIBFT_FLAGS) -lreadline -o tests/vildan/test_is_builtin
+test_unset: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) \
+		tests/vildan/test_unset.c \
+		src/executor/builtin_commands/builtin_unset.c \
+		$(LIBFT_FLAGS) -lreadline \
+		-o tests/vildan/test_unset
 
-test_pwd: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) tests/vildan/test_pwd.c $(TEST_COMMON) $(LIBFT_FLAGS) -lreadline -o tests/vildan/test_pwd
+.PHONY: all clean fclean re
 
-test_exec_command: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) tests/vildan/test_exec_command.c $(TEST_COMMON) $(LIBFT_FLAGS) -lreadline -o tests/vildan/test_exec_command
-
-.PHONY: all clean fclean re test_is_builtin test_pwd test_exec_command

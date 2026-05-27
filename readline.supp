@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
    Ignore_Readline_Leaks
    Memcheck:Leak
    match-leak-kinds: reachable,definite,indirect,possible
@@ -13,4 +14,16 @@
    ...
    fun:add_history
    ...
+=======
+   readline_leak
+   Memcheck:Leak
+   ...
+   obj:*/libreadline.so*
+}
+{
+   history_leak
+   Memcheck:Leak
+   ...
+   obj:*/libhistory.so*
+>>>>>>> main
 }
