@@ -53,6 +53,7 @@ bool is_binary_op(int type);
 // BUILD_AST --------------------------------------------------------
 // print_ast.c
 void print_spaces(int depth);
+void print_command_node(t_ast_node *node);
 void print_ast(t_ast_node *node , int depth);
 
 // build_ast_utils.c
@@ -65,6 +66,7 @@ char **build_args_array(t_token *start, t_token *end);
 // build_ast_utils_2.c
 void append_redir_node(t_redir **head, t_redir *new_node);
 t_ast_node *create_ast_node(t_node_type type);
+int is_redir_ast(int type);
 
 // build_ast.c
 t_ast_node *parse_command(t_token *start, t_token *end);

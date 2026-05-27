@@ -16,4 +16,7 @@ char    *append_char(char *str, char c);
 char    *append_string(char *str, char *append);
 int ft_strcmp(char *s1, char *s2);
 
+// expander_utils_2.c
+void toggle_quotes(char c, int *sq, int *dq);
+
 #endif
