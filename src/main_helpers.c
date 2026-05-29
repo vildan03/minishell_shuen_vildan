@@ -50,6 +50,8 @@ int	init_shell(t_shell *shell, char **envp)
 	shell->env = copy_envp(envp);
 	shell->export = copy_envp(envp);
 	shell->last_exit_status = 0;
+	shell->token_list = NULL;
+	shell->ast_root = NULL;
 	if (!shell->env || !shell->export)
 		return (1);
 	return (0);

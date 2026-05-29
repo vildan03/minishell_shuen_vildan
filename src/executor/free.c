@@ -12,8 +12,16 @@ void	free_array(char **arr)
 		free(arr[i++]);
 	free(arr);
 }
-void	cleanup_shell(t_shell *shell)
+void cleanup_shell(t_shell *shell)
 {
-	free_array(shell->env);
-	free_array(shell->export);
+    if (shell->ast_root)
+        free_ast(shell->ast_root);
+    if (shell->token_list)
+        free_token_list(shell->token_list);
+
+    free_array(shell->env);
+    free_array(shell->export);
+
+    shell->ast_root = NULL;
+    shell->token_list = NULL;
 }

@@ -10,6 +10,7 @@ static void	execute_command(t_shell *shell, t_ast_node *ast_root)
 	interactive_signals();
 	printf("[exit status = %d]\n", shell->last_exit_status);
 	free_ast(ast_root);
+	shell->ast_root = NULL;
 }
 
 static void	process_command(t_shell *shell, char *input)
@@ -24,16 +25,22 @@ static void	process_command(t_shell *shell, char *input)
 	token_list = construct_token_list(input, token_list);
 	if (!token_list)
 		return ;
+	shell->token_list = token_list;
 	if (check_valid_syntax(token_list) != 0)
 	{
 		shell->last_exit_status = 2;
 		free_token_list(token_list);
+		shell->token_list = NULL;
 		return ;
 	}
 	ast_root = parse_logic(token_list, NULL);
 	if (ast_root)
+	{
+		shell->ast_root = ast_root;
 		execute_command(shell, ast_root);
+	}
 	free_token_list(token_list);
+	shell->token_list = NULL;
 }
 int	main(int argc, char **argv, char **envp)
 {
