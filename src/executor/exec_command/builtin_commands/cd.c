@@ -7,9 +7,9 @@ char	*get_cd_target(char **args, t_shell *shell)
 	if (args[1] && args[2])
 		return (NULL);
 	if (!args[1])
-		return (get_env_value(shell->env, "HOME"));
+		return (get_env_value_executor(shell->env, "HOME"));
 	if (ft_strncmp(args[1], "-", 2) == 0)
-		return (get_env_value(shell->env, "OLDPWD"));
+		return (get_env_value_executor(shell->env, "OLDPWD"));
 	return (args[1]);
 }
 static int	update_cd_state(t_shell *shell, char **args,

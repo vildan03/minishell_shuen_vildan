@@ -5,8 +5,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <sys/stat.h>
-extern int	g_exit_status;
 
+extern volatile sig_atomic_t g_exit_status;
 
 int	exec_ast(t_ast_node *node, t_shell *shell);
 int	exec_command(t_ast_node *node, t_shell *shell);
@@ -25,7 +25,7 @@ int	exec_builtin_unset(char **args, t_shell *shell);
 int	exec_builtin_env(char **args, t_shell *shell);
 int	exec_builtin_exit(char **args, t_shell *shell);
 int	is_n_flag(char *arg);
-char	*get_env_value(char **envp, char *key);
+char	*get_env_value_executor(char **envp, char *key);
 char	*get_cd_target(char **args, t_shell *shell);
 int	update_env_value(t_shell *shell, char *key, char *value);
 int	is_valid_identifier(char *str);
@@ -34,7 +34,6 @@ int	print_export(t_shell *shell);
 int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
 int	update_export_value(t_shell *shell, char *key, char *value);
-int	ft_strcmp(char *s1, char *s2);
 void	print_export_line(char *entry);
 void	sort_export(char **export);
 void	free_array(char **arr);

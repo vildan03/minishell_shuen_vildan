@@ -2,8 +2,6 @@
 #include "../inc/minishell.h"
 #include "../inc/executor.h"
 
-int	g_exit_status = 0;
-
 static void	handle_sigint(int sig)
 {
 	(void)sig;

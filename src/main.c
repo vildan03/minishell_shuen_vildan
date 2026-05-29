@@ -1,13 +1,15 @@
 #include "../inc/minishell.h"
 #include "../inc/executor.h"
 
+volatile sig_atomic_t g_exit_status = 0;
+
 static void	execute_command(t_shell *shell, t_ast_node *ast_root)
 {
 	execution_signals();
 	shell->last_exit_status = exec_ast(ast_root, shell);
 	interactive_signals();
 	printf("[exit status = %d]\n", shell->last_exit_status);
-	/* free_ast(ast_root); */
+	free_ast(ast_root);
 }
 
 static void	process_command(t_shell *shell, char *input)
