@@ -8,40 +8,68 @@
 
 extern volatile sig_atomic_t g_exit_status;
 
+//exec_ast.c
 int	exec_ast(t_ast_node *node, t_shell *shell);
+
+// execute_nods.c 
 int	exec_command(t_ast_node *node, t_shell *shell);
 int	exec_and(t_ast_node *node, t_shell *shell);
 int	exec_or(t_ast_node *node, t_shell *shell);
 int	exec_pipe(t_ast_node *node, t_shell *shell);
 int	exec_subshell(t_ast_node *node, t_shell *shell);
-int	exec_builtin(t_ast_node *node, t_shell *shell);
+
+// exec_simple_command.c
+int	get_child_status(int status);
 int	exec_external(t_ast_node *node, t_shell *shell);
-int	is_builtin(char *cmd);
-int	exec_builtin_pwd();
+int	exec_simple_command(t_ast_node *node, t_shell *shell);
+char	*find_command_path(char *cmd, char **envp);
+
+// cd.c
 int	exec_builtin_cd(char **args, t_shell *shell);
+char	*get_cd_target(char **args, t_shell *shell);
+
+// env_utils.c
+char	*get_env_value_executor(char **envp, char *key);
+int	update_env_value(t_shell *shell, char *key, char *value);
+
+// execute.c
+int	exec_builtin(t_ast_node *node, t_shell *shell);
+int	exec_builtin_pwd();
 int	exec_builtin_echo(char **args, t_shell *shell);
 int	exec_builtin_export(char **args, t_shell *shell);
-int	exec_builtin_unset(char **args, t_shell *shell);
 int	exec_builtin_env(char **args, t_shell *shell);
+
+//exit.c
 int	exec_builtin_exit(char **args, t_shell *shell);
-int	is_n_flag(char *arg);
-char	*get_env_value_executor(char **envp, char *key);
-char	*get_cd_target(char **args, t_shell *shell);
-int	update_env_value(t_shell *shell, char *key, char *value);
-int	is_valid_identifier(char *str);
-int	find_matching_key(char *env_line, char *key);
-int	print_export(t_shell *shell);
+
+//export_utils.c
+void	sort_export(char **export);
+void	print_export_line(char *entry);
 int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
+
+//export.c
+int	print_export(t_shell *shell);
 int	update_export_value(t_shell *shell, char *key, char *value);
-void	print_export_line(char *entry);
-void	sort_export(char **export);
-void	free_array(char **arr);
-void	cleanup_shell(t_shell *shell);
-char	*find_command_path(char *cmd, char **envp);
+
+//unset.c
+int	exec_builtin_unset(char **args, t_shell *shell);
+int	find_matching_key(char *env_line, char *key);
+
+//utils.c
+int	is_builtin(char *cmd);
+int	is_n_flag(char *arg);
+int	is_valid_identifier(char *str);
+
+//error_exit.c
 void	print_cmd_error(char *cmd, char *msg);
 void	exit_exec_error(char *cmd, char *path, t_shell *shell);
-int	exec_simple_command(t_ast_node *node, t_shell *shell);
+
+//free.c
+void	free_array(char **arr);
+void	cleanup_shell(t_shell *shell);
+
+//main_helpers.c
 void	interactive_signals(void);
 void	execution_signals(void);
 char	**copy_envp(char **envp);

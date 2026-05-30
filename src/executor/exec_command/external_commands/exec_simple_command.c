@@ -60,7 +60,7 @@ char	*find_command_path(char *cmd, char **envp)
 		return (NULL);
 	return (check_paths(paths, cmd));
 }
-static int	get_child_status(int status)
+int	get_child_status(int status)
 {
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
