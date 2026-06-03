@@ -14,16 +14,22 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 
 int	exec_and(t_ast_node *node, t_shell *shell)
 {
-	(void)node;
-	(void)shell;
-	return (0);
+	int status;
+	
+	status = exec_ast(node->left, shell);
+	if(status == 0)
+		status = exec_ast(node->right, shell);
+	return (status);
 }
 
 int	exec_or(t_ast_node *node, t_shell *shell)
 {
-	(void)node;
-	(void)shell;
-	return (0);
+	int status;
+
+	status = exec_ast(node->left, shell);
+	if(status != 0)
+		status = exec_ast(node->right, shell);
+	return (status);
 }
 
 int	exec_pipe(t_ast_node *node, t_shell *shell)

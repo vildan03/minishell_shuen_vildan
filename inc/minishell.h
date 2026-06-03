@@ -68,5 +68,6 @@ void append_env_node(t_env **head, t_env *new_node);
 void extract_key_value(char *env_str, char **key, char **value);
 void free_env_list(t_env *env);
 t_env *init_env(char **envp);
+int ft_strcmp(char *s1, char *s2);
 
 #endif

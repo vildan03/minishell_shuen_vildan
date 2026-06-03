@@ -46,6 +46,8 @@ char *expand_string(char *raw, t_env *env, int status)
     {
         if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
             toggle_quotes(raw[i++], &sq, &dq);
+	else if(raw[i] == '$' && !sq && (raw[i + 1] == '"' || raw[i + 1] == '\''))
+		i++;
         else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
             res = process_var(res, raw, &i, env, status);
         else
@@ -73,6 +75,7 @@ void expand_command_args(t_ast_node *node, t_env *env, int last_status)
 {
     int     i;
     char    *expanded_str;
+    int original_had_quotes;
 
     if (!node || !node->args)
         return;
@@ -80,10 +83,20 @@ void expand_command_args(t_ast_node *node, t_env *env, int last_status)
     i = 0;
     while (node->args[i] != NULL)
     {
+	original_had_quotes = has_quotes(node->args[i]);
         expanded_str = expand_string(node->args[i], env, last_status);
-        free(node->args[i]);
-        node->args[i] = expanded_str;
-        i++;
+	if (expanded_str[0] == '\0' && !original_had_quotes) 
+	{
+	    free(expanded_str);
+	    free(node->args[i]);
+	    remove_empty_arg(node->args, i);
+	}
+	else
+	{
+	    free(node->args[i]);
+	    node->args[i] = expanded_str;
+	    i++;
+	}
     }
     expand_redirections(node->redir, env, last_status);
 }

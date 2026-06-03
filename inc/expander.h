@@ -14,9 +14,10 @@ int     is_env_char(char c);
 char    *get_env_value(char *key, t_env *env);
 char    *append_char(char *str, char c);
 char    *append_string(char *str, char *append);
-int ft_strcmp(char *s1, char *s2);
 
 // expander_utils_2.c
 void toggle_quotes(char c, int *sq, int *dq);
+int has_quotes(char *str);
+void remove_empty_arg(char **argc, int index);
 
 #endif
