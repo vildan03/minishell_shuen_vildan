@@ -59,9 +59,10 @@ static int	wait_pipe_children(pid_t left_pid, pid_t right_pid)
 {
 	int	status;
 
-	waitpid(left_pid, NULL, 0);
+	if (waitpid(left_pid, NULL, 0) == -1)
+		return (perror("waitpid"), 1);
 	if (waitpid(right_pid, &status, 0) == -1)
-		return (perror("waitpid"), 1);		
+		return (perror("waitpid"), 1);
 	return (get_child_status(status));
 }
 
