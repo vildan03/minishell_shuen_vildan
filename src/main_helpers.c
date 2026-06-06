@@ -4,12 +4,10 @@
 
 static void	handle_sigint(int sig)
 {
-	int return_val;
-
 	(void)sig;
 	g_exit_status = 130;
-	return_val = write(1, "\n", 1);
-	(void)return_val;
+	if(write(1, "\n", 1) < 0)
+		return;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

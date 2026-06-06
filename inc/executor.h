@@ -44,7 +44,7 @@ int	exec_builtin_exit(char **args, t_shell *shell);
 
 //export_utils.c
 void	sort_export(char **export);
-void	print_export_line(char *entry);
+int   print_export_line(char *entry);
 int	handle_export_no_value(char *arg, t_shell *shell);
 int	handle_export_with_value(char *arg, char *sep, t_shell *shell);
 
