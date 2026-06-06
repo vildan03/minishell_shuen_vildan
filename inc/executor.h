@@ -20,6 +20,10 @@ int	exec_subshell(t_ast_node *node, t_shell *shell);
 //pipe.c
 int	exec_pipe(t_ast_node *node, t_shell *shell);
 
+// heredoc.c
+int	has_heredoc(t_redir *redir);
+int	process_heredoc(t_redir *redir);
+
 // exec_simple_command.c
 int	get_child_status(int status);
 int	exec_external(t_ast_node *node, t_shell *shell);

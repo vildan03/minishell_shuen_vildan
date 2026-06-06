@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+static t_redir_type	get_redir_type(int token_type)
+{
+	if (token_type == TOKEN_REDIR_IN)
+		return (REDIR_IN);
+	if (token_type == TOKEN_REDIR_OUT)
+		return (REDIR_OUT);
+	if (token_type == TOKEN_HEREDOC)
+		return (REDIR_HEREDOC);
+	return (REDIR_APPEND);
+}
+
 t_token *find_last_op(t_token *start, t_token *end, int first_token, int second_token)
 {
     t_token *current;
@@ -53,7 +64,7 @@ void extract_redirections(t_ast_node *node, t_token *start, t_token *end)
             new_redir = malloc(sizeof(t_redir));
 	    if(!new_redir)
 		    return;
-            new_redir->type = current->type;
+            new_redir->type = get_redir_type(current->type);
             new_redir->file = ft_strdup(current->next->value);
 	    if(!new_redir->file)
 		    return;
