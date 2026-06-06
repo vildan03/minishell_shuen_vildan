@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "expander.h"
 
 void toggle_quotes(char c, int *sq, int *dq)
 {

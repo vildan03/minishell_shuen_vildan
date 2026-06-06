@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "expander.h"
 
 char *extract_and_replace_var(char *str, int *i, t_env *env, int last_status)
 {

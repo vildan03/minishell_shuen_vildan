@@ -30,6 +30,7 @@ SRCS		= src/main.c \
 			  src/parser/ast_tools/build_ast_utils.c \
 			  src/parser/ast_tools/build_ast_utils_2.c \
 			  src/parser/ast_tools/build_ast.c \
+			  src/parser/ast_tools/redir_ast_debug.c \
 			  src/parser/ast_tools/print_ast.c \
 			  src/parser/ast_tools/free_ast.c \
 			  src/parser/lexer/build_token_list.c \

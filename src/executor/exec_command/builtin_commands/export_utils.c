@@ -29,6 +29,7 @@ void	print_export_line(char *entry)
 {
 	char	*eq;
 	int		key_len;
+	int return_val;
 
 	eq = ft_strchr(entry, '=');
 	ft_putstr_fd("declare -x ", 1);
@@ -38,7 +39,8 @@ void	print_export_line(char *entry)
 		return ;
 	}
 	key_len = eq - entry;
-	write(1, entry, key_len);
+	return_val = write(1, entry, key_len);
+	(void)return_val;
 	ft_putstr_fd("=\"", 1);
 	ft_putstr_fd(eq + 1, 1);
 	ft_putendl_fd("\"", 1);
