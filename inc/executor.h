@@ -24,6 +24,9 @@ int	exec_external(t_ast_node *node, t_shell *shell);
 int	exec_simple_command(t_ast_node *node, t_shell *shell);
 char	*find_command_path(char *cmd, char **envp);
 
+// redirection.c
+int apply_redirections(t_redir *redir);
+
 // cd.c
 int	exec_builtin_cd(char **args, t_shell *shell);
 char	*get_cd_target(char **args, t_shell *shell);
@@ -38,6 +41,9 @@ int	exec_builtin_pwd();
 int	exec_builtin_echo(char **args, t_shell *shell);
 int	exec_builtin_export(char **args, t_shell *shell);
 int	exec_builtin_env(char **args, t_shell *shell);
+
+// execute_2.c
+int exec_builtin_with_redir(t_ast_node *node, t_shell *shell);
 
 //exit.c
 int	exec_builtin_exit(char **args, t_shell *shell);

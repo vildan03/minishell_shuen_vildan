@@ -19,5 +19,7 @@ char    *append_string(char *str, char *append);
 
 // expander_utils_2.c
 void toggle_quotes(char c, int *sq, int *dq);
+void expand_redirections(t_redir *redir_list, t_env *env, int status);
+int	count_valid_args(char **args);
 
 #endif
