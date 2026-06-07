@@ -1,9 +1,14 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "minishell.h"
 # include "limits.h"
 # include "stdbool.h"
+# include <stdio.h>
+# include <stdlib.h>
+#include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
 
 typedef enum s_token_type {
    TOKEN_WORD,
@@ -24,6 +29,41 @@ typedef struct s_token {
    char *value;
    struct s_token *next;
 } t_token;
+
+typedef enum e_node_type
+{
+	NODE_COMMAND,
+	NODE_PIPE,
+	NODE_AND,
+	NODE_OR,
+	NODE_SUBSHELL
+}						t_node_type;
+
+typedef enum e_redir_type
+{
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_HEREDOC,
+	REDIR_APPEND
+}						t_redir_type;
+
+typedef struct s_redir
+{
+	t_redir_type		type;
+	char				*file;
+	struct s_redir		*next;
+}						t_redir;
+
+typedef struct s_ast_node
+{
+	t_node_type			type;
+
+	char				**args;
+	t_redir				*redir;
+
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}						t_ast_node;
 
 // LEXER ---------------------------------------------------------
 // error_handling.c
@@ -58,15 +98,17 @@ void print_ast(t_ast_node *node , int depth);
 
 // build_ast_utils.c
 t_token *find_last_op(t_token *start, t_token *end, int first_token, int second_token);
-t_token *get_last_token(t_token *start, t_token *end);
 void extract_redirections(t_ast_node *node, t_token *start, t_token *end);
 int count_args(t_token *start, t_token *end);
 char **build_args_array(t_token *start, t_token *end);
+int create_and_append_redir(t_ast_node *node, t_token *current);
 
 // build_ast_utils_2.c
 void append_redir_node(t_redir **head, t_redir *new_node);
 t_ast_node *create_ast_node(t_node_type type);
 int is_redir_ast(int type);
+t_token *get_last_token(t_token *start, t_token *end);
+t_redir_type translate_token_to_redir(t_token_type type);
 
 // build_ast.c
 t_ast_node *parse_command(t_token *start, t_token *end);
@@ -77,5 +119,8 @@ t_ast_node *parse_logic(t_token *start, t_token *end);
 void free_string_array(char **arr);
 void free_redir(t_redir *head);
 void free_ast(t_ast_node *node);
+
+// redir_ast_debug.c
+void debug_print_command(t_ast_node *node);
 
 #endif

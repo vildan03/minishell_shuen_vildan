@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:32:33 by vikaradu          #+#    #+#             */
-/*   Updated: 2025/11/24 14:46:37 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/06 11:51:39 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 int					ft_strncmp(char *s1, char *s2, unsigned int n);
+int ft_strcmp(char *s1, char *s2);
 char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 char				*ft_strrchr(const char *str, int c);

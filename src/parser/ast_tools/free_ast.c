@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "parser.h"
 
 void free_string_array(char **arr)
 {
