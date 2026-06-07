@@ -1,6 +1,6 @@
 
-#include "../inc/minishell.h"
 #include "../inc/executor.h"
+#include "../inc/minishell.h"
 
 static char	**free_partial_copy(char **copy, int count)
 {
@@ -14,8 +14,8 @@ static void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_exit_status = 130;
-	if(write(1, "\n", 1) < 0)
-		return;
+	if (write(1, "\n", 1) < 0)
+		return ;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -52,7 +52,6 @@ char	**copy_envp(char **envp)
 	copy[i] = NULL;
 	return (copy);
 }
-
 
 int	init_shell(t_shell *shell, char **envp)
 {

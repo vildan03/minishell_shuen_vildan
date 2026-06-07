@@ -1,9 +1,10 @@
-#include "../../inc/minishell.h"
 #include "../../inc/executor.h"
+#include "../../inc/minishell.h"
 #include <stdio.h>
+
 static int	env_count(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp && envp[i])
@@ -38,9 +39,9 @@ static char	**copy_envp(char **envp)
 	return (copy);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell shell;
 
 	(void)argc;
 	argv[0] = "export";
@@ -51,6 +52,6 @@ int main(int argc, char **argv, char **envp)
 		return (1);
 	shell.last_exit_status = 0;
 	if (exec_builtin_export(argv, &shell))
-		return (printf("fail\n"),1);
+		return (printf("fail\n"), 1);
 	return (printf("succes\n"), 0);
 }

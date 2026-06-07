@@ -1,5 +1,5 @@
-#include "../../../inc/minishell.h"
 #include "../../../inc/executor.h"
+#include "../../../inc/minishell.h"
 
 static int	is_delimiter(char *line, char *delimiter)
 {
@@ -17,7 +17,7 @@ static int	write_heredoc_line(int fd, char *line)
 	return (0);
 }
 
-static int	fill_heredoc_pipe(int write_fd, char *delimiter)
+int	fill_heredoc_pipe(int write_fd, char *delimiter)
 {
 	char	*line;
 
@@ -32,22 +32,6 @@ static int	fill_heredoc_pipe(int write_fd, char *delimiter)
 		line = readline("> ");
 	}
 	return (0);
-}
-
-static int	create_heredoc_fd(char *delimiter)
-{
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		return (perror("pipe"), -1);
-	if (fill_heredoc_pipe(fd[1], delimiter) != 0)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		return (-1);
-	}
-	close(fd[1]);
-	return (fd[0]);
 }
 
 int	has_heredoc(t_redir *redir)

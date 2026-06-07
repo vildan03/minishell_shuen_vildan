@@ -1,6 +1,7 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
+
 static char	*build_env_entry(char *key, char *value)
 {
 	char	*tmp;
@@ -74,8 +75,8 @@ int	update_env_value(t_shell *shell, char *key, char *new_value)
 }
 char	*get_env_value_executor(char **envp, char *key)
 {
-	int		i;
-	int		key_len;
+	int i;
+	int key_len;
 
 	if (!envp || !key)
 		return (NULL);
@@ -83,8 +84,7 @@ char	*get_env_value_executor(char **envp, char *key)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], key, key_len) == 0
-			&& envp[i][key_len] == '=')
+		if (ft_strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
 			return (envp[i] + key_len + 1);
 		i++;
 	}

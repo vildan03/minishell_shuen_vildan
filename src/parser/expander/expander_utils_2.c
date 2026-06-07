@@ -1,26 +1,26 @@
 #include "expander.h"
 
-void toggle_quotes(char c, int *sq, int *dq)
+void	toggle_quotes(char c, int *sq, int *dq)
 {
-    if (c == '\'' && !(*dq))
-        *sq = !(*sq);
-    else if (c == '"' && !(*sq))
-        *dq = !(*dq);
+	if (c == '\'' && !(*dq))
+		*sq = !(*sq);
+	else if (c == '"' && !(*sq))
+		*dq = !(*dq);
 }
 
-void expand_redirections(t_redir *redir_list, t_env *env, int status)
+void	expand_redirections(t_redir *redir_list, t_env *env, int status)
 {
-    t_redir *current;
-    char    *expanded_file;
+	t_redir	*current;
+	char	*expanded_file;
 
-    current = redir_list;
-    while (current != NULL)
-    {
-        expanded_file = expand_string(current->file, env, status);
-        free(current->file);
-        current->file = expanded_file;
-        current = current->next;
-    }
+	current = redir_list;
+	while (current != NULL)
+	{
+		expanded_file = expand_string(current->file, env, status);
+		free(current->file);
+		current->file = expanded_file;
+		current = current->next;
+	}
 }
 
 int	count_valid_args(char **args)

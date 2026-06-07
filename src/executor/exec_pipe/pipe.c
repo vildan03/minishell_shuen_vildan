@@ -1,6 +1,7 @@
 
-#include "../../../inc/minishell.h"
 #include "../../../inc/executor.h"
+#include "../../../inc/minishell.h"
+
 static void	exit_pipe_error(int fd[2], t_shell *shell)
 {
 	perror("dup2");
@@ -10,8 +11,8 @@ static void	exit_pipe_error(int fd[2], t_shell *shell)
 	exit(1);
 }
 
-static void	setup_pipe_child(t_ast_node *node, t_shell *shell,
-		int fd[2], int is_left)
+static void	setup_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
+		int is_left)
 {
 	int	status;
 
@@ -37,8 +38,8 @@ static void	setup_pipe_child(t_ast_node *node, t_shell *shell,
 	exit(status);
 }
 
-static int	fork_pipe_child(t_ast_node *node, t_shell *shell,
-		int fd[2], int is_left)
+static int	fork_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
+		int is_left)
 {
 	pid_t	pid;
 

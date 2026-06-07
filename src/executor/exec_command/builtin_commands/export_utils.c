@@ -1,6 +1,7 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
+
 void	sort_export(char **export)
 {
 	int		i;
@@ -35,18 +36,19 @@ int	print_export_line(char *entry)
 	if (!eq)
 	{
 		ft_putendl_fd(entry, 1);
-		return 0;
+		return (0);
 	}
 	key_len = eq - entry;
-	if(write(1, entry, key_len) < 0)
+	if (write(1, entry, key_len) < 0)
 	{
-		ft_putstr_fd("minishell: export: write error: No space left on device\n", 2);
-		return 1;
+		ft_putstr_fd("minishell: export: write error: No space left on device\n",
+			2);
+		return (1);
 	}
 	ft_putstr_fd("=\"", 1);
 	ft_putstr_fd(eq + 1, 1);
 	ft_putendl_fd("\"", 1);
-	return 0;
+	return (0);
 }
 
 static void	print_export_error(char *arg)

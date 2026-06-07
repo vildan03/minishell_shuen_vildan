@@ -1,6 +1,6 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
 
 static int	print_env_error(char *arg)
 {
@@ -31,7 +31,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	return (1);
 }
 
-int	exec_builtin_pwd()
+int	exec_builtin_pwd(void)
 {
 	char	*cwd;
 
@@ -45,8 +45,8 @@ int	exec_builtin_pwd()
 
 int	exec_builtin_echo(char **args, t_shell *shell)
 {
-	int		i;
-	int		newline;
+	int	i;
+	int	newline;
 
 	(void)shell;
 	i = 1;

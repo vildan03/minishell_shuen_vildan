@@ -1,6 +1,7 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
+
 int	find_matching_key(char *env_line, char *key)
 {
 	int	i;
@@ -8,8 +9,7 @@ int	find_matching_key(char *env_line, char *key)
 	i = 0;
 	while (key[i] && env_line[i] && env_line[i] == key[i])
 		i++;
-	if (key[i] == '\0'
-		&& (env_line[i] == '=' || env_line[i] == '\0'))
+	if (key[i] == '\0' && (env_line[i] == '=' || env_line[i] == '\0'))
 		return (1);
 	return (0);
 }
@@ -44,8 +44,8 @@ static void	remove_from_array(char **arr, char *key)
 
 int	exec_builtin_unset(char **args, t_shell *shell)
 {
-	int	i;
-	int	status;
+	int i;
+	int status;
 
 	if (!shell)
 		return (1);

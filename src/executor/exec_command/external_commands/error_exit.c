@@ -1,6 +1,6 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
 
 static int	is_directory(char *path)
 {

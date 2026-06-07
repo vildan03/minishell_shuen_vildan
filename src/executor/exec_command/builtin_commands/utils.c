@@ -1,6 +1,7 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
+
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
@@ -24,19 +25,20 @@ int	is_builtin(char *cmd)
 
 int	is_valid_identifier(char *str)
 {
-	int i;
+	int	i;
+
 	if (!str || !str[0])
 		return (0);
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
 	i = 1;
 	while (str[i])
-		{
-			if (!ft_isalnum(str[i]) && str[i] != '_')
-				return (0);
-			++i;
-		}
-		return (1);
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		++i;
+	}
+	return (1);
 }
 int	is_n_flag(char *arg)
 {

@@ -1,6 +1,6 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
 
 static char	*create_export_entry(char *key, char *value)
 {
@@ -29,7 +29,7 @@ static int	replace_export_value(t_shell *shell, char *key, char *value)
 	{
 		if (ft_strncmp(shell->export[i], key, key_len) == 0
 			&& (shell->export[i][key_len] == '='
-			|| shell->export[i][key_len] == '\0'))
+				|| shell->export[i][key_len] == '\0'))
 		{
 			if (!value)
 				return (0);
@@ -89,8 +89,8 @@ int	print_export(t_shell *shell)
 	i = 0;
 	while (shell->export[i])
 	{
-		if(print_export_line(shell->export[i]) != 0)
-			return(shell->last_exit_status = 1, 1);
+		if (print_export_line(shell->export[i]) != 0)
+			return (shell->last_exit_status = 1, 1);
 		i++;
 	}
 	return (0);
