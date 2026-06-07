@@ -15,7 +15,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (!node || !node->args || !node->args[0])
 		return (1);
 	if (ft_strncmp(node->args[0], "pwd", 4) == 0)
-		return (exec_builtin_pwd(node->args, shell));
+		return (exec_builtin_pwd());
 	if (ft_strncmp(node->args[0], "cd", 3) == 0)
 		return (exec_builtin_cd(node->args, shell));
 	if (ft_strncmp(node->args[0], "echo", 5) == 0)
