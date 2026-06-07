@@ -1,7 +1,7 @@
 #include "../../inc/executor.h"
 #include "../../inc/minishell.h"
 
-static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status)
+static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status) //
 {
 	dup2(saved_stdout, STDOUT_FILENO);
 	dup2(saved_stdin, STDIN_FILENO);
@@ -10,10 +10,10 @@ static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status)
 	return (status);
 }
 
-static int	exec_redir_only(t_ast_node *node)
+static int	exec_redir_only(t_ast_node *node) // handles < a, > a, << a, >> a
 {
-	int	saved_stdout;
-	int	saved_stdin;
+	int saved_stdout;
+	int saved_stdin;
 
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
@@ -35,6 +35,7 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 	if (!node)
 		return (1);
 	if ((!node->args || !node->args[0]) && node->redir)
+		// bash behaviour: it works even though it is like < file
 		return (exec_redir_only(node));
 	if (!node->args || !node->args[0])
 		return (0);

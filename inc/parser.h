@@ -4,6 +4,7 @@
 # include "../libft/libft.h"
 # include "limits.h"
 # include "stdbool.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
