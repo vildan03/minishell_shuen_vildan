@@ -1,7 +1,7 @@
+#include "../../inc/executor.h"
+#include "../../inc/minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../inc/minishell.h"
-#include "../../inc/executor.h"
 
 static int	test_env_display(void)
 {
@@ -37,14 +37,12 @@ static int	test_add_env_value(void)
 	for (i = 0; i < 3; i++)
 		envp[i] = env[i];
 	shell.env = envp;
-	
 	if (update_env_value(&shell, "TEST_VAR", "test_value") != 0)
 		return (printf("FAIL: update_env_value\n"), 1);
 	if (!get_env_value(shell.env, "TEST_VAR"))
 		return (printf("FAIL: TEST_VAR not added\n"), 1);
 	if (!get_env_value(shell.env, "USER"))
 		return (printf("FAIL: USER lost\n"), 1);
-	
 	printf("PASS: add env value\n");
 	free(shell.env);
 	return (0);
@@ -57,11 +55,9 @@ int	main(void)
 	result = test_env_display();
 	if (result != 0)
 		return (1);
-	
 	result = test_add_env_value();
 	if (result != 0)
 		return (1);
-	
 	printf("\n=== All tests passed ===\n");
 	return (0);
 }

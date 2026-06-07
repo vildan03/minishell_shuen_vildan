@@ -1,36 +1,36 @@
-#include "../inc/minishell.h"
 #include "../inc/executor.h"
 #include "../inc/expander.h"
+#include "../inc/minishell.h"
 #include "../inc/parser.h"
 
-volatile sig_atomic_t g_exit_status = 0;
+volatile sig_atomic_t	g_exit_status = 0;
 
-void expand_entire_tree(t_ast_node *node, t_env *env, int last_status)
+void	expand_entire_tree(t_ast_node *node, t_env *env, int last_status)
 {
-    if (node == NULL)
-        return;
-
-    if (node->type == NODE_COMMAND)
-        expand_command_args(node, env, last_status);
-    expand_entire_tree(node->left, env, last_status);
-    expand_entire_tree(node->right, env, last_status);
+	if (node == NULL)
+		return ;
+	if (node->type == NODE_COMMAND)
+		expand_command_args(node, env, last_status);
+	expand_entire_tree(node->left, env, last_status);
+	expand_entire_tree(node->right, env, last_status);
 }
 
-bool is_whitespaces_only(char *input)
+bool	is_whitespaces_only(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(input[i] != '\0')
+	while (input[i] != '\0')
 	{
-		if(!ft_isspace(input[i]))
-			return false;
+		if (!ft_isspace(input[i]))
+			return (false);
 		i++;
 	}
-	return true;
+	return (true);
 }
 
-static void	execute_command(t_shell *shell, t_ast_node *ast_root, t_env *env_list)
+static void	execute_command(t_shell *shell, t_ast_node *ast_root,
+		t_env *env_list)
 {
 	expand_entire_tree(ast_root, env_list, shell->last_exit_status);
 	execution_signals();
@@ -74,7 +74,7 @@ static void	process_command(t_shell *shell, char *input, t_env *env_list)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
-	t_env *env_list;
+	t_env	*env_list;
 	char	*input;
 
 	(void)argc;
@@ -88,8 +88,8 @@ int	main(int argc, char **argv, char **envp)
 		input = readline("minishell$ ");
 		if (g_exit_status)
 		{
-				shell.last_exit_status = g_exit_status;
-				g_exit_status = 0;
+			shell.last_exit_status = g_exit_status;
+			g_exit_status = 0;
 		}
 		if (!input)
 		{

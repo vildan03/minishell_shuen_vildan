@@ -30,6 +30,8 @@ SRCS		= src/main.c \
 			  src/executor/exec_command/external_commands/redirection.c \
 			  src/executor/exec_command/external_commands/error_exit.c \
 			  src/executor/exec_pipe/pipe.c \
+			  src/executor/exec_heredoc/heredoc.c \
+			  src/executor/exec_heredoc/heredoc_fds.c \
 			  src/parser/ast_tools/build_ast_utils.c \
 			  src/parser/ast_tools/build_ast_utils_2.c \
 			  src/parser/ast_tools/build_ast.c \
@@ -81,4 +83,3 @@ test_unset: $(LIBFT)
 		-o tests/vildan/test_unset
 
 .PHONY: all clean fclean re
-

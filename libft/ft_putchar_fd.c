@@ -15,8 +15,8 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	int return_val;
+	int	return_val;
 
-	return_val = write (fd, &c, 1);
+	return_val = write(fd, &c, 1);
 	(void)return_val;
 }

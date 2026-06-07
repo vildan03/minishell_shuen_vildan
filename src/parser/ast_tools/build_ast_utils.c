@@ -1,120 +1,98 @@
 #include "minishell.h"
 #include "parser.h"
 
-t_token *find_last_op(t_token *start, t_token *end, int first_token, int second_token)
+int	create_and_append_redir(t_ast_node *node, t_token *current)
 {
-    t_token *current;
-    t_token *last_op;
-    int     paren_count;
+	t_redir	*new_redir;
 
-    current = start;
-    last_op = NULL;
-    paren_count = 0;
-    while(current != end)
-    {
-        if(paren_count == 0 && (current->type == first_token || current->type == second_token))
-            last_op = current;
-        
-        if(current->type == TOKEN_LEFT_PAREN)
-            paren_count++;
-        else if(current->type == TOKEN_RIGHT_PAREN)
-            paren_count--;
-            
-        current = current->next;
-    }
-    return (last_op);
+	if (current->next == NULL || current->next->type != TOKEN_WORD)
+		return (0);
+	new_redir = malloc(sizeof(t_redir));
+	if (!new_redir)
+		return (0);
+	new_redir->type = translate_token_to_redir(current->type);
+	new_redir->file = ft_strdup(current->next->value);
+	if (!new_redir->file)
+	{
+		free(new_redir);
+		return (0);
+	}
+	new_redir->next = NULL;
+	append_redir_node(&(node->redir), new_redir);
+	return (1);
 }
 
-int create_and_append_redir(t_ast_node *node, t_token *current)
+void	extract_redirections(t_ast_node *node, t_token *start, t_token *end)
 {
-    t_redir *new_redir;
+	t_token	*current;
 
-    if (current->next == NULL || current->next->type != TOKEN_WORD)
-        return (0);
-    new_redir = malloc(sizeof(t_redir));
-    if (!new_redir)
-        return (0);
-    new_redir->type = translate_token_to_redir(current->type);
-    new_redir->file = ft_strdup(current->next->value);
-    if (!new_redir->file)
-    {
-        free(new_redir);
-        return (0);
-    }
-    new_redir->next = NULL;
-    append_redir_node(&(node->redir), new_redir);
-    return (1);
+	current = start;
+	while (current != end)
+	{
+		if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_IN
+			|| current->type == TOKEN_APPEND || current->type == TOKEN_HEREDOC)
+		{
+			if (!create_and_append_redir(node, current))
+				return ;
+			current = current->next->next;
+		}
+		else
+			current = current->next;
+	}
 }
 
-void extract_redirections(t_ast_node *node, t_token *start, t_token *end)
+int	count_args(t_token *start, t_token *end)
 {
-    t_token *current = start;
+	int		count;
+	t_token	*current;
 
-    while (current != end)
-    {
-        if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_IN ||
-            current->type == TOKEN_APPEND || current->type == TOKEN_HEREDOC)
-        {
-		if(!create_and_append_redir(node, current))
-			return;
-		current = current->next->next;
-        }
-        else
-            current = current->next;
-    }
+	count = 0;
+	current = start;
+	while (current != end && current != NULL)
+	{
+		if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_IN
+			|| current->type == TOKEN_APPEND || current->type == TOKEN_HEREDOC)
+		{
+			if (current->next)
+				current = current->next->next;
+			else
+				current = current->next;
+		}
+		else
+		{
+			if (current->value != NULL)
+				count++;
+			current = current->next;
+		}
+	}
+	return (count);
 }
 
-int count_args(t_token *start, t_token *end)
+char	**build_args_array(t_token *start, t_token *end)
 {
-    int     count = 0;
-    t_token *current = start;
+	char	**args;
+	int		i;
 
-    while (current != end && current != NULL) 
-    {
-        if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_IN ||
-            current->type == TOKEN_APPEND || current->type == TOKEN_HEREDOC)
-        {
-            if (current->next)
-                current = current->next->next;
-            else
-                current = current->next;
-        }
-        else
-        {
-            if (current->value != NULL)
-                count++;
-            
-            current = current->next;
-        }
-    }
-    return (count);
-}
-
-char **build_args_array(t_token *start, t_token *end)
-{
-    char    **args;
-    int     i;
-
-    args = malloc(sizeof(char *) * (count_args(start, end) + 1));
-    if (!args)
-        return (NULL);
-    i = 0;
-    while (start && start != end)
-    {
-        if (is_redir_ast(start->type))
-        {
-            	start = start->next;
-           	if (start)
-              		start = start->next;
-            	continue ;
-        }
-        if (start->value)
-        {
-            	args[i] = ft_strdup(start->value);
-            	i++;
-        }
-        start = start->next;
-    }
-    args[i] = NULL;
-    return (args);
+	args = malloc(sizeof(char *) * (count_args(start, end) + 1));
+	if (!args)
+		return (NULL);
+	i = 0;
+	while (start && start != end)
+	{
+		if (is_redir_ast(start->type))
+		{
+			start = start->next;
+			if (start)
+				start = start->next;
+			continue ;
+		}
+		if (start->value)
+		{
+			args[i] = ft_strdup(start->value);
+			i++;
+		}
+		start = start->next;
+	}
+	args[i] = NULL;
+	return (args);
 }

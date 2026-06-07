@@ -15,11 +15,10 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-
 	while (*s)
 	{
-		if(write(fd, s, 1) < 0)
-			return;
+		if (write(fd, s, 1) < 0)
+			return ;
 		++s;
 	}
 }

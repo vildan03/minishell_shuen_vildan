@@ -1,5 +1,5 @@
-#include "../../inc/minishell.h"
 #include "../../inc/executor.h"
+#include "../../inc/minishell.h"
 
 int	main(void)
 {

@@ -1,5 +1,5 @@
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
 #include <errno.h>
 #include <string.h>
 
@@ -48,8 +48,8 @@ char	*get_cd_target(char **args, t_shell *shell)
 	}
 	return (args[1]);
 }
-static int	update_cd_state(t_shell *shell, char **args,
-	char *old_pwd, char *new_pwd)
+static int	update_cd_state(t_shell *shell, char **args, char *old_pwd,
+		char *new_pwd)
 {
 	if (old_pwd && update_env_value(shell, "OLDPWD", old_pwd) != 0)
 		return (1);

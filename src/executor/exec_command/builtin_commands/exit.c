@@ -1,6 +1,6 @@
 
-#include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include "../../../../inc/minishell.h"
 #include <limits.h>
 
 static int	is_numeric(char *str)
@@ -65,7 +65,8 @@ static int	parse_exit_code(char *str, long long *value)
 	return (0);
 }
 
-static int	handle_exit_arg(char **args, t_shell *shell, long long *parsed_value)
+static int	handle_exit_arg(char **args, t_shell *shell,
+		long long *parsed_value)
 {
 	if (parse_exit_code(args[1], parsed_value) != 0)
 	{
