@@ -7,6 +7,8 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 		return (1);
 	if (!node->args || !node->args[0])
 		return (0);
+//if (redir->type == REDIR_HEREDOC) 
+//fd = process_heredoc(redir);
 	if (is_builtin(node->args[0]))
 		return (exec_builtin(node, shell));
 	return (exec_external(node, shell));

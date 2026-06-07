@@ -11,30 +11,6 @@ static t_redir_type	get_redir_type(int token_type)
 	return (REDIR_APPEND);
 }
 
-t_token *find_last_op(t_token *start, t_token *end, int first_token, int second_token)
-{
-    t_token *current;
-    t_token *last_op;
-    int     paren_count;
-
-    current = start;
-    last_op = NULL;
-    paren_count = 0;
-    while(current != end)
-    {
-        if(paren_count == 0 && (current->type == first_token || current->type == second_token))
-            last_op = current;
-        
-        if(current->type == TOKEN_LEFT_PAREN)
-            paren_count++;
-        else if(current->type == TOKEN_RIGHT_PAREN)
-            paren_count--;
-            
-        current = current->next;
-    }
-    return (last_op);
-}
-
 t_token *get_last_token(t_token *start, t_token *end)
 {
     t_token *current;
