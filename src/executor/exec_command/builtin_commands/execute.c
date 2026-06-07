@@ -1,6 +1,15 @@
 
 #include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+
+static int	print_env_error(char *arg)
+{
+	ft_putstr_fd("minishell: env: '", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd("': No such file or directory", 2);
+	return (1);
+}
+
 int	exec_builtin(t_ast_node *node, t_shell *shell)
 {
 	if (!node || !node->args || !node->args[0])
@@ -65,7 +74,7 @@ int	exec_builtin_env(char **args, t_shell *shell)
 	if (!shell || !shell->env)
 		return (1);
 	if (args[1])
-		return (1);
+		return (print_env_error(args[1]));
 	i = 0;
 	while (shell->env[i])
 	{

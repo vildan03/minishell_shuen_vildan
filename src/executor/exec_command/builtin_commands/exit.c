@@ -1,6 +1,8 @@
 
 #include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include <limits.h>
+
 static int	is_numeric(char *str)
 {
 	int	i;
@@ -28,17 +30,44 @@ static void	print_numeric_error(char *arg)
 	ft_putendl_fd(": numeric argument required", 2);
 }
 
-int	exec_builtin_exit(char **args, t_shell *shell)
+static int	will_overflow(long long result, int digit, int sign)
 {
-	int	exit_code;
+	if (sign == 1)
+		return (result > (LLONG_MAX - digit) / 10);
+	return (-result < (LLONG_MIN + digit) / 10);
+}
 
-	ft_putendl_fd("exit", 1);
-	if (!args[1])
+static int	parse_exit_code(char *str, long long *value)
+{
+	int			i;
+	int			sign;
+	long long	result;
+
+	if (!is_numeric(str))
+		return (1);
+	i = 0;
+	sign = 1;
+	result = 0;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		cleanup_shell(shell);
-		exit(shell->last_exit_status);
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	if (!is_numeric(args[1]))
+	while (str[i])
+	{
+		if (will_overflow(result, str[i] - '0', sign))
+			return (1);
+		result = (result * 10) + (str[i] - '0');
+		i++;
+	}
+	*value = result * sign;
+	return (0);
+}
+
+static int	handle_exit_arg(char **args, t_shell *shell, long long *parsed_value)
+{
+	if (parse_exit_code(args[1], parsed_value) != 0)
 	{
 		print_numeric_error(args[1]);
 		cleanup_shell(shell);
@@ -50,7 +79,23 @@ int	exec_builtin_exit(char **args, t_shell *shell)
 		shell->last_exit_status = 1;
 		return (1);
 	}
-	exit_code = ft_atoi(args[1]) % 256;
+	return (0);
+}
+
+int	exec_builtin_exit(char **args, t_shell *shell)
+{
+	int			exit_code;
+	long long	parsed_value;
+
+	ft_putendl_fd("exit", 1);
+	if (!args[1])
+	{
+		cleanup_shell(shell);
+		exit(shell->last_exit_status);
+	}
+	if (handle_exit_arg(args, shell, &parsed_value) != 0)
+		return (1);
+	exit_code = parsed_value % 256;
 	if (exit_code < 0)
 		exit_code += 256;
 	cleanup_shell(shell);

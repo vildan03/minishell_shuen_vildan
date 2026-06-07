@@ -15,8 +15,10 @@ int	exec_ast(t_ast_node *node, t_shell *shell);
 int	exec_command(t_ast_node *node, t_shell *shell);
 int	exec_and(t_ast_node *node, t_shell *shell);
 int	exec_or(t_ast_node *node, t_shell *shell);
-int	exec_pipe(t_ast_node *node, t_shell *shell);
 int	exec_subshell(t_ast_node *node, t_shell *shell);
+
+//pipe.c
+int	exec_pipe(t_ast_node *node, t_shell *shell);
 
 // exec_simple_command.c
 int	get_child_status(int status);

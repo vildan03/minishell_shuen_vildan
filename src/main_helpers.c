@@ -2,6 +2,14 @@
 #include "../inc/minishell.h"
 #include "../inc/executor.h"
 
+static char	**free_partial_copy(char **copy, int count)
+{
+	while (count > 0)
+		free(copy[--count]);
+	free(copy);
+	return (NULL);
+}
+
 static void	handle_sigint(int sig)
 {
 	(void)sig;
@@ -38,7 +46,7 @@ char	**copy_envp(char **envp)
 	{
 		copy[i] = ft_strdup(envp[i]);
 		if (!copy[i])
-			return (NULL);
+			return (free_partial_copy(copy, i));
 		i++;
 	}
 	copy[i] = NULL;
@@ -54,6 +62,12 @@ int	init_shell(t_shell *shell, char **envp)
 	shell->token_list = NULL;
 	shell->ast_root = NULL;
 	if (!shell->env || !shell->export)
+	{
+		free_array(shell->env);
+		free_array(shell->export);
+		shell->env = NULL;
+		shell->export = NULL;
 		return (1);
+	}
 	return (0);
 }
