@@ -1,5 +1,6 @@
 #include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+#include <sys/wait.h>
 
 int	exec_external(t_ast_node *node, t_shell *shell)
 {
@@ -73,11 +74,19 @@ int	get_child_status(int status)
 	return (1);
 }
 
+static void	handle_child_error(char *path, t_ast_node *node, t_shell *shell)
+{
+	perror(node->args[0]);
+	free(path);
+	cleanup_shell(shell);
+	exit(126);
+}
+
 int	exec_simple_command(t_ast_node *node, t_shell *shell)
 {
-	pid_t pid;
-	int status;
-	char *path;
+	pid_t	pid;
+	int		status;
+	char	*path;
 
 	if (!node || !node->args || !node->args[0])
 		return (0);
@@ -89,12 +98,11 @@ int	exec_simple_command(t_ast_node *node, t_shell *shell)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+		if (apply_redirections(node->redir) == -1)
+			(cleanup_shell(shell), exit(1));
 		exit_exec_error(node->args[0], path, shell);
 		execve(path, node->args, shell->env);
-		perror(node->args[0]);
-		free(path);
-		cleanup_shell(shell);
-		exit(126);
+		handle_child_error(path, node, shell);
 	}
 	free(path);
 	if (waitpid(pid, &status, 0) == -1)

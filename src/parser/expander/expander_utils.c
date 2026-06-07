@@ -1,3 +1,4 @@
+#include "expander.h"
 #include "minishell.h"
 
 int is_env_char(char c)
@@ -45,16 +46,6 @@ char *append_string(char *str, char *append)
     new_str = ft_strjoin(str, append);
     free(str);
     return (new_str);
-}
-
-int ft_strcmp(char *s1, char *s2)
-{
-    int i;
-
-    i = 0;
-    while (s1[i] != '\0' && s1[i] == s2[i])
-        i++;
-    return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 char *get_env_value(char *key, t_env *env)

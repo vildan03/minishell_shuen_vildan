@@ -6,7 +6,7 @@
 #    By: vildan <vildan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 18:09:29 by vikaradu          #+#    #+#              #
-#    Updated: 2025/11/23 13:35:20 by vildan           ###   ########.fr        #
+#    Updated: 2026/06/06 11:51:57 by kerlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC = ft_atoi.c \
  ft_strlcpy.c \
  ft_strlcat.c \
  ft_strlen.c \
+ ft_strcmp.c \
  ft_strncmp.c \
  ft_strnstr.c \
  ft_strrchr.c \

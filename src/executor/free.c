@@ -1,5 +1,6 @@
 #include "../../inc/minishell.h"
 #include "../../inc/executor.h"
+#include "../../inc/parser.h"
 
 void	free_array(char **arr)
 {

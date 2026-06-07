@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "parser.h"
 
 t_token *find_last_op(t_token *start, t_token *end, int first_token, int second_token)
 {
@@ -59,4 +60,31 @@ int is_redir_ast(int type)
 {
     return (type == TOKEN_REDIR_OUT || type == TOKEN_REDIR_IN
         || type == TOKEN_APPEND || type == TOKEN_HEREDOC);
+}
+
+t_token *get_last_token(t_token *start, t_token *end)
+{
+    t_token *current;
+    t_token *last_token;
+
+    current = start;
+    last_token = NULL;
+    // We added: && current->type != TOKEN_EOF
+    while(current != end && current->type != TOKEN_EOF) 
+    {
+        last_token = current;
+        current = current->next;
+    }
+    return (last_token);
+}
+
+t_redir_type translate_token_to_redir(t_token_type type)
+{
+    if (type == TOKEN_REDIR_OUT)
+        return (REDIR_OUT);
+    if (type == TOKEN_REDIR_IN)
+        return (REDIR_IN);
+    if (type == TOKEN_APPEND)
+        return (REDIR_APPEND);
+    return (REDIR_HEREDOC); 
 }
