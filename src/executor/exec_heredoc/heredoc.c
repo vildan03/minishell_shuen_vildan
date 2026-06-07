@@ -63,28 +63,7 @@ int	has_heredoc(t_redir *redir)
 
 int	process_heredoc(t_redir *redir)
 {
-	int	heredoc_fd;
-	int	current_fd;
-
-	if (!has_heredoc(redir))
+	if (!redir || redir->type != REDIR_HEREDOC)
 		return (-1);
-	heredoc_fd = -1;
-	while (redir)
-	{
-		if (redir->type == REDIR_HEREDOC)
-		{
-			current_fd = create_heredoc_fd(redir->file);
-			if (current_fd == -1)
-			{
-				if (heredoc_fd != -1)
-					close(heredoc_fd);
-				return (-1);
-			}
-			if (heredoc_fd != -1)
-				close(heredoc_fd);
-			heredoc_fd = current_fd;
-		}
-		redir = redir->next;
-	}
-	return (heredoc_fd);
+	return (create_heredoc_fd(redir->file));
 }
