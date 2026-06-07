@@ -25,7 +25,7 @@ void	sort_export(char **export)
 	}
 }
 
-void	print_export_line(char *entry)
+int	print_export_line(char *entry)
 {
 	char	*eq;
 	int		key_len;
@@ -35,13 +35,18 @@ void	print_export_line(char *entry)
 	if (!eq)
 	{
 		ft_putendl_fd(entry, 1);
-		return ;
+		return 0;
 	}
 	key_len = eq - entry;
-	write(1, entry, key_len);
+	if(write(1, entry, key_len) < 0)
+	{
+		ft_putstr_fd("minishell: export: write error: No space left on device\n", 2);
+		return 1;
+	}
 	ft_putstr_fd("=\"", 1);
 	ft_putstr_fd(eq + 1, 1);
 	ft_putendl_fd("\"", 1);
+	return 0;
 }
 
 static void	print_export_error(char *arg)

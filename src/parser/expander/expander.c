@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "expander.h"
 
 char *extract_and_replace_var(char *str, int *i, t_env *env, int last_status)
 {
@@ -54,36 +54,44 @@ char *expand_string(char *raw, t_env *env, int status)
     return (res);
 }
 
-void expand_redirections(t_redir *redir_list, t_env *env, int status)
+static void	filter_empty_args(t_ast_node *node, char **new_args)
 {
-    t_redir *current;
-    char    *expanded_file;
+	int	i;
+	int	j;
 
-    current = redir_list;
-    while (current != NULL)
-    {
-        expanded_file = expand_string(current->file, env, status);
-        free(current->file);
-        current->file = expanded_file;
-        current = current->next;
-    }
+	i = 0;
+	j = 0;
+	while (node->args[i] != NULL)
+	{
+		if (node->args[i][0] != '\0')
+			new_args[j++] = node->args[i];
+		else
+			free(node->args[i]);
+		i++;
+	}
+	new_args[j] = NULL;
+	free(node->args);
+	node->args = new_args;
 }
 
-void expand_command_args(t_ast_node *node, t_env *env, int last_status)
+void	expand_command_args(t_ast_node *node, t_env *env, int last_status)
 {
-    int     i;
-    char    *expanded_str;
+	int		i;
+	char	*expanded;
+	char	**new_args;
 
-    if (!node || !node->args)
-        return;
-        
-    i = 0;
-    while (node->args[i] != NULL)
-    {
-        expanded_str = expand_string(node->args[i], env, last_status);
-        free(node->args[i]);
-        node->args[i] = expanded_str;
-        i++;
-    }
-    expand_redirections(node->redir, env, last_status);
+	if (!node || !node->args)
+		return ;
+	i = -1;
+	while (node->args[++i] != NULL)
+	{
+		expanded = expand_string(node->args[i], env, last_status);
+		free(node->args[i]);
+		node->args[i] = expanded;
+	}
+	expand_redirections(node->redir, env, last_status);
+	new_args = malloc(sizeof(char *) * (count_valid_args(node->args) + 1));
+	if (!new_args)
+		return ;
+	filter_empty_args(node, new_args);
 }

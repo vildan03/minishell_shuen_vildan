@@ -19,6 +19,7 @@ SRCS		= src/main.c \
 			  src/executor/execute_nods.c \
 			  src/executor/exec_command//builtin_commands/utils.c \
 			  src/executor/exec_command/builtin_commands/execute.c \
+			  src/executor/exec_command/builtin_commands/execute_2.c \
 			  src/executor/exec_command/builtin_commands/cd.c \
 			  src/executor/exec_command/builtin_commands/exit.c \
 			  src/executor/exec_command/builtin_commands/export.c \
@@ -26,10 +27,12 @@ SRCS		= src/main.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
 			  src/executor/exec_command/external_commands/exec_simple_command.c \
+			  src/executor/exec_command/external_commands/redirection.c \
 			  src/executor/exec_command/external_commands/error_exit.c \
 			  src/parser/ast_tools/build_ast_utils.c \
 			  src/parser/ast_tools/build_ast_utils_2.c \
 			  src/parser/ast_tools/build_ast.c \
+			  src/parser/ast_tools/redir_ast_debug.c \
 			  src/parser/ast_tools/print_ast.c \
 			  src/parser/ast_tools/free_ast.c \
 			  src/parser/lexer/build_token_list.c \
@@ -39,7 +42,8 @@ SRCS		= src/main.c \
 			  src/parser/expander/expander_utils_2.c \
 			  src/parser/expander/expander.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
-			  src/parser/syntax_checker/check_syntax.c
+			  src/parser/syntax_checker/check_syntax.c \
+			  src/env/env_utils.c
 
 OBJS        = $(SRCS:.c=.o)
 

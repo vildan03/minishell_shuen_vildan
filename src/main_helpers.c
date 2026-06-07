@@ -6,7 +6,8 @@ static void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_exit_status = 130;
-	write(1, "\n", 1);
+	if(write(1, "\n", 1) < 0)
+		return;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

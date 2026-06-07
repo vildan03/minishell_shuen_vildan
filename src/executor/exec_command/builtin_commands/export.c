@@ -1,6 +1,7 @@
 
 #include "../../../../inc/minishell.h"
 #include "../../../../inc/executor.h"
+
 static char	*create_export_entry(char *key, char *value)
 {
 	char	*tmp;
@@ -88,7 +89,8 @@ int	print_export(t_shell *shell)
 	i = 0;
 	while (shell->export[i])
 	{
-		print_export_line(shell->export[i]);
+		if(print_export_line(shell->export[i]) != 0)
+			return(shell->last_exit_status = 1, 1);
 		i++;
 	}
 	return (0);
