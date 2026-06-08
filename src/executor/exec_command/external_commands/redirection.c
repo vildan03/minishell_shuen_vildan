@@ -1,9 +1,8 @@
 #include "executor.h"
 #include "minishell.h"
 #include "parser.h"
-#include <fcntl.h>
 
-static int	open_redirection_fd(t_redir *redir)
+static int	open_redirection_fd(t_redir *redir) //
 {
 	if (redir->type == REDIR_OUT)
 		return (open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
@@ -16,17 +15,17 @@ static int	open_redirection_fd(t_redir *redir)
 	return (-1);
 }
 
-static int	get_target_fd(t_redir_type type)
+static int	get_target_fd(t_redir_type type) //
 {
 	if (type == REDIR_IN || type == REDIR_HEREDOC)
 		return (STDIN_FILENO);
 	return (STDOUT_FILENO);
 }
 
-static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds)
+static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds) //
 {
-	int	fd;
-	int	target_fd;
+	int fd;
+	int target_fd;
 
 	if (redir->type == REDIR_HEREDOC)
 		fd = next_heredoc_fd(heredoc_fds);
@@ -46,9 +45,9 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds)
 	return (0);
 }
 
-int	apply_redirections(t_redir *redir)
+int	apply_redirections(t_redir *redir) //
 {
-	t_hd_fd	*heredoc_fds;
+	t_hd_fd *heredoc_fds;
 
 	heredoc_fds = NULL;
 	if (collect_heredoc_fds(redir, &heredoc_fds) != 0)
