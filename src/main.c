@@ -5,7 +5,7 @@
 
 volatile sig_atomic_t	g_exit_status = 0;
 
-void	expand_entire_tree(t_ast_node *node, t_env *env, int last_status)
+void	expand_entire_tree(t_ast_node *node, char **env, int last_status)
 {
 	if (node == NULL)
 		return ;
@@ -29,10 +29,9 @@ bool	is_whitespaces_only(char *input)
 	return (true);
 }
 
-static void	execute_command(t_shell *shell, t_ast_node *ast_root,
-		t_env *env_list)
+static void	execute_command(t_shell *shell, t_ast_node *ast_root)
 {
-	expand_entire_tree(ast_root, env_list, shell->last_exit_status);
+	expand_entire_tree(ast_root, shell->env, shell->last_exit_status);
 	execution_signals();
 	shell->last_exit_status = exec_ast(ast_root, shell);
 	interactive_signals();
@@ -41,7 +40,7 @@ static void	execute_command(t_shell *shell, t_ast_node *ast_root,
 	shell->ast_root = NULL;
 }
 
-static void	process_command(t_shell *shell, char *input, t_env *env_list)
+static void	process_command(t_shell *shell, char *input)
 {
 	t_token		*token_list;
 	t_ast_node	*ast_root;
@@ -65,7 +64,7 @@ static void	process_command(t_shell *shell, char *input, t_env *env_list)
 	if (ast_root)
 	{
 		shell->ast_root = ast_root;
-		execute_command(shell, ast_root, env_list);
+		execute_command(shell, ast_root);
 	}
 	free_token_list(token_list);
 	shell->token_list = NULL;
@@ -74,14 +73,12 @@ static void	process_command(t_shell *shell, char *input, t_env *env_list)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
-	t_env	*env_list;
 	char	*input;
 
 	(void)argc;
 	(void)argv;
 	if (init_shell(&shell, envp))
 		return (1);
-	env_list = init_env(envp);
 	while (1)
 	{
 		interactive_signals();
@@ -96,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_putendl_fd("exit", 1);
 			break ;
 		}
-		process_command(&shell, input, env_list);
+		process_command(&shell, input);
 		free(input);
 	}
 	free_array(shell.env);
