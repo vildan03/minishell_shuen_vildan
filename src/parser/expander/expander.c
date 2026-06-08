@@ -1,6 +1,6 @@
 #include "expander.h"
 
-char	*extract_and_replace_var(char *str, int *i, t_env *env, int last_status)
+char	*extract_and_replace_var(char *str, int *i, char **env, int last_status)
 {
 	int		start;
 	char	*key;
@@ -16,12 +16,12 @@ char	*extract_and_replace_var(char *str, int *i, t_env *env, int last_status)
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	key = ft_substr(str, start, *i - start);
-	val_dup = ft_strdup(get_env_value(key, env));
+	val_dup = ft_strdup(get_env_value(env, key));
 	free(key);
 	return (val_dup);
 }
 
-char	*process_var(char *res, char *raw, int *i, t_env *env, int status)
+char	*process_var(char *res, char *raw, int *i, char **env, int status)
 {
 	char	*tmp;
 
@@ -31,7 +31,7 @@ char	*process_var(char *res, char *raw, int *i, t_env *env, int status)
 	return (res);
 }
 
-char	*expand_string(char *raw, t_env *env, int status)
+char	*expand_string(char *raw, char **env, int status)
 {
 	int		sq;
 	int		dq;
@@ -74,7 +74,7 @@ static void	filter_empty_args(t_ast_node *node, char **new_args)
 	node->args = new_args;
 }
 
-void	expand_command_args(t_ast_node *node, t_env *env, int last_status)
+void	expand_command_args(t_ast_node *node, char **env, int last_status)
 {
 	int		i;
 	char	*expanded;
