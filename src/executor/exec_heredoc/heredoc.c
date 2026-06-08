@@ -1,7 +1,6 @@
 #include "../../../inc/executor.h"
 #include "../../../inc/minishell.h"
 
-
 static int	write_heredoc_line(int fd, char *line)
 {
 	if (write(fd, line, ft_strlen(line)) == -1)
