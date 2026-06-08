@@ -8,7 +8,7 @@ void	toggle_quotes(char c, int *sq, int *dq)
 		*dq = !(*dq);
 }
 
-void	expand_redirections(t_redir *redir_list, t_env *env, int status)
+void	expand_redirections(t_redir *redir_list, char **env, int status)
 {
 	t_redir	*current;
 	char	*expanded_file;

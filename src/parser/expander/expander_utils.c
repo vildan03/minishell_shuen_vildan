@@ -48,16 +48,20 @@ char	*append_string(char *str, char *append)
 	return (new_str);
 }
 
-char	*get_env_value(char *key, t_env *env)
+char	*get_env_value(char **env, char *key)
 {
-	t_env	*current;
+	int	i;
+	int	len;
 
-	current = env;
-	while (current != NULL)
+	if (!env || !key)
+		return ("");
+	i = 0;
+	len = ft_strlen(key);
+	while (env[i] != NULL)
 	{
-		if (ft_strcmp(current->key, key) == 0)
-			return (current->value);
-		current = current->next;
+		if (ft_strncmp(env[i], key, len) == 0 && env[i][len] == '=')
+			return (env[i] + len + 1);
+		i++;
 	}
 	return ("");
 }
