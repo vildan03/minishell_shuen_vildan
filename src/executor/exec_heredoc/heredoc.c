@@ -34,17 +34,6 @@ int	fill_heredoc_pipe(int write_fd, char *delimiter)
 	return (0);
 }
 
-int	has_heredoc(t_redir *redir)
-{
-	while (redir)
-	{
-		if (redir->type == REDIR_HEREDOC)
-			return (1);
-		redir = redir->next;
-	}
-	return (0);
-}
-
 int	process_heredoc(t_redir *redir)
 {
 	if (!redir || redir->type != REDIR_HEREDOC)
