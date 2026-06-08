@@ -1,12 +1,6 @@
 #include "../../../inc/executor.h"
 #include "../../../inc/minishell.h"
 
-static int	is_delimiter(char *line, char *delimiter)
-{
-	if (!line || !delimiter)
-		return (0);
-	return (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0);
-}
 
 static int	write_heredoc_line(int fd, char *line)
 {
@@ -15,6 +9,13 @@ static int	write_heredoc_line(int fd, char *line)
 	if (write(fd, "\n", 1) == -1)
 		return (perror("write"), 1);
 	return (0);
+}
+
+static int	is_delimiter(char *line, char *delimiter)
+{
+	if (!line || !delimiter)
+		return (0);
+	return (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0);
 }
 
 int	fill_heredoc_pipe(int write_fd, char *delimiter)

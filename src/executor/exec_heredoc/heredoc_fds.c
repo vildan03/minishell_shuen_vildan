@@ -49,6 +49,18 @@ static int	append_heredoc_fd(t_hd_fd **head, int fd)
 	return (0);
 }
 
+int	next_heredoc_fd(t_hd_fd **head)
+{
+	t_hd_fd	*current;
+	int		fd;
+
+	current = *head;
+	fd = current->fd;
+	*head = current->next;
+	free(current);
+	return (fd);
+}
+
 int	collect_heredoc_fds(t_redir *redir, t_hd_fd **head)
 {
 	int	fd;
@@ -64,16 +76,4 @@ int	collect_heredoc_fds(t_redir *redir, t_hd_fd **head)
 		redir = redir->next;
 	}
 	return (0);
-}
-
-int	next_heredoc_fd(t_hd_fd **head)
-{
-	t_hd_fd	*current;
-	int		fd;
-
-	current = *head;
-	fd = current->fd;
-	*head = current->next;
-	free(current);
-	return (fd);
 }
