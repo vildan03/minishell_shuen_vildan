@@ -4,11 +4,12 @@
 # include "../libft/libft.h"
 # include "limits.h"
 # include "stdbool.h"
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+
 
 typedef enum s_token_type
 {
