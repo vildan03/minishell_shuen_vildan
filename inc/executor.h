@@ -23,6 +23,9 @@ int								exec_and(t_ast_node *node, t_shell *shell);
 int								exec_or(t_ast_node *node, t_shell *shell);
 int								exec_subshell(t_ast_node *node, t_shell *shell);
 
+// exec_redir_only.c
+int	exec_redir_only(t_ast_node *node);
+
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
 
