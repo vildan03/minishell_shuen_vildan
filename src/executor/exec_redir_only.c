@@ -3,7 +3,7 @@
 
 static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status) //
 {
-	int	restore_failed;
+	int restore_failed;
 
 	restore_failed = 0;
 	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
