@@ -1,7 +1,7 @@
-#include "../../../../inc/executor.h"
-#include "../../../../inc/minishell.h"
+#include "../../inc/executor.h"
+#include "../../inc/minishell.h"
 
-static int	restore_builtin_fds(int saved_stdout, int saved_stdin, int status)
+static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status) //
 {
 	int	restore_failed;
 
@@ -17,11 +17,10 @@ static int	restore_builtin_fds(int saved_stdout, int saved_stdin, int status)
 	return (status);
 }
 
-int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
+int	exec_redir_only(t_ast_node *node) // handles < a, > a, << a, >> a
 {
-	int	saved_stdout;
-	int	saved_stdin;
-	int	status;
+	int saved_stdout;
+	int saved_stdin;
 
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
@@ -34,7 +33,6 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 		return (perror("dup"), 1);
 	}
 	if (apply_redirections(node->redir) == -1)
-		return (restore_builtin_fds(saved_stdout, saved_stdin, 1));
-	status = exec_builtin(node, shell);
-	return (restore_builtin_fds(saved_stdout, saved_stdin, status));
+		return (restore_redir_fds(saved_stdout, saved_stdin, 1));
+	return (restore_redir_fds(saved_stdout, saved_stdin, 0));
 }

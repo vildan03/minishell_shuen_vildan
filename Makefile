@@ -17,6 +17,7 @@ SRCS		= src/main.c \
 			  src/executor/execute_ast.c \
 			  src/executor/free.c \
 			  src/executor/execute_nods.c \
+			  src/executor/exec_redir_only.c \
 			  src/executor/exec_command//builtin_commands/utils.c \
 			  src/executor/exec_command/builtin_commands/execute.c \
 			  src/executor/exec_command/builtin_commands/execute_2.c \
