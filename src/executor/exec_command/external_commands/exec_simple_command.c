@@ -2,11 +2,6 @@
 #include "../../../../inc/minishell.h"
 #include <sys/wait.h>
 
-int	exec_external(t_ast_node *node, t_shell *shell)
-{
-	// write has_pipe, has_redirs...
-	return (exec_simple_command(node, shell));
-}
 static char	*join_cmd_path(char *dir, char *cmd)
 {
 	char	*tmp;

@@ -43,7 +43,6 @@ int								next_heredoc_fd(t_hd_fd **head);
 
 // exec_simple_command.c
 int								get_child_status(int status);
-int								exec_external(t_ast_node *node, t_shell *shell);
 int								exec_simple_command(t_ast_node *node,
 									t_shell *shell);
 char							*find_command_path(char *cmd, char **envp);

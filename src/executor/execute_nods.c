@@ -12,7 +12,7 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 		return (0);
 	if (is_builtin(node->args[0]))
 		return (exec_builtin_with_redir(node, shell));
-	return (exec_external(node, shell));
+	return (exec_simple_command(node, shell));
 }
 
 int	exec_and(t_ast_node *node, t_shell *shell)
