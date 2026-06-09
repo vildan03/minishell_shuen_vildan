@@ -3,10 +3,17 @@
 
 static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status) //
 {
-	dup2(saved_stdout, STDOUT_FILENO);
-	dup2(saved_stdin, STDIN_FILENO);
+	int	restore_failed;
+
+	restore_failed = 0;
+	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
+		restore_failed = 1;
+	if (dup2(saved_stdin, STDIN_FILENO) == -1)
+		restore_failed = 1;
 	close(saved_stdout);
 	close(saved_stdin);
+	if (restore_failed)
+		return (perror("dup2"), 1);
 	return (status);
 }
 
