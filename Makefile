@@ -23,6 +23,7 @@ SRCS		= src/main.c \
 			  src/executor/exec_command/builtin_commands/execute_2.c \
 			  src/executor/exec_command/builtin_commands/cd.c \
 			  src/executor/exec_command/builtin_commands/exit.c \
+			  src/executor/exec_command/builtin_commands/exit_2.c \
 			  src/executor/exec_command/builtin_commands/export.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
 			  src/executor/exec_command/builtin_commands/unset.c \

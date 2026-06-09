@@ -72,7 +72,12 @@ int								exec_builtin_with_redir(t_ast_node *node,
 									t_shell *shell);
 
 // exit.c
-int								exec_builtin_exit(char **args, t_shell *shell);
+int								handle_exit_arg(char **args, t_shell *shell,
+									long long *parsed_value);
+
+// exit_2.c
+int								exec_builtin_exit(char **args, t_shell *shell,
+									int saved_stdout, int saved_stdin);
 
 // export_utils.c
 void							sort_export(char **export);
