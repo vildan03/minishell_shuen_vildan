@@ -6,7 +6,6 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 	if (!node)
 		return (1);
 	if ((!node->args || !node->args[0]) && node->redir)
-		// bash behaviour: it works even though it is like < file
 		return (exec_redir_only(node));
 	if (!node->args || !node->args[0])
 		return (0);
