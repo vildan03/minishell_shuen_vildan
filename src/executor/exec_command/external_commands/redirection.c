@@ -60,4 +60,3 @@ int	apply_redirections(t_redir *redir) //
 	}
 	return (0);
 }
-

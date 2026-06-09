@@ -7,7 +7,7 @@ static int	print_env_error(char *arg)
 	ft_putstr_fd("minishell: env: '", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putendl_fd("': No such file or directory", 2);
-	return (1);
+	return (127);
 }
 
 int	exec_builtin(t_ast_node *node, t_shell *shell)
@@ -27,7 +27,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (ft_strncmp(node->args[0], "env", 4) == 0)
 		return (exec_builtin_env(node->args, shell));
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)
-		return (exec_builtin_exit(node->args, shell));
+		return (exec_builtin_exit(node->args, shell, -1, -1));
 	return (1);
 }
 

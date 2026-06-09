@@ -24,7 +24,7 @@ int								exec_or(t_ast_node *node, t_shell *shell);
 int								exec_subshell(t_ast_node *node, t_shell *shell);
 
 // exec_redir_only.c
-int	exec_redir_only(t_ast_node *node);
+int								exec_redir_only(t_ast_node *node);
 
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
@@ -43,7 +43,6 @@ int								next_heredoc_fd(t_hd_fd **head);
 
 // exec_simple_command.c
 int								get_child_status(int status);
-int								exec_external(t_ast_node *node, t_shell *shell);
 int								exec_simple_command(t_ast_node *node,
 									t_shell *shell);
 char							*find_command_path(char *cmd, char **envp);
@@ -73,7 +72,12 @@ int								exec_builtin_with_redir(t_ast_node *node,
 									t_shell *shell);
 
 // exit.c
-int								exec_builtin_exit(char **args, t_shell *shell);
+int								handle_exit_arg(char **args, t_shell *shell,
+									long long *parsed_value);
+
+// exit_2.c
+int								exec_builtin_exit(char **args, t_shell *shell,
+									int saved_stdout, int saved_stdin);
 
 // export_utils.c
 void							sort_export(char **export);
