@@ -7,7 +7,7 @@ static int	print_env_error(char *arg)
 	ft_putstr_fd("minishell: env: '", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putendl_fd("': No such file or directory", 2);
-	return (1);
+	return (127);
 }
 
 int	exec_builtin(t_ast_node *node, t_shell *shell)
