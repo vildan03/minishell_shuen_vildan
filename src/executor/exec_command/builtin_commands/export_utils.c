@@ -2,20 +2,6 @@
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
 
-static int	write_export_str(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (write(STDOUT_FILENO, &str[i], 1) == -1)
-			return (perror("minishell: export: write error"), 1);
-		i++;
-	}
-	return (0);
-}
-
 void	sort_export(char **export)
 {
 	int		i;
@@ -56,7 +42,7 @@ int	print_export_line(char *entry)
 	}
 	key_len = eq - entry;
 	if (write(1, entry, key_len) < 0)
-		return (perror("minishell: export: write error"), 1);
+		return (print_write_error("export"));
 	if (write_export_str("=\"") != 0 || write_export_str(eq + 1) != 0
 		|| write_export_str("\"\n") != 0)
 		return (1);
