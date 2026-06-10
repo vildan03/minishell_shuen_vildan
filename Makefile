@@ -21,6 +21,7 @@ SRCS		= src/main.c \
 			  src/executor/exec_command//builtin_commands/utils.c \
 			  src/executor/exec_command/builtin_commands/execute.c \
 			  src/executor/exec_command/builtin_commands/execute_2.c \
+			  src/executor/exec_command/builtin_commands/write.c \
 			  src/executor/exec_command/builtin_commands/cd.c \
 			  src/executor/exec_command/builtin_commands/exit.c \
 			  src/executor/exec_command/builtin_commands/exit_2.c \

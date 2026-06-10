@@ -71,6 +71,11 @@ int								exec_builtin_env(char **args, t_shell *shell);
 int								exec_builtin_with_redir(t_ast_node *node,
 									t_shell *shell);
 
+// write.c
+int								print_env_error(char *arg);
+int								write_builtin_char(char c, char *name);
+int								write_builtin_str(char *str, char *name);
+
 // exit.c
 int								handle_exit_arg(char **args, t_shell *shell,
 									long long *parsed_value);

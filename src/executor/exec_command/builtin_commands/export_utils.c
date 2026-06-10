@@ -2,6 +2,20 @@
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
 
+static int	write_export_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (write(STDOUT_FILENO, &str[i], 1) == -1)
+			return (perror("minishell: export: write error"), 1);
+		i++;
+	}
+	return (0);
+}
+
 void	sort_export(char **export)
 {
 	int		i;
@@ -32,22 +46,20 @@ int	print_export_line(char *entry)
 	int		key_len;
 
 	eq = ft_strchr(entry, '=');
-	ft_putstr_fd("declare -x ", 1);
+	if (write_export_str("declare -x ") != 0)
+		return (1);
 	if (!eq)
 	{
-		ft_putendl_fd(entry, 1);
+		if (write_export_str(entry) != 0 || write_export_str("\n") != 0)
+			return (1);
 		return (0);
 	}
 	key_len = eq - entry;
 	if (write(1, entry, key_len) < 0)
-	{
-		ft_putstr_fd("minishell: export: write error: No space left on device\n",
-			2);
+		return (perror("minishell: export: write error"), 1);
+	if (write_export_str("=\"") != 0 || write_export_str(eq + 1) != 0
+		|| write_export_str("\"\n") != 0)
 		return (1);
-	}
-	ft_putstr_fd("=\"", 1);
-	ft_putstr_fd(eq + 1, 1);
-	ft_putendl_fd("\"", 1);
 	return (0);
 }
 
