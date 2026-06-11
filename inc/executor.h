@@ -120,7 +120,17 @@ void							cleanup_shell(t_shell *shell);
 // main_helpers.c
 void							interactive_signals(void);
 void							execution_signals(void);
-char							**copy_envp(char **envp);
+char	**free_partial_copy(char **copy, int count);
 int								init_shell(t_shell *shell, char **envp);
+
+// main_input.c
+char							**copy_envp(char **envp);
+char							*read_noninteractive_line(void);
+
+// main_loop.c
+void							expand_entire_tree(t_ast_node *node, char **env,
+									int last_status);
+void							process_command(t_shell *shell, char *input,
+									int interactive);
 
 #endif

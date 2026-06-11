@@ -12,8 +12,10 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS		= src/main.c \
-					src/main_helpers.c \
+SRCS		= src/main/main.c \
+					src/main/main_helpers.c \
+					src/main/main_input.c \
+					src/main/main_loop.c \
 			  src/executor/execute_ast.c \
 			  src/executor/free.c \
 			  src/executor/execute_nods.c \
