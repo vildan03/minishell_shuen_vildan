@@ -57,8 +57,8 @@ static int	update_cd_state(t_shell *shell, char **args, char *old_pwd,
 		return (1);
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0 && new_pwd)
 	{
-		if (write_builtin_str(new_pwd, "cd") != 0
-			|| write_builtin_char('\n', "cd") != 0)
+		if (write_builtin_str(new_pwd, "cd") != 0 || write_builtin_char('\n',
+				"cd") != 0)
 			return (1);
 	}
 	return (0);

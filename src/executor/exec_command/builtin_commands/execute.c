@@ -2,7 +2,6 @@
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
 
-
 int	exec_builtin(t_ast_node *node, t_shell *shell)
 {
 	if (!node || !node->args || !node->args[0])
@@ -31,8 +30,8 @@ int	exec_builtin_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (1);
-	if (write_builtin_str(cwd, "pwd") != 0
-		|| write_builtin_char('\n', "pwd") != 0)
+	if (write_builtin_str(cwd, "pwd") != 0 || write_builtin_char('\n',
+			"pwd") != 0)
 		return (free(cwd), 1);
 	free(cwd);
 	return (0);

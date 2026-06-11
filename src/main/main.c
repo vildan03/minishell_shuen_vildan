@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 		interactive_signals();
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
-				break ;
+			break ;
 	}
 	free_array(shell.env);
 	free_array(shell.export);

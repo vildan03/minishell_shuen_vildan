@@ -120,7 +120,7 @@ void							cleanup_shell(t_shell *shell);
 // main_helpers.c
 void							interactive_signals(void);
 void							execution_signals(void);
-char	**free_partial_copy(char **copy, int count);
+char							**free_partial_copy(char **copy, int count);
 int								init_shell(t_shell *shell, char **envp);
 
 // main_input.c
