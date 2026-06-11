@@ -18,7 +18,8 @@ int	exec_builtin_exit(char **args, t_shell *shell, int saved_stdout,
 	int exit_code;
 	long long parsed_value;
 
-	ft_putendl_fd("exit", 1);
+	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+		ft_putendl_fd("exit", 2);
 	if (!args[1])
 		exit_with_cleanup(shell, shell->last_exit_status, saved_stdout,
 			saved_stdin);
