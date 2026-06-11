@@ -9,24 +9,20 @@ bool	is_valid_combo(t_token *token, int *paren_count)
 	next_type = TOKEN_EOF;
 	if (type != TOKEN_EOF)
 		next_type = token->next->type;
-	if ((is_redir(type) || is_binary_op(type)) && (next_type != TOKEN_WORD
-			|| next_type == TOKEN_RIGHT_PAREN))
-		return (false);
-	else if ((is_binary_op(type) || type == TOKEN_LEFT_PAREN)
-		&& is_binary_op(next_type))
-		return (false);
-	else if (type == TOKEN_WORD && next_type == TOKEN_LEFT_PAREN)
-		return (false);
-	else if (next_type == TOKEN_EOF && is_binary_op(type))
-		return (false);
-	else if (type == TOKEN_LEFT_PAREN && next_type == TOKEN_RIGHT_PAREN)
-		return (false);
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
-	if (type == TOKEN_RIGHT_PAREN)
+	else if (type == TOKEN_RIGHT_PAREN)
 		(*paren_count)--;
-	if (*paren_count < 0)
+	if (*paren_count < 0 || (type == TOKEN_WORD && next_type == TOKEN_LEFT_PAREN)
+		|| (next_type == TOKEN_EOF && is_binary_op(type))
+		|| (type == TOKEN_LEFT_PAREN && next_type == TOKEN_RIGHT_PAREN))
 		return (false);
+	if ((is_redir(type) || is_binary_op(type)) && (next_type != TOKEN_WORD
+		|| next_type == TOKEN_RIGHT_PAREN))
+		return (false);
+	if ((is_binary_op(type) || type == TOKEN_LEFT_PAREN)
+		&& is_binary_op(next_type))
+		return (false);	
 	return (true);
 }
 

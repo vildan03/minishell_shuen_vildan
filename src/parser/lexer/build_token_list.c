@@ -16,11 +16,9 @@ t_token	*create_new_token(void)
 int	get_word_value(char *input, int *i, t_token *token)
 {
 	char	in_quotes;
-	int		len;
 	int		start;
 
 	in_quotes = 0;
-	len = 0;
 	start = *i;
 	while (input[*i])
 	{
@@ -30,16 +28,14 @@ int	get_word_value(char *input, int *i, t_token *token)
 			in_quotes = input[*i];
 		else if (in_quotes == input[*i])
 			in_quotes = 0;
-		len++;
 		(*i)++;
 	}
-	token->value = ft_substr(input, start, len);
+	token->value = ft_substr(input, start, *i - start);
 	if (!token->value)
 		return (1);
 	if (in_quotes)
-		return (token->type = TOKEN_EOF,
-			print_syntax_err("unexpected EOF while looking for matching ",
-				&in_quotes), 1);
+		return (token->type = TOKEN_EOF, print_syntax_err(
+			"unexpected EOF while looking for matching ", &in_quotes), 1);
 	return (0);
 }
 
