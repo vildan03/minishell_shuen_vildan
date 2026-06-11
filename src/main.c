@@ -44,10 +44,12 @@ static void	process_command(t_shell *shell, char *input)
 {
 	t_token		*token_list;
 	t_ast_node	*ast_root;
+	int			interactive;
 
 	token_list = NULL;
 	ast_root = NULL;
-	if (*input)
+	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
+	if (*input && interactive)
 		add_history(input);
 	token_list = construct_token_list(input, token_list);
 	if (!token_list)
@@ -74,15 +76,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*input;
+	int		interactive;
 
 	(void)argc;
 	(void)argv;
 	if (init_shell(&shell, envp))
 		return (1);
+	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (1)
 	{
 		interactive_signals();
-		input = readline("minishell$ ");
+		if (interactive)
+			input = readline("minishell$ ");
+		else
+			input = readline("");
 		if (g_exit_status)
 		{
 			shell.last_exit_status = g_exit_status;
@@ -90,7 +97,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (!input)
 		{
-			ft_putendl_fd("exit", 1);
+			if (interactive)
+				ft_putendl_fd("exit", 1);
 			break ;
 		}
 		process_command(&shell, input);
