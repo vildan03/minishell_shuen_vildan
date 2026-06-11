@@ -20,7 +20,10 @@ bool	is_whitespaces_only(char *input)
 static char	*read_shell_input(int interactive)
 {
 	if (interactive)
+	{
+		rl_outstream = stderr;
 		return (readline("minishell$ "));
+	}
 	return (read_noninteractive_line());
 }
 
@@ -34,7 +37,7 @@ static int	handle_shell_input(t_shell *shell, char *input, int interactive)
 	if (!input)
 	{
 		if (interactive)
-			ft_putendl_fd("exit", 1);
+			ft_putendl_fd("exit", 2);
 		return (0);
 	}
 	process_command(shell, input, interactive);
@@ -52,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (init_shell(&shell, envp))
 		return (1);
-	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
+	interactive = isatty(STDIN_FILENO) && isatty(STDERR_FILENO);
 	while (1)
 	{
 		interactive_signals();
