@@ -40,8 +40,10 @@ static int	handle_shell_input(t_shell *shell, char *input, int interactive)
 			ft_putendl_fd("exit", 2);
 		return (0);
 	}
+	shell->current_input = input;
 	process_command(shell, input, interactive);
 	free(input);
+	shell->current_input = NULL;
 	return (1);
 }
 

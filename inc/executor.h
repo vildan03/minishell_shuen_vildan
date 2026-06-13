@@ -110,11 +110,13 @@ int								is_valid_identifier(char *str);
 
 // error_exit.c
 void							print_cmd_error(char *cmd, char *msg);
-void							exit_exec_error(char *cmd, char *path,
-									t_shell *shell);
+int								validate_exec_path(char *cmd, char *path);
 
 // free.c
 void							free_array(char **arr);
+void							cleanup_process_state(t_shell *shell,
+									t_ast_node *ast_root,
+									t_token *token_list);
 void							cleanup_shell(t_shell *shell);
 
 // main_helpers.c

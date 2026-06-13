@@ -69,8 +69,8 @@ int	handle_exit_arg(char **args, t_shell *shell, long long *parsed_value)
 	if (parse_exit_code(args[1], parsed_value) != 0)
 	{
 		print_numeric_error(args[1]);
-		cleanup_shell(shell);
-		exit(2);
+		shell->last_exit_status = 2;
+		return (2);
 	}
 	if (args[2])
 	{

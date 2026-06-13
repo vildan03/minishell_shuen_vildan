@@ -31,6 +31,7 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
+			  src/executor/exec_command/external_commands/exec_command_path.c \
 			  src/executor/exec_command/external_commands/exec_simple_command.c \
 			  src/executor/exec_command/external_commands/redirection.c \
 			  src/executor/exec_command/external_commands/error_exit.c \

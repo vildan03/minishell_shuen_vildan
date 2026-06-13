@@ -33,6 +33,7 @@ int	init_shell(t_shell *shell, char **envp)
 {
 	shell->env = copy_envp(envp);
 	shell->export = copy_envp(envp);
+	shell->current_input = NULL;
 	shell->last_exit_status = 0;
 	shell->token_list = NULL;
 	shell->ast_root = NULL;
@@ -42,6 +43,7 @@ int	init_shell(t_shell *shell, char **envp)
 		free_array(shell->export);
 		shell->env = NULL;
 		shell->export = NULL;
+		shell->current_input = NULL;
 		return (1);
 	}
 	return (0);

@@ -13,14 +13,30 @@ void	free_array(char **arr)
 		free(arr[i++]);
 	free(arr);
 }
-void	cleanup_shell(t_shell *shell)
+
+static void	reset_shell_state(t_shell *shell)
 {
-	if (shell->ast_root)
-		free_ast(shell->ast_root);
-	if (shell->token_list)
-		free_token_list(shell->token_list);
-	free_array(shell->env);
-	free_array(shell->export);
+	shell->env = NULL;
+	shell->export = NULL;
+	shell->current_input = NULL;
 	shell->ast_root = NULL;
 	shell->token_list = NULL;
+}
+
+void	cleanup_process_state(t_shell *shell, t_ast_node *ast_root,
+		t_token *token_list)
+{
+	if (ast_root)
+		free_ast(ast_root);
+	if (token_list)
+		free_token_list(token_list);
+	free_array(shell->env);
+	free_array(shell->export);
+	free(shell->current_input);
+	reset_shell_state(shell);
+}
+
+void	cleanup_shell(t_shell *shell)
+{
+	cleanup_process_state(shell, shell->ast_root, shell->token_list);
 }
