@@ -4,36 +4,51 @@
 t_ast_node	*parse_command(t_token *start, t_token *end)
 {
 	t_ast_node	*node;
-	t_token		*last_token;
 
-	last_token = get_last_token(start, end);
-	if (!start || !last_token)
+	if (!start || start == end || start->type == TOKEN_EOF)
 		return (NULL);
-	if (start->type == TOKEN_LEFT_PAREN
-		&& last_token->type == TOKEN_RIGHT_PAREN)
-	{
-		node = create_ast_node(NODE_SUBSHELL);
-		node->left = parse_logic(start->next, last_token);
-		return (node);
-	}
 	node = create_ast_node(NODE_COMMAND);
+	if (!node)
+		return (NULL);
 	extract_redirections(node, start, end);
 	node->args = build_args_array(start, end);
-	debug_print_command(node);
 	return (node);
+}
+
+t_ast_node	*parse_element(t_token *start, t_token *end)
+{
+	t_ast_node	*node;
+	t_token		*match;
+
+	if (!start || start == end || start->type == TOKEN_EOF)
+		return (NULL);
+	if (start->type == TOKEN_LEFT_PAREN)
+	{
+		match = find_matching_paren(start, end);
+		if (match)
+		{
+			node = create_ast_node(NODE_SUBSHELL);
+			node->left = parse_logic(start->next, match);
+			extract_redirections(node, match->next, end);
+			return (node);
+		}
+	}
+	return (parse_command(start, end));
 }
 
 t_ast_node	*parse_pipe(t_token *start, t_token *end)
 {
-	t_token		*last_pipe;
 	t_ast_node	*node;
+	t_token		*last_pipe;
 
-	last_pipe = find_last_op(start, end, TOKEN_PIPE, -1);
-	if (last_pipe == NULL)
-		return (parse_command(start, end));
+	last_pipe = find_top_op(start, end, TOKEN_PIPE, -1);
+	if (!last_pipe)
+		return (parse_element(start, end));
 	node = create_ast_node(NODE_PIPE);
+	if (!node)
+		return (NULL);
 	node->left = parse_pipe(start, last_pipe);
-	node->right = parse_command(last_pipe->next, end);
+	node->right = parse_element(last_pipe->next, end);
 	return (node);
 }
 
@@ -42,15 +57,14 @@ t_ast_node	*parse_logic(t_token *start, t_token *end)
 	t_ast_node	*node;
 	t_token		*last_op;
 
-	last_op = find_last_op(start, end, TOKEN_AND, TOKEN_OR);
-	node = NULL;
-	if (last_op == NULL)
+	last_op = find_top_op(start, end, TOKEN_AND, TOKEN_OR);
+	if (!last_op)
 		return (parse_pipe(start, end));
 	if (last_op->type == TOKEN_AND)
 		node = create_ast_node(NODE_AND);
-	else if (last_op->type == TOKEN_OR)
+	else
 		node = create_ast_node(NODE_OR);
-	if (node == NULL)
+	if (!node)
 		return (NULL);
 	node->left = parse_logic(start, last_op);
 	node->right = parse_pipe(last_op->next, end);

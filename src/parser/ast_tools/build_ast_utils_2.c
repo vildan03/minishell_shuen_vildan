@@ -1,29 +1,48 @@
 #include "minishell.h"
 #include "parser.h"
 
-t_token	*find_last_op(t_token *start, t_token *end, int first_token,
-		int second_token)
+t_token	*find_top_op(t_token *start, t_token *end, int op1, int op2)
 {
 	t_token	*current;
 	t_token	*last_op;
-	int		paren_count;
+	int		depth;
 
 	current = start;
 	last_op = NULL;
-	paren_count = 0;
-	while (current != end)
+	depth = 0;
+	while (current && current != end)
 	{
-		if (paren_count == 0 && (current->type == first_token
-				|| current->type == second_token))
-			last_op = current;
 		if (current->type == TOKEN_LEFT_PAREN)
-			paren_count++;
+			depth++;
 		else if (current->type == TOKEN_RIGHT_PAREN)
-			paren_count--;
+			depth--;
+		else if (depth == 0 && (current->type == op1 || current->type == op2))
+			last_op = current;
 		current = current->next;
 	}
 	return (last_op);
 }
+
+t_token	*find_matching_paren(t_token *start, t_token *end)
+{
+	t_token	*current;
+	int		depth;
+
+	current = start;
+	depth = 0;
+	while (current && current != end)
+	{
+		if (current->type == TOKEN_LEFT_PAREN)
+			depth++;
+		else if (current->type == TOKEN_RIGHT_PAREN)
+			depth--;
+		if (depth == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 void	append_redir_node(t_redir **head, t_redir *new_node)
 {
 	t_redir	*current;

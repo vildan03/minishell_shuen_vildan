@@ -3,26 +3,26 @@
 bool	is_valid_combo(t_token *token, int *paren_count)
 {
 	int	type;
-	int	next_type;
+	int	next;
 
 	type = token->type;
-	next_type = TOKEN_EOF;
-	if (type != TOKEN_EOF)
-		next_type = token->next->type;
+	next = TOKEN_EOF;
+	if (type != TOKEN_EOF && token->next)
+		next = token->next->type;
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
 		(*paren_count)--;
-	if (*paren_count < 0 || (type == TOKEN_WORD && next_type == TOKEN_LEFT_PAREN)
-		|| (next_type == TOKEN_EOF && is_binary_op(type))
-		|| (type == TOKEN_LEFT_PAREN && next_type == TOKEN_RIGHT_PAREN))
+	if (*paren_count < 0 || (type == TOKEN_WORD && next == TOKEN_LEFT_PAREN)
+		|| (type == TOKEN_LEFT_PAREN && next == TOKEN_RIGHT_PAREN))
 		return (false);
-	if ((is_redir(type) || is_binary_op(type)) && (next_type != TOKEN_WORD
-		|| next_type == TOKEN_RIGHT_PAREN))
+	if (is_redir(type) && next != TOKEN_WORD)
 		return (false);
-	if ((is_binary_op(type) || type == TOKEN_LEFT_PAREN)
-		&& is_binary_op(next_type))
-		return (false);	
+	if (is_binary_op(type) && (next == TOKEN_RIGHT_PAREN
+			|| next == TOKEN_EOF || is_binary_op(next)))
+		return (false);
+	if (type == TOKEN_LEFT_PAREN && is_binary_op(next))
+		return (false);
 	return (true);
 }
 
