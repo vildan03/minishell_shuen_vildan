@@ -46,6 +46,8 @@ SRCS		= src/main.c \
 			  src/parser/expander/expander_utils.c \
 			  src/parser/expander/expander_utils_2.c \
 			  src/parser/expander/expander.c \
+			  src/parser/expander/wildcards_utils.c \
+			  src/parser/expander/wildcards_utils_2.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c \
 			  src/env/env_utils.c
