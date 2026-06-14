@@ -2,61 +2,6 @@
 #include "../../../../inc/minishell.h"
 #include <sys/wait.h>
 
-static char	*join_cmd_path(char *dir, char *cmd)
-{
-	char	*tmp;
-	char	*full_path;
-
-	tmp = ft_strjoin(dir, "/");
-	if (!tmp)
-		return (NULL);
-	full_path = ft_strjoin(tmp, cmd);
-	free(tmp);
-	return (full_path);
-}
-
-static char	*check_paths(char **paths, char *cmd)
-{
-	char	*full_path;
-	int		i;
-
-	i = 0;
-	while (paths[i])
-	{
-		full_path = join_cmd_path(paths[i], cmd);
-		if (!full_path)
-			return (free_array(paths), NULL);
-		if (access(full_path, F_OK) == 0)
-		{
-			free_array(paths);
-			return (full_path);
-		}
-		free(full_path);
-		i++;
-	}
-	free_array(paths);
-	return (NULL);
-}
-
-char	*find_command_path(char *cmd, char **envp)
-{
-	char	**paths;
-	int		i;
-
-	if (!cmd || !envp)
-		return (NULL);
-	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	if (!envp[i])
-		return (NULL);
-	paths = ft_split(envp[i] + 5, ':');
-	if (!paths)
-		return (NULL);
-	return (check_paths(paths, cmd));
-}
 int	get_child_status(int status)
 {
 	if (WIFEXITED(status))
@@ -70,38 +15,60 @@ int	get_child_status(int status)
 	return (1);
 }
 
-static void	handle_child_error(char *path, t_ast_node *node, t_shell *shell)
+static void	handle_child_error(char *path, t_ast_node *node, t_shell *shell,
+		t_ast_node *ast_root, t_token *token_list)
 {
 	perror(node->args[0]);
 	free(path);
-	cleanup_shell(shell);
+	cleanup_process_state(shell, ast_root, token_list);
 	exit(126);
+}
+
+static void	run_child_command(t_ast_node *node, t_shell *shell, char *path,
+		t_ast_node *ast_root, t_token *token_list)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	free(shell->current_input);
+	shell->current_input = NULL;
+	free(path);
+	if (apply_redirections(node->redir) == -1)
+		(cleanup_process_state(shell, ast_root, token_list), exit(1));
+	path = find_command_path(node->args[0], shell->env);
+	execve(path, node->args, shell->env);
+	handle_child_error(path, node, shell, ast_root, token_list);
+}
+
+static int	wait_simple_command(pid_t pid)
+{
+	int	status;
+
+	if (waitpid(pid, &status, 0) == -1)
+		return (perror("waitpid"), 1);
+	return (get_child_status(status));
 }
 
 int	exec_simple_command(t_ast_node *node, t_shell *shell)
 {
-	pid_t	pid;
-	int		status;
-	char	*path;
+	pid_t		pid;
+	int			path_status;
+	char		*path;
+	t_ast_node	*ast_root;
+	t_token		*token_list;
 
 	if (!node || !node->args || !node->args[0])
 		return (0);
+	ast_root = shell->ast_root;
+	token_list = shell->token_list;
 	path = find_command_path(node->args[0], shell->env);
+	path_status = validate_exec_path(node->args[0], path);
+	if (path_status != 0)
+		return (free(path), path_status);
 	pid = fork();
 	if (pid == -1)
 		return (free(path), perror("fork"), 1);
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		if (apply_redirections(node->redir) == -1)
-			(cleanup_shell(shell), exit(1));
-		exit_exec_error(node->args[0], path, shell);
-		execve(path, node->args, shell->env);
-		handle_child_error(path, node, shell);
-	}
+		run_child_command(node, shell, path, ast_root, token_list);
 	free(path);
-	if (waitpid(pid, &status, 0) == -1)
-		return (perror("waitpid"), 1);
-	return (get_child_status(status));
+	return (wait_simple_command(pid));
 }

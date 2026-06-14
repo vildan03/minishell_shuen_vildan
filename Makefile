@@ -12,8 +12,10 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-SRCS		= src/main.c \
-					src/main_helpers.c \
+SRCS		= src/main/main.c \
+					src/main/main_helpers.c \
+					src/main/main_input.c \
+					src/main/main_loop.c \
 			  src/executor/execute_ast.c \
 			  src/executor/free.c \
 			  src/executor/execute_nods.c \
@@ -21,6 +23,7 @@ SRCS		= src/main.c \
 			  src/executor/exec_command//builtin_commands/utils.c \
 			  src/executor/exec_command/builtin_commands/execute.c \
 			  src/executor/exec_command/builtin_commands/execute_2.c \
+			  src/executor/exec_command/builtin_commands/write.c \
 			  src/executor/exec_command/builtin_commands/cd.c \
 			  src/executor/exec_command/builtin_commands/exit.c \
 			  src/executor/exec_command/builtin_commands/exit_2.c \
@@ -28,6 +31,7 @@ SRCS		= src/main.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
+			  src/executor/exec_command/external_commands/exec_command_path.c \
 			  src/executor/exec_command/external_commands/exec_simple_command.c \
 			  src/executor/exec_command/external_commands/redirection.c \
 			  src/executor/exec_command/external_commands/error_exit.c \

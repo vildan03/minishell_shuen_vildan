@@ -13,16 +13,17 @@ bool	is_valid_combo(t_token *token, int *paren_count)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
 		(*paren_count)--;
-	if (*paren_count < 0 || (type == TOKEN_WORD && next_type == TOKEN_LEFT_PAREN)
-		|| (next_type == TOKEN_EOF && is_binary_op(type))
-		|| (type == TOKEN_LEFT_PAREN && next_type == TOKEN_RIGHT_PAREN))
+	if (*paren_count < 0 || (type == TOKEN_WORD
+			&& next_type == TOKEN_LEFT_PAREN) || (next_type == TOKEN_EOF
+			&& is_binary_op(type)) || (type == TOKEN_LEFT_PAREN
+			&& next_type == TOKEN_RIGHT_PAREN))
 		return (false);
 	if ((is_redir(type) || is_binary_op(type)) && (next_type != TOKEN_WORD
-		|| next_type == TOKEN_RIGHT_PAREN))
+			|| next_type == TOKEN_RIGHT_PAREN))
 		return (false);
 	if ((is_binary_op(type) || type == TOKEN_LEFT_PAREN)
 		&& is_binary_op(next_type))
-		return (false);	
+		return (false);
 	return (true);
 }
 

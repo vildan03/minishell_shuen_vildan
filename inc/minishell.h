@@ -10,6 +10,7 @@ typedef struct s_shell
 {
 	char					**env;
 	char					**export;
+	char					*current_input;
 	int						last_exit_status;
 	t_token					*token_list;
 	t_ast_node				*ast_root;
