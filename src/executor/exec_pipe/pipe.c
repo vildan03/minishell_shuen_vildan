@@ -16,8 +16,8 @@ static void	setup_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
 {
 	int	status;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (is_left)
 	{
 		close(fd[0]);

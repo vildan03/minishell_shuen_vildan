@@ -30,7 +30,7 @@ int						count_valid_args(char **args);
 // wildcard_utils.c
 
 // remove match_pattern
-//bool match_pattern(char *pattern, char *filename);
+bool match_pattern(char *pattern, char *filename);
 bool has_unquoted_star(char *str);
 char	**add_match_to_array(char **matches, char *new_match);
 char	**get_wildcard_matches(char *pattern);

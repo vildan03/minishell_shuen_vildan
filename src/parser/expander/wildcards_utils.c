@@ -1,7 +1,7 @@
 # include "expander.h"
 
-// Used to check and to replace algorithm side
-/*
+//Used to check and to replace algorithm side
+
 bool	match_pattern_recursive(char *pattern, char *str)
 {
 	if (*pattern == '\0' && *str == '\0')
@@ -24,7 +24,6 @@ bool	match_pattern(char *pattern, char *str)
 		return (false);
 	return (match_pattern_recursive(pattern, str));
 }
-*/
 
 bool	has_unquoted_star(char *str)
 {
