@@ -19,7 +19,7 @@ t_ast_node	*parse_command(t_token *start, t_token *end)
 	node = create_ast_node(NODE_COMMAND);
 	extract_redirections(node, start, end);
 	node->args = build_args_array(start, end);
-	debug_print_command(node);
+	// debug_print_command(node);
 	return (node);
 }
 

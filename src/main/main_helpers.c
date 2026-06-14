@@ -1,8 +1,7 @@
+#include "../../inc/executor.h"
+#include "../../inc/minishell.h"
 
-#include "../inc/executor.h"
-#include "../inc/minishell.h"
-
-static char	**free_partial_copy(char **copy, int count)
+char	**free_partial_copy(char **copy, int count)
 {
 	while (count > 0)
 		free(copy[--count]);
@@ -14,8 +13,7 @@ static void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_exit_status = 130;
-	if (write(1, "\n", 1) < 0)
-		return ;
+	(void)write(2, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -30,33 +28,12 @@ void	execution_signals(void)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
-char	**copy_envp(char **envp)
-{
-	char	**copy;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	copy = malloc(sizeof(char *) * (i + 1));
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		copy[i] = ft_strdup(envp[i]);
-		if (!copy[i])
-			return (free_partial_copy(copy, i));
-		i++;
-	}
-	copy[i] = NULL;
-	return (copy);
-}
 
 int	init_shell(t_shell *shell, char **envp)
 {
 	shell->env = copy_envp(envp);
 	shell->export = copy_envp(envp);
+	shell->current_input = NULL;
 	shell->last_exit_status = 0;
 	shell->token_list = NULL;
 	shell->ast_root = NULL;
@@ -66,6 +43,7 @@ int	init_shell(t_shell *shell, char **envp)
 		free_array(shell->export);
 		shell->env = NULL;
 		shell->export = NULL;
+		shell->current_input = NULL;
 		return (1);
 	}
 	return (0);

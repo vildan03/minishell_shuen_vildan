@@ -2,14 +2,6 @@
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
 
-static int	print_env_error(char *arg)
-{
-	ft_putstr_fd("minishell: env: '", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd("': No such file or directory", 2);
-	return (127);
-}
-
 int	exec_builtin(t_ast_node *node, t_shell *shell)
 {
 	if (!node || !node->args || !node->args[0])
@@ -38,7 +30,9 @@ int	exec_builtin_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (1);
-	ft_putendl_fd(cwd, 1);
+	if (write_builtin_str(cwd, "pwd") != 0 || write_builtin_char('\n',
+			"pwd") != 0)
+		return (free(cwd), 1);
 	free(cwd);
 	return (0);
 }
@@ -58,15 +52,17 @@ int	exec_builtin_echo(char **args, t_shell *shell)
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
-		if (args[i + 1])
-			ft_putchar_fd(' ', 1);
+		if (write_builtin_str(args[i], "echo") != 0)
+			return (1);
+		if (args[i + 1] && write_builtin_char(' ', "echo") != 0)
+			return (1);
 		i++;
 	}
-	if (newline)
-		ft_putchar_fd('\n', 1);
+	if (newline && write_builtin_char('\n', "echo") != 0)
+		return (1);
 	return (0);
 }
+
 int	exec_builtin_env(char **args, t_shell *shell)
 {
 	int	i;
@@ -78,7 +74,9 @@ int	exec_builtin_env(char **args, t_shell *shell)
 	i = 0;
 	while (shell->env[i])
 	{
-		ft_putendl_fd(shell->env[i], 1);
+		if (write_builtin_str(shell->env[i], "env") != 0
+			|| write_builtin_char('\n', "env") != 0)
+			return (125);
 		i++;
 	}
 	return (0);
