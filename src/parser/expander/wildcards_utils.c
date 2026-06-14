@@ -1,28 +1,33 @@
 # include "expander.h"
 
-//Used to check and to replace algorithm side
-
-bool	match_pattern_recursive(char *pattern, char *str)
+static bool	match_pattern_recursive(char *pattern, char *str)
 {
-	if (*pattern == '\0' && *str == '\0')
-		return (true);
+	while (*pattern == '*' && pattern[1] == '*')
+		pattern++;
+	if (*pattern == '\0')
+		return (*str == '\0');
 	if (*pattern == '*')
 	{
 		if (match_pattern_recursive(pattern + 1, str))
 			return (true);
-		if (*str != '\0' && match_pattern_recursive(pattern, str + 1))
-			return (true);
+		return (*str != '\0' && match_pattern_recursive(pattern, str + 1));
 	}
-	if (*pattern == *str && *str != '\0')
+	if (*str != '\0' && *pattern == *str)
 		return (match_pattern_recursive(pattern + 1, str + 1));
 	return (false);
 }
 
-bool	match_pattern(char *pattern, char *str)
+bool	match_pattern(char *pattern, char *filename)
 {
-	if (str[0] == '.' && pattern[0] != '.')
+	if (!pattern || !filename)
 		return (false);
-	return (match_pattern_recursive(pattern, str));
+	if ((filename[0] == '.' && filename[1] == '\0')
+		|| (filename[0] == '.' && filename[1] == '.'
+			&& filename[2] == '\0'))
+		return (false);
+	if (filename[0] == '.' && pattern[0] != '.')
+		return (false);
+	return (match_pattern_recursive(pattern, filename));
 }
 
 bool	has_unquoted_star(char *str)
