@@ -10,6 +10,7 @@ static int	is_directory(char *path)
 		return (0);
 	return (S_ISDIR(st.st_mode));
 }
+
 void	print_cmd_error(char *cmd, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
