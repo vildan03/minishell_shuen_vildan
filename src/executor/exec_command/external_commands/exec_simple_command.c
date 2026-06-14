@@ -1,4 +1,5 @@
 #include "../../../../inc/executor.h"
+#include "../../../../inc/expander.h"
 #include "../../../../inc/minishell.h"
 #include <sys/wait.h>
 
@@ -58,6 +59,7 @@ int	exec_simple_command(t_ast_node *node, t_shell *shell)
 
 	if (!node || !node->args || !node->args[0])
 		return (0);
+	expand_wildcards(node);
 	ast_root = shell->ast_root;
 	token_list = shell->token_list;
 	path = find_command_path(node->args[0], shell->env);

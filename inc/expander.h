@@ -2,6 +2,7 @@
 # define EXPANDER_H
 
 # include "parser.h"
+# include <dirent.h>
 
 typedef struct s_env	t_env;
 
@@ -25,5 +26,17 @@ void					toggle_quotes(char c, int *sq, int *dq);
 void					expand_redirections(t_redir *redir_list, char **env,
 							int status);
 int						count_valid_args(char **args);
+
+// wildcard_utils.c
+
+// remove match_pattern
+//bool match_pattern(char *pattern, char *filename);
+bool has_unquoted_star(char *str);
+char	**add_match_to_array(char **matches, char *new_match);
+char	**get_wildcard_matches(char *pattern);
+
+// wildcard_utils_2.c
+char **splice_wildcard_matches(char **args, char **matches, int target_idx);
+void	expand_wildcards(t_ast_node *node);
 
 #endif
