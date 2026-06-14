@@ -1,5 +1,7 @@
 # include "expander.h"
 
+//Used to check and to replace algorithm side
+
 bool	match_pattern_recursive(char *pattern, char *str)
 {
 	if (*pattern == '\0' && *str == '\0')
