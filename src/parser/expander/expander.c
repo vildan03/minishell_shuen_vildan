@@ -45,11 +45,17 @@ char	*expand_string(char *raw, char **env, int status)
 	while (raw[i])
 	{
 		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-			toggle_quotes(raw[i++], &sq, &dq);
+			toggle_quotes(raw[i], &sq, &dq);
 		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
+		{
 			res = process_var(res, raw, &i, env, status);
+			continue ;
+		}
+		else if (raw[i] == '*' && (sq || dq))
+			res = append_char(res, 1);
 		else
-			res = append_char(res, raw[i++]);
+			res = append_char(res, raw[i]);
+		i++;
 	}
 	return (res);
 }
@@ -74,6 +80,25 @@ static void	filter_empty_args(t_ast_node *node, char **new_args)
 	node->args = new_args;
 }
 
+void unmask_args(char **args)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (args && args[i])
+    {
+        j = 0;
+        while (args[i][j])
+        {
+            if (args[i][j] == 1)
+                args[i][j] = '*';
+            j++;
+        }
+        i++;
+    }
+}
+
 void	expand_command_args(t_ast_node *node, char **env, int last_status)
 {
 	int		i;
@@ -89,9 +114,11 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 		free(node->args[i]);
 		node->args[i] = expanded;
 	}
+	expand_wildcards(node);
 	expand_redirections(node->redir, env, last_status);
 	new_args = malloc(sizeof(char *) * (count_valid_args(node->args) + 1));
 	if (!new_args)
 		return ;
 	filter_empty_args(node, new_args);
+	unmask_args(new_args);
 }
