@@ -16,17 +16,4 @@ typedef struct s_shell
 	t_ast_node				*ast_root;
 }							t_shell;
 
-typedef struct s_env
-{
-	char					*key;
-	char					*value;
-	struct s_env			*next;
-}							t_env;
-
-void						append_env_node(t_env **head, t_env *new_node);
-void						extract_key_value(char *env_str, char **key,
-								char **value);
-void						free_env_list(t_env *env);
-t_env						*init_env(char **envp);
-
 #endif

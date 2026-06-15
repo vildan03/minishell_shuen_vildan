@@ -3,7 +3,7 @@
 
 volatile sig_atomic_t	g_exit_status = 0;
 
-bool	is_whitespaces_only(char *input)
+static bool	is_whitespaces_only(char *input)
 {
 	int	i;
 
@@ -39,6 +39,11 @@ static int	handle_shell_input(t_shell *shell, char *input, int interactive)
 		if (interactive)
 			ft_putendl_fd("exit", 2);
 		return (0);
+	}
+	if (is_whitespaces_only(input))
+	{
+		free(input);
+		return (1);
 	}
 	shell->current_input = input;
 	process_command(shell, input, interactive);

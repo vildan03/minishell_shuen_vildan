@@ -81,21 +81,6 @@ int	is_redir_ast(int type)
 		|| type == TOKEN_APPEND || type == TOKEN_HEREDOC);
 }
 
-t_token	*get_last_token(t_token *start, t_token *end)
-{
-	t_token	*current;
-	t_token	*last_token;
-
-	current = start;
-	last_token = NULL;
-	while (current != end && current->type != TOKEN_EOF)
-	{
-		last_token = current;
-		current = current->next;
-	}
-	return (last_token);
-}
-
 t_redir_type	translate_token_to_redir(t_token_type type)
 {
 	if (type == TOKEN_REDIR_OUT)

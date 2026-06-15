@@ -51,8 +51,7 @@ SRCS		= src/main/main.c \
 			  src/parser/expander/wildcards_utils.c \
 			  src/parser/expander/wildcards_utils_2.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
-			  src/parser/syntax_checker/check_syntax.c \
-			  src/env/env_utils.c
+			  src/parser/syntax_checker/check_syntax.c
 
 OBJS        = $(SRCS:.c=.o)
 
