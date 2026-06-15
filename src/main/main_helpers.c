@@ -11,11 +11,9 @@ char	**free_partial_copy(char **copy, int count)
 
 static void	handle_sigint(int sig)
 {
-	int return_val;
 	(void)sig;
 	g_exit_status = 130;
-	return_val = write(2, "\n", 1);
-	(void) return_val;
+	(void)write(2, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
