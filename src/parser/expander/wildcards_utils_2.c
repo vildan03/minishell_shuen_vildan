@@ -1,41 +1,41 @@
-# include "expander.h"
+#include "expander.h"
 
-int count_contents(char **args)
+int	count_contents(char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(args[i] != NULL)
+	while (args[i] != NULL)
 		i++;
-	return i;
+	return (i);
 }
 
-char **splice_wildcard_matches(char **args, char **matches, int target_index)
+char	**splice_wildcard_matches(char **args, char **matches, int target_index)
 {
-	char **new_args;
-	int args_len;
-	int matches_len;
-	int j;
-	int k;
+	char	**new_args;
+	int		args_len;
+	int		matches_len;
+	int		j;
+	int		k;
 
 	args_len = count_contents(args);
 	matches_len = count_contents(matches);
 	j = 0;
 	k = 0;
 	new_args = malloc(sizeof(char *) * (args_len + matches_len));
-	while(k < target_index)
+	while (k < target_index)
 		new_args[j++] = args[k++];
 	k = 0;
-	while(matches[k] != NULL)
+	while (matches[k] != NULL)
 		new_args[j++] = matches[k++];
 	k = target_index + 1;
-	while(args[k] != NULL)
+	while (args[k] != NULL)
 		new_args[j++] = args[k++];
 	new_args[j] = NULL;
 	free(args[target_index]);
 	free(args);
 	free(matches);
-	return new_args;
+	return (new_args);
 }
 
 void	expand_wildcards(t_ast_node *node)
