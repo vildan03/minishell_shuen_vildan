@@ -11,6 +11,12 @@ static bool	match_pattern_recursive(char *pattern, char *filename)
 		return (*filename != '\0' && match_pattern_recursive(pattern, filename
 				+ 1));
 	}
+	if (*pattern == 1)
+	{
+		if (*filename == '*')
+			return (match_pattern_recursive(pattern, filename + 1));
+		return (false);
+	}
 	if (*filename != '\0' && *pattern == *filename)
 		return (match_pattern_recursive(pattern + 1, filename + 1));
 	return (false);
@@ -31,21 +37,13 @@ bool	match_pattern(char *pattern, char *filename)
 bool	has_unquoted_star(char *str)
 {
 	int	i;
-	int	sq;
-	int	dq;
 
 	i = 0;
-	sq = 0;
-	dq = 0;
 	if (!str)
 		return (false);
 	while (str[i])
 	{
-		if (str[i] == '\'' && !dq)
-			sq = !sq;
-		else if (str[i] == '"' && !sq)
-			dq = !dq;
-		else if (str[i] == '*' && !sq && !dq)
+		if (str[i] == '*')
 			return (true);
 		i++;
 	}
