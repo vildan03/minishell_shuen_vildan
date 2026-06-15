@@ -44,27 +44,16 @@ static void	remove_from_array(char **arr, char *key)
 
 int	exec_builtin_unset(char **args, t_shell *shell)
 {
-	int i;
-	int status;
+	int	i;
 
 	if (!shell)
 		return (1);
 	i = 1;
-	status = 0;
 	while (args[i])
 	{
-		if (!is_valid_identifier(args[i]))
-		{
-			ft_putstr_fd("minishell: unset: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			status = 1;
-			i++;
-			continue ;
-		}
 		remove_from_array(shell->env, args[i]);
 		remove_from_array(shell->export, args[i]);
 		i++;
 	}
-	return (status);
+	return (0);
 }

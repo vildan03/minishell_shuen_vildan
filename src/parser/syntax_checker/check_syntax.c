@@ -7,12 +7,11 @@ bool	is_valid_combo(t_token *token, int *paren_count)
 
 	type = token->type;
 	next = TOKEN_EOF;
-	if (type != TOKEN_EOF && token->next)
-		next = token->next->type;
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
 		(*paren_count)--;
+
 	if (*paren_count < 0 || (type == TOKEN_WORD && next == TOKEN_LEFT_PAREN)
 		|| (type == TOKEN_LEFT_PAREN && next == TOKEN_RIGHT_PAREN))
 		return (false);
@@ -23,6 +22,7 @@ bool	is_valid_combo(t_token *token, int *paren_count)
 		return (false);
 	if (type == TOKEN_LEFT_PAREN && is_binary_op(next))
 		return (false);
+
 	return (true);
 }
 

@@ -1,7 +1,6 @@
 
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
-#include <limits.h>
 
 static int	is_numeric(char *str)
 {
@@ -65,14 +64,13 @@ static int	parse_exit_code(char *str, long long *value)
 	return (0);
 }
 
-static int	handle_exit_arg(char **args, t_shell *shell,
-		long long *parsed_value)
+int	handle_exit_arg(char **args, t_shell *shell, long long *parsed_value)
 {
 	if (parse_exit_code(args[1], parsed_value) != 0)
 	{
 		print_numeric_error(args[1]);
-		cleanup_shell(shell);
-		exit(2);
+		shell->last_exit_status = 2;
+		return (2);
 	}
 	if (args[2])
 	{
@@ -81,24 +79,4 @@ static int	handle_exit_arg(char **args, t_shell *shell,
 		return (1);
 	}
 	return (0);
-}
-
-int	exec_builtin_exit(char **args, t_shell *shell)
-{
-	int			exit_code;
-	long long	parsed_value;
-
-	ft_putendl_fd("exit", 1);
-	if (!args[1])
-	{
-		cleanup_shell(shell);
-		exit(shell->last_exit_status);
-	}
-	if (handle_exit_arg(args, shell, &parsed_value) != 0)
-		return (1);
-	exit_code = parsed_value % 256;
-	if (exit_code < 0)
-		exit_code += 256;
-	cleanup_shell(shell);
-	exit(exit_code);
 }

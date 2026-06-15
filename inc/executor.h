@@ -23,11 +23,13 @@ int								exec_and(t_ast_node *node, t_shell *shell);
 int								exec_or(t_ast_node *node, t_shell *shell);
 int								exec_subshell(t_ast_node *node, t_shell *shell);
 
+// exec_redir_only.c
+int								exec_redir_only(t_ast_node *node);
+
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
 
 // heredoc.c
-int								has_heredoc(t_redir *redir);
 int								process_heredoc(t_redir *redir);
 
 // heredoc_fds.c
@@ -41,7 +43,6 @@ int								next_heredoc_fd(t_hd_fd **head);
 
 // exec_simple_command.c
 int								get_child_status(int status);
-int								exec_external(t_ast_node *node, t_shell *shell);
 int								exec_simple_command(t_ast_node *node,
 									t_shell *shell);
 char							*find_command_path(char *cmd, char **envp);
@@ -70,8 +71,20 @@ int								exec_builtin_env(char **args, t_shell *shell);
 int								exec_builtin_with_redir(t_ast_node *node,
 									t_shell *shell);
 
+// write.c
+int								print_env_error(char *arg);
+int								print_write_error(char *name);
+int								write_builtin_char(char c, char *name);
+int								write_builtin_str(char *str, char *name);
+int								write_export_str(char *str);
+
 // exit.c
-int								exec_builtin_exit(char **args, t_shell *shell);
+int								handle_exit_arg(char **args, t_shell *shell,
+									long long *parsed_value);
+
+// exit_2.c
+int								exec_builtin_exit(char **args, t_shell *shell,
+									int saved_stdout, int saved_stdin);
 
 // export_utils.c
 void							sort_export(char **export);
@@ -97,17 +110,29 @@ int								is_valid_identifier(char *str);
 
 // error_exit.c
 void							print_cmd_error(char *cmd, char *msg);
-void							exit_exec_error(char *cmd, char *path,
-									t_shell *shell);
+int								validate_exec_path(char *cmd, char *path);
 
 // free.c
 void							free_array(char **arr);
+void							cleanup_process_state(t_shell *shell,
+									t_ast_node *ast_root,
+									t_token *token_list);
 void							cleanup_shell(t_shell *shell);
 
 // main_helpers.c
 void							interactive_signals(void);
 void							execution_signals(void);
-char							**copy_envp(char **envp);
+char							**free_partial_copy(char **copy, int count);
 int								init_shell(t_shell *shell, char **envp);
+
+// main_input.c
+char							**copy_envp(char **envp);
+char							*read_noninteractive_line(void);
+
+// main_loop.c
+void							expand_entire_tree(t_ast_node *node, char **env,
+									int last_status);
+void							process_command(t_shell *shell, char *input,
+									int interactive);
 
 #endif

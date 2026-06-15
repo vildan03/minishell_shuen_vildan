@@ -12,6 +12,7 @@ t_ast_node	*parse_command(t_token *start, t_token *end)
 		return (NULL);
 	extract_redirections(node, start, end);
 	node->args = build_args_array(start, end);
+	// debug_print_command(node);
 	return (node);
 }
 
