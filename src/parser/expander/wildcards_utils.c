@@ -1,19 +1,18 @@
 # include "expander.h"
 
-static bool	match_pattern_recursive(char *pattern, char *str)
+static bool	match_pattern_recursive(char *pattern, char *filename)
 {
-	while (*pattern == '*' && pattern[1] == '*')
-		pattern++;
 	if (*pattern == '\0')
-		return (*str == '\0');
+		return (*filename == '\0');
 	if (*pattern == '*')
 	{
-		if (match_pattern_recursive(pattern + 1, str))
+		if (match_pattern_recursive(pattern + 1, filename))
 			return (true);
-		return (*str != '\0' && match_pattern_recursive(pattern, str + 1));
+		return (*filename != '\0'
+			&& match_pattern_recursive(pattern, filename + 1));
 	}
-	if (*str != '\0' && *pattern == *str)
-		return (match_pattern_recursive(pattern + 1, str + 1));
+	if (*filename != '\0' && *pattern == *filename)
+		return (match_pattern_recursive(pattern + 1, filename + 1));
 	return (false);
 }
 
