@@ -88,7 +88,6 @@ t_token	*get_last_token(t_token *start, t_token *end)
 
 	current = start;
 	last_token = NULL;
-	// We added: && current->type != TOKEN_EOF
 	while (current != end && current->type != TOKEN_EOF)
 	{
 		last_token = current;

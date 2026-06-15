@@ -15,18 +15,6 @@ bool	is_word(char x)
 	return (true);
 }
 
-void	print_tokens(t_token *token_list)
-{
-	t_token	*current;
-
-	current = token_list;
-	while (current->type != TOKEN_EOF)
-	{
-		printf("%d = %s\n", current->type, current->value);
-		current = current->next;
-	}
-}
-
 void	free_token_list(t_token *token)
 {
 	t_token	*current;

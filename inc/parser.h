@@ -84,7 +84,6 @@ t_token					*construct_token_list(char *inpit, t_token *token_list);
 bool					ft_isspace(char a);
 bool					is_word(char x);
 void					free_token_list(t_token *token);
-void	print_tokens(t_token *token_list); // REMOVE??
 
 // SYNTAX_CHECKER ---------------------------------------------------
 // check_syntax.c
@@ -95,11 +94,6 @@ bool					is_redir(int x);
 bool					is_binary_op(int type);
 
 // BUILD_AST --------------------------------------------------------
-// print_ast.c
-void					print_spaces(int depth);
-void					print_command_node(t_ast_node *node);
-void					print_ast(t_ast_node *node, int depth);
-
 // build_ast_utils.c
 void					extract_redirections(t_ast_node *node, t_token *start,
 							t_token *end);
@@ -127,8 +121,5 @@ t_ast_node				*parse_logic(t_token *start, t_token *end);
 void					free_string_array(char **arr);
 void					free_redir(t_redir *head);
 void					free_ast(t_ast_node *node);
-
-// redir_ast_debug.c
-void					debug_print_command(t_ast_node *node);
 
 #endif
