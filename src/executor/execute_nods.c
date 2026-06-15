@@ -1,4 +1,5 @@
 #include "../../inc/executor.h"
+#include "../../inc/expander.h"
 #include "../../inc/minishell.h"
 
 int	exec_command(t_ast_node *node, t_shell *shell)
@@ -9,6 +10,7 @@ int	exec_command(t_ast_node *node, t_shell *shell)
 		return (exec_redir_only(node));
 	if (!node->args || !node->args[0])
 		return (0);
+	expand_wildcards(node);
 	if (is_builtin(node->args[0]))
 		return (exec_builtin_with_redir(node, shell));
 	return (exec_simple_command(node, shell));
