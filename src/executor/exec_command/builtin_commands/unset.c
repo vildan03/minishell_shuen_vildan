@@ -2,7 +2,7 @@
 #include "../../../../inc/executor.h"
 #include "../../../../inc/minishell.h"
 
-int	find_matching_key(char *env_line, char *key)
+static int	find_matching_key(char *env_line, char *key)
 {
 	int	i;
 
@@ -13,6 +13,7 @@ int	find_matching_key(char *env_line, char *key)
 		return (1);
 	return (0);
 }
+
 static void	remove_env_index(char **arr, int index)
 {
 	free(arr[index]);

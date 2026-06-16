@@ -1,6 +1,7 @@
 #include "expander.h"
 
-char	*extract_and_replace_var(char *str, int *i, char **env, int last_status)
+static char	*extract_and_replace_var(char *str, int *i, char **env,
+		int last_status)
 {
 	int		start;
 	char	*key;
@@ -21,7 +22,7 @@ char	*extract_and_replace_var(char *str, int *i, char **env, int last_status)
 	return (val_dup);
 }
 
-char	*process_var(char *res, char *raw, int *i, char **env, int status)
+static char	*process_var(char *res, char *raw, int *i, char **env, int status)
 {
 	char	*tmp;
 
@@ -80,23 +81,23 @@ static void	filter_empty_args(t_ast_node *node, char **new_args)
 	node->args = new_args;
 }
 
-void unmask_args(char **args)
+static void	unmask_args(char **args)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (args && args[i])
-    {
-        j = 0;
-        while (args[i][j])
-        {
-            if (args[i][j] == 1)
-                args[i][j] = '*';
-            j++;
-        }
-        i++;
-    }
+	i = 0;
+	while (args && args[i])
+	{
+		j = 0;
+		while (args[i][j])
+		{
+			if (args[i][j] == 1)
+				args[i][j] = '*';
+			j++;
+		}
+		i++;
+	}
 }
 
 void	expand_command_args(t_ast_node *node, char **env, int last_status)

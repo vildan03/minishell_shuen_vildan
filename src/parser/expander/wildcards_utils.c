@@ -50,7 +50,7 @@ bool	has_unquoted_star(char *str)
 	return (false);
 }
 
-char	**add_match_to_array(char **matches, char *new_match)
+static char	**add_match_to_array(char **matches, char *new_match)
 {
 	int		target_index;
 	int		j;
@@ -61,8 +61,8 @@ char	**add_match_to_array(char **matches, char *new_match)
 	count = 0;
 	while (matches && matches[count])
 		count++;
-	while (target_index < count
-		&& ft_strcmp(matches[target_index], new_match) < 0)
+	while (target_index < count && ft_strcmp(matches[target_index],
+			new_match) < 0)
 		target_index++;
 	new_array = malloc(sizeof(char *) * (count + 2));
 	if (!new_array)

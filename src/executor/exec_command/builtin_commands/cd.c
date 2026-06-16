@@ -21,7 +21,7 @@ static int	print_cd_errno(char *target)
 	return (print_cd_error(target, strerror(errno)));
 }
 
-char	*get_cd_target(char **args, t_shell *shell)
+static char	*get_cd_target(char **args, t_shell *shell)
 {
 	char	*target;
 
@@ -48,6 +48,7 @@ char	*get_cd_target(char **args, t_shell *shell)
 	}
 	return (args[1]);
 }
+
 static int	update_cd_state(t_shell *shell, char **args, char *old_pwd,
 		char *new_pwd)
 {

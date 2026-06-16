@@ -52,7 +52,6 @@ int								apply_redirections(t_redir *redir);
 
 // cd.c
 int								exec_builtin_cd(char **args, t_shell *shell);
-char							*get_cd_target(char **args, t_shell *shell);
 
 // env_utils.c
 char							*get_env_value_executor(char **envp, char *key);
@@ -101,7 +100,6 @@ int								update_export_value(t_shell *shell, char *key,
 
 // unset.c
 int								exec_builtin_unset(char **args, t_shell *shell);
-int								find_matching_key(char *env_line, char *key);
 
 // utils.c
 int								is_builtin(char *cmd);
