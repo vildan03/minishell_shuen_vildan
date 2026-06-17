@@ -19,6 +19,14 @@ static int	finish_heredoc(int status, char *line, void (*old_quit)(int))
 	return (status);
 }
 
+static void	print_heredoc_warning(char *delimiter)
+{
+	ft_putstr_fd("minishell: warning: here-document delimited by ", 2);
+	ft_putstr_fd("end-of-file (wanted `", 2);
+	ft_putstr_fd(delimiter, 2);
+	ft_putendl_fd("')", 2);
+}
+
 static int	handle_heredoc_line(int write_fd, char *line, t_redir *redir,
 		t_shell *shell)
 {
@@ -62,6 +70,7 @@ int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 		else
 			line = read_noninteractive_line();
 	}
+	print_heredoc_warning(redir->file);
 	return (finish_heredoc(0, NULL, old_quit));
 }
 
