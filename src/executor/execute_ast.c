@@ -1,5 +1,5 @@
-#include "../../inc/executor.h"
-#include "../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 int	exec_ast(t_ast_node *node, t_shell *shell)
 {

@@ -1,5 +1,5 @@
-#include "../../../../inc/executor.h"
-#include "../../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 static void	exit_with_cleanup(t_shell *shell, int exit_code, int saved_stdout,
 		int saved_stdin)

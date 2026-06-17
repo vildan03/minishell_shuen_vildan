@@ -1,5 +1,5 @@
-#include "../../inc/executor.h"
-#include "../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status)
 {

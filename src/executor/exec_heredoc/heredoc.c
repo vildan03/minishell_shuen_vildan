@@ -1,5 +1,5 @@
-#include "../../../inc/executor.h"
-#include "../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 static int	write_heredoc_line(int fd, char *line)
 {

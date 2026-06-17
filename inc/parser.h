@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "minishell.h"
+#include "minishell.h"
 
 // LEXER ---------------------------------------------------------
 // error_handling.c
