@@ -1,6 +1,20 @@
 #include "minishell.h"
 #include "parser.h"
 
+static bool	has_quotes(char *value)
+{
+	int	i;
+
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' || value[i] == '"')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 int	create_and_append_redir(t_ast_node *node, t_token *current)
 {
 	t_redir	*new_redir;
@@ -12,6 +26,8 @@ int	create_and_append_redir(t_ast_node *node, t_token *current)
 		return (0);
 	new_redir->type = translate_token_to_redir(current->type);
 	new_redir->file = ft_strdup(current->next->value);
+	new_redir->quoted = (new_redir->type == REDIR_HEREDOC
+			&& has_quotes(current->next->value));
 	if (!new_redir->file)
 	{
 		free(new_redir);

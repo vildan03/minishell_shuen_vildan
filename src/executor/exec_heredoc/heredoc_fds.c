@@ -1,13 +1,13 @@
 #include "../../../inc/executor.h"
 #include "../../../inc/minishell.h"
 
-int	create_heredoc_fd(char *delimiter)
+int	create_heredoc_fd(t_redir *redir, t_shell *shell)
 {
 	int	fd[2];
 
 	if (pipe(fd) == -1)
 		return (perror("pipe"), -1);
-	if (fill_heredoc_pipe(fd[1], delimiter) != 0)
+	if (fill_heredoc_pipe(fd[1], redir, shell) != 0)
 	{
 		close(fd[0]);
 		close(fd[1]);
@@ -61,7 +61,7 @@ int	next_heredoc_fd(t_hd_fd **head)
 	return (fd);
 }
 
-int	collect_heredoc_fds(t_redir *redir, t_hd_fd **head)
+int	collect_heredoc_fds(t_redir *redir, t_hd_fd **head, t_shell *shell)
 {
 	int	fd;
 
@@ -69,7 +69,7 @@ int	collect_heredoc_fds(t_redir *redir, t_hd_fd **head)
 	{
 		if (redir->type == REDIR_HEREDOC)
 		{
-			fd = process_heredoc(redir);
+			fd = process_heredoc(redir, shell);
 			if (fd == -1 || append_heredoc_fd(head, fd) != 0)
 				return (clear_heredoc_fds(*head), *head = NULL, 1);
 		}

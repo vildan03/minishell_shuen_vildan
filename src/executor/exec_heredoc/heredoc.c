@@ -1,4 +1,5 @@
 #include "../../../inc/executor.h"
+#include "../../../inc/expander.h"
 #include "../../../inc/minishell.h"
 
 static int	write_heredoc_line(int fd, char *line)
@@ -10,13 +11,6 @@ static int	write_heredoc_line(int fd, char *line)
 	return (0);
 }
 
-static int	is_delimiter(char *line, char *delimiter)
-{
-	if (!line || !delimiter)
-		return (0);
-	return (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0);
-}
-
 static int	finish_heredoc(int status, char *line, void (*old_quit)(int))
 {
 	if (line)
@@ -25,28 +19,55 @@ static int	finish_heredoc(int status, char *line, void (*old_quit)(int))
 	return (status);
 }
 
-int	fill_heredoc_pipe(int write_fd, char *delimiter)
+static int	handle_heredoc_line(int write_fd, char *line, t_redir *redir,
+		t_shell *shell)
+{
+	char	*content;
+
+	content = line;
+	if (!redir->quoted)
+		content = expand_heredoc_line(line, shell->env, shell->last_exit_status);
+	if (!content)
+		return (1);
+	if (write_heredoc_line(write_fd, content) != 0)
+	{
+		if (content != line)
+			free(content);
+		return (1);
+	}
+	if (content != line)
+		free(content);
+	return (0);
+}
+
+int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 {
 	char	*line;
 	void	(*old_quit)(int);
 
 	old_quit = signal(SIGQUIT, SIG_IGN);
-	line = readline("> ");
+	if (isatty(STDIN_FILENO))
+		line = readline("> ");
+	else
+		line = read_noninteractive_line();
 	while (line)
 	{
-		if (is_delimiter(line, delimiter))
+		if (ft_strncmp(line, redir->file, ft_strlen(redir->file) + 1) == 0)
 			return (finish_heredoc(0, line, old_quit));
-		if (write_heredoc_line(write_fd, line) != 0)
+		if (handle_heredoc_line(write_fd, line, redir, shell) != 0)
 			return (finish_heredoc(1, line, old_quit));
 		free(line);
-		line = readline("> ");
+		if (isatty(STDIN_FILENO))
+			line = readline("> ");
+		else
+			line = read_noninteractive_line();
 	}
 	return (finish_heredoc(0, NULL, old_quit));
 }
 
-int	process_heredoc(t_redir *redir)
+int	process_heredoc(t_redir *redir, t_shell *shell)
 {
 	if (!redir || redir->type != REDIR_HEREDOC)
 		return (-1);
-	return (create_heredoc_fd(redir->file));
+	return (create_heredoc_fd(redir, shell));
 }

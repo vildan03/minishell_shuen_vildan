@@ -33,7 +33,7 @@ static void	run_child_command(t_ast_node *node, t_shell *shell, char *path,
 	free(shell->current_input);
 	shell->current_input = NULL;
 	free(path);
-	if (apply_redirections(node->redir) == -1)
+	if (apply_redirections(node->redir, shell) == -1)
 		(cleanup_process_state(shell, ast_root, token_list), exit(1));
 	path = find_command_path(node->args[0], shell->env);
 	execve(path, node->args, shell->env);

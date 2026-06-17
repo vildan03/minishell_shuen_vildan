@@ -8,6 +8,27 @@ void	toggle_quotes(char c, int *sq, int *dq)
 		*dq = !(*dq);
 }
 
+static char	*strip_heredoc_quotes(char *raw)
+{
+	char	*clean;
+	int		i;
+	int		j;
+
+	clean = malloc(ft_strlen(raw) + 1);
+	if (!clean)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (raw[i])
+	{
+		if (raw[i] != '\'' && raw[i] != '"')
+			clean[j++] = raw[i];
+		i++;
+	}
+	clean[j] = '\0';
+	return (clean);
+}
+
 void	expand_redirections(t_redir *redir_list, char **env, int status)
 {
 	t_redir	*current;
@@ -16,7 +37,10 @@ void	expand_redirections(t_redir *redir_list, char **env, int status)
 	current = redir_list;
 	while (current != NULL)
 	{
-		expanded_file = expand_string(current->file, env, status);
+		if (current->type == REDIR_HEREDOC)
+			expanded_file = strip_heredoc_quotes(current->file);
+		else
+			expanded_file = expand_string(current->file, env, status);
 		free(current->file);
 		current->file = expanded_file;
 		current = current->next;

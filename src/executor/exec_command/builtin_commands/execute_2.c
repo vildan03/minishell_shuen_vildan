@@ -33,7 +33,7 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 			close(saved_stdin);
 		return (perror("dup"), 1);
 	}
-	if (apply_redirections(node->redir) == -1)
+	if (apply_redirections(node->redir, shell) == -1)
 		return (restore_builtin_fds(saved_stdout, saved_stdin, 1));
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)
 		return (exec_builtin_exit(node->args, shell, saved_stdout,
