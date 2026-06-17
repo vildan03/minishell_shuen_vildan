@@ -21,6 +21,11 @@ static char	*strip_heredoc_quotes(char *raw)
 	j = 0;
 	while (raw[i])
 	{
+		if (raw[i] == '$' && raw[i + 1] == '"' && (i == 0 || raw[i - 1] != '$'))
+		{
+			i++;
+			continue ;
+		}
 		if (raw[i] != '\'' && raw[i] != '"')
 			clean[j++] = raw[i];
 		i++;
