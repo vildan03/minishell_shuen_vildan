@@ -6,7 +6,7 @@ static bool	is_valid_combo(t_token *token, int *paren_count)
 	int	next;
 
 	type = token->type;
-	next = TOKEN_EOF;
+	next = token->next->type;
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
