@@ -1,7 +1,6 @@
-#include "../../../../inc/executor.h"
-#include "../../../../inc/expander.h"
-#include "../../../../inc/minishell.h"
-#include <sys/wait.h>
+#include "executor.h"
+#include "expander.h"
+#include "minishell.h"
 
 int	get_child_status(int status)
 {
