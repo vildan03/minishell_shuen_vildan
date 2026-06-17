@@ -1,12 +1,5 @@
 #include "parser.h"
 
-bool	ft_isspace(char a)
-{
-	if (a == ' ' || (a >= '\t' && a <= '\r'))
-		return (true);
-	return (false);
-}
-
 bool	is_word(char x)
 {
 	if (x == '\t' || x == ' ' || x == '|' || x == '<' || x == '>' || x == '('

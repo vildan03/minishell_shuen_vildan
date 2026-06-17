@@ -1,6 +1,6 @@
-#include "../../inc/executor.h"
-#include "../../inc/expander.h"
-#include "../../inc/minishell.h"
+#include "executor.h"
+#include "expander.h"
+#include "minishell.h"
 
 int	exec_command(t_ast_node *node, t_shell *shell)
 {

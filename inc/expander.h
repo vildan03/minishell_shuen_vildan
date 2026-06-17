@@ -1,8 +1,9 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-# include "parser.h"
+#include "minishell.h"
 # include <dirent.h>
+# include <sys/types.h>
 
 // expander.c
 char	*expand_string(char *raw, char **env, int status);

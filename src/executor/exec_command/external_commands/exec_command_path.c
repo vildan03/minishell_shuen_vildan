@@ -1,5 +1,5 @@
-#include "../../../../inc/executor.h"
-#include "../../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 static char	*join_cmd_path(char *dir, char *cmd)
 {

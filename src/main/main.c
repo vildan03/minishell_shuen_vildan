@@ -1,5 +1,5 @@
-#include "../../inc/executor.h"
-#include "../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 volatile sig_atomic_t	g_exit_status = 0;
 

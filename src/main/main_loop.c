@@ -1,7 +1,7 @@
-#include "../../inc/executor.h"
-#include "../../inc/expander.h"
-#include "../../inc/minishell.h"
-#include "../../inc/parser.h"
+#include "executor.h"
+#include "expander.h"
+#include "minishell.h"
+#include "parser.h"
 
 void	expand_entire_tree(t_ast_node *node, char **env, int last_status)
 {
