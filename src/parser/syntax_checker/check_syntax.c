@@ -39,11 +39,11 @@ int	check_valid_syntax(t_token *token)
 				token->value), 1);
 	while (current->type != TOKEN_EOF)
 	{
-		if (is_valid_combo(current, &paren_count) == false)
+		if (current->type == TOKEN_AMP || is_valid_combo(current, &paren_count) == false)
 		{
-			if (current->next->type == TOKEN_EOF)
+			if (!current->next || current->next->type == TOKEN_EOF)
 				return (print_syntax_err("syntax error near unexpected token ",
-						"newline"), 1);
+						"newline"), 2);
 			return (print_syntax_err("syntax error near unexpected token ",
 					current->next->value), 1);
 		}

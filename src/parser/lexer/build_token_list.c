@@ -52,6 +52,8 @@ int	get_token_type(char *input, int i)
 		type = TOKEN_OR;
 	else if (input[i] == '&' && input[i + 1] == '&')
 		type = TOKEN_AND;
+	else if (input[i] == '&')
+		type = TOKEN_AMP;
 	else if (input[i] == '>')
 		type = TOKEN_REDIR_OUT;
 	else if (input[i] == '<')
