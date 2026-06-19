@@ -25,17 +25,30 @@ static void	handle_child_error(char *path, t_ast_node *node, t_shell *shell,
 	exit(126);
 }
 
-static void	run_child_command(t_ast_node *node, t_shell *shell, char *path,
+static void	exit_invalid_path(char *path, t_shell *shell, t_ast_node *ast_root,
+		t_token *token_list, int status)
+{
+	free(path);
+	cleanup_process_state(shell, ast_root, token_list);
+	exit(status);
+}
+
+static void	run_child_command(t_ast_node *node, t_shell *shell,
 		t_ast_node *ast_root, t_token *token_list)
 {
+	char	*path;
+	int		status;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	free(shell->current_input);
 	shell->current_input = NULL;
-	free(path);
 	if (apply_redirections(node->redir, shell) == -1)
 		(cleanup_process_state(shell, ast_root, token_list), exit(1));
 	path = find_command_path(node->args[0], shell->env);
+	status = validate_exec_path(node->args[0], path);
+	if (status != 0)
+		exit_invalid_path(path, shell, ast_root, token_list, status);
 	execve(path, node->args, shell->env);
 	handle_child_error(path, node, shell, ast_root, token_list);
 }
@@ -52,8 +65,6 @@ static int	wait_simple_command(pid_t pid)
 int	exec_simple_command(t_ast_node *node, t_shell *shell)
 {
 	pid_t		pid;
-	int			path_status;
-	char		*path;
 	t_ast_node	*ast_root;
 	t_token		*token_list;
 
@@ -61,15 +72,10 @@ int	exec_simple_command(t_ast_node *node, t_shell *shell)
 		return (0);
 	ast_root = shell->ast_root;
 	token_list = shell->token_list;
-	path = find_command_path(node->args[0], shell->env);
-	path_status = validate_exec_path(node->args[0], path);
-	if (path_status != 0)
-		return (free(path), path_status);
 	pid = fork();
 	if (pid == -1)
-		return (free(path), perror("fork"), 1);
+		return (perror("fork"), 1);
 	if (pid == 0)
-		run_child_command(node, shell, path, ast_root, token_list);
-	free(path);
+		run_child_command(node, shell, ast_root, token_list);
 	return (wait_simple_command(pid));
 }
