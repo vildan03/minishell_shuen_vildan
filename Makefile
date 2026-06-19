@@ -11,6 +11,8 @@ LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
+LIBFT_SRCS  = $(wildcard $(LIBFT_DIR)/*.c)
+LIBFT_HDRS  = $(wildcard $(LIBFT_DIR)/*.h)
 
 SRCS		= src/main/main.c \
 					src/main/main_helpers.c \
@@ -56,13 +58,13 @@ SRCS		= src/main/main.c \
 
 OBJS        = $(SRCS:.c=.o)
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_SRCS) $(LIBFT_HDRS) $(LIBFT_DIR)/Makefile
 	@echo "Compiling libft..."
 	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 	@echo "Linking $(NAME)..."
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_FLAGS) -lreadline -o $(NAME)
 
