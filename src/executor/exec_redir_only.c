@@ -17,7 +17,7 @@ static int	restore_redir_fds(int saved_stdout, int saved_stdin, int status)
 	return (status);
 }
 
-int	exec_redir_only(t_ast_node *node)
+int	exec_redir_only(t_ast_node *node, t_shell *shell)
 {
 	int	saved_stdout;
 	int	saved_stdin;
@@ -32,7 +32,7 @@ int	exec_redir_only(t_ast_node *node)
 			close(saved_stdin);
 		return (perror("dup"), 1);
 	}
-	if (apply_redirections(node->redir) == -1)
+	if (apply_redirections(node->redir, shell) == -1)
 		return (restore_redir_fds(saved_stdout, saved_stdin, 1));
 	return (restore_redir_fds(saved_stdout, saved_stdin, 0));
 }

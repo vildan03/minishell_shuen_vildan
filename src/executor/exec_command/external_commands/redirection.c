@@ -2,7 +2,7 @@
 #include "minishell.h"
 #include "parser.h"
 
-static int	open_redirection_fd(t_redir *redir) //
+static int	open_redirection_fd(t_redir *redir, t_shell *shell) //
 {
 	if (redir->type == REDIR_OUT)
 		return (open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
@@ -11,7 +11,7 @@ static int	open_redirection_fd(t_redir *redir) //
 	if (redir->type == REDIR_IN)
 		return (open(redir->file, O_RDONLY));
 	if (redir->type == REDIR_HEREDOC)
-		return (process_heredoc(redir));
+		return (process_heredoc(redir, shell));
 	return (-1);
 }
 
@@ -22,7 +22,8 @@ static int	get_target_fd(t_redir_type type) //
 	return (STDOUT_FILENO);
 }
 
-static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds) //
+static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
+		t_shell *shell) //
 {
 	int fd;
 	int target_fd;
@@ -30,7 +31,7 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds) //
 	if (redir->type == REDIR_HEREDOC)
 		fd = next_heredoc_fd(heredoc_fds);
 	else
-		fd = open_redirection_fd(redir);
+		fd = open_redirection_fd(redir, shell);
 	if (fd == -1)
 	{
 		clear_heredoc_fds(*heredoc_fds);
@@ -45,16 +46,16 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds) //
 	return (0);
 }
 
-int	apply_redirections(t_redir *redir) //
+int	apply_redirections(t_redir *redir, t_shell *shell) //
 {
 	t_hd_fd *heredoc_fds;
 
 	heredoc_fds = NULL;
-	if (collect_heredoc_fds(redir, &heredoc_fds) != 0)
+	if (collect_heredoc_fds(redir, &heredoc_fds, shell) != 0)
 		return (-1);
 	while (redir)
 	{
-		if (apply_one_redirection(redir, &heredoc_fds) == -1)
+		if (apply_one_redirection(redir, &heredoc_fds, shell) == -1)
 			return (-1);
 		redir = redir->next;
 	}

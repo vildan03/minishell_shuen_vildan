@@ -24,22 +24,24 @@ int								exec_or(t_ast_node *node, t_shell *shell);
 int								exec_subshell(t_ast_node *node, t_shell *shell);
 
 // exec_redir_only.c
-int								exec_redir_only(t_ast_node *node);
+int								exec_redir_only(t_ast_node *node, t_shell *shell);
 
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
 
 // heredoc.c
-int								process_heredoc(t_redir *redir);
+int								process_heredoc(t_redir *redir, t_shell *shell);
 
 // heredoc_fds.c
-int								create_heredoc_fd(char *delimiter);
-int								fill_heredoc_pipe(int write_fd,
-									char *delimiter);
+int								create_heredoc_fd(t_redir *redir, t_shell *shell);
+int								fill_heredoc_pipe(int write_fd, t_redir *redir,
+										t_shell *shell);
 void							clear_heredoc_fds(t_hd_fd *head);
 int								collect_heredoc_fds(t_redir *redir,
-									t_hd_fd **head);
+										t_hd_fd **head, t_shell *shell);
 int								next_heredoc_fd(t_hd_fd **head);
+char							*expand_heredoc_line(char *line, char **env,
+										int status);
 
 // exec_simple_command.c
 int								get_child_status(int status);
@@ -48,7 +50,7 @@ int								exec_simple_command(t_ast_node *node,
 char							*find_command_path(char *cmd, char **envp);
 
 // redirection.c
-int								apply_redirections(t_redir *redir);
+int								apply_redirections(t_redir *redir, t_shell *shell);
 
 // cd.c
 int								exec_builtin_cd(char **args, t_shell *shell);
