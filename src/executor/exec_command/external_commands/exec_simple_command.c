@@ -1,7 +1,6 @@
-#include "../../../../inc/executor.h"
-#include "../../../../inc/expander.h"
-#include "../../../../inc/minishell.h"
-#include <sys/wait.h>
+#include "executor.h"
+#include "expander.h"
+#include "minishell.h"
 
 int	get_child_status(int status)
 {
@@ -70,6 +69,8 @@ int	exec_simple_command(t_ast_node *node, t_shell *shell)
 
 	if (!node || !node->args || !node->args[0])
 		return (0);
+	if(ft_strncmp(node->args[0], "!", 2) == 0 && node->args[1] == NULL)
+		return(shell->last_exit_status = 1, 1);
 	ast_root = shell->ast_root;
 	token_list = shell->token_list;
 	pid = fork();

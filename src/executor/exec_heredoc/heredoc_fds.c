@@ -1,5 +1,5 @@
-#include "../../../inc/executor.h"
-#include "../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 int	create_heredoc_fd(t_redir *redir, t_shell *shell)
 {

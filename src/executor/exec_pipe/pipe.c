@@ -1,6 +1,6 @@
 
-#include "../../../inc/executor.h"
-#include "../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 static void	exit_pipe_error(int fd[2], t_shell *shell)
 {

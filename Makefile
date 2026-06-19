@@ -46,11 +46,11 @@ SRCS		= src/main/main.c \
 			  src/parser/lexer/build_token_list.c \
 			  src/parser/lexer/error_handling.c \
 			  src/parser/lexer/token_list_utils.c \
-			  src/parser/expander/expander_utils.c \
-			  src/parser/expander/expander_utils_2.c \
-			  src/parser/expander/expander.c \
-			  src/parser/expander/wildcards_utils.c \
-			  src/parser/expander/wildcards_utils_2.c \
+			  src/expander/expander_utils.c \
+			  src/expander/expander_utils_2.c \
+			  src/expander/expander.c \
+			  src/expander/wildcards_utils.c \
+			  src/expander/wildcards_utils_2.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c
 

@@ -1,4 +1,4 @@
-#include "../../inc/executor.h"
+#include "executor.h"
 #include <errno.h>
 
 static char	*append_input_char(char *line, size_t len, char c)

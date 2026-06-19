@@ -1,6 +1,6 @@
 
-#include "../../../../inc/executor.h"
-#include "../../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 int	exec_builtin(t_ast_node *node, t_shell *shell)
 {
@@ -20,6 +20,8 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 		return (exec_builtin_env(node->args, shell));
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)
 		return (exec_builtin_exit(node->args, shell, -1, -1));
+	if (ft_strncmp(node->args[0], ":", 2) == 0)
+        	return (0);
 	return (1);
 }
 

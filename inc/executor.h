@@ -1,14 +1,14 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "minishell.h"
+#include "minishell.h"
 # include <signal.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_exit_status;
 
-typedef struct s_hd_fd //
+typedef struct s_hd_fd
 {
 	int fd;
 	struct s_hd_fd *next;

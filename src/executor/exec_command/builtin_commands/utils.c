@@ -1,6 +1,6 @@
 
-#include "../../../../inc/executor.h"
-#include "../../../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 int	is_builtin(char *cmd)
 {
@@ -19,6 +19,8 @@ int	is_builtin(char *cmd)
 	if (ft_strncmp(cmd, "env", 4) == 0)
 		return (1);
 	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (1);
+	if(ft_strncmp(cmd, ":", 2) == 0)
 		return (1);
 	return (0);
 }

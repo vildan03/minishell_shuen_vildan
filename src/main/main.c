@@ -1,5 +1,5 @@
-#include "../../inc/executor.h"
-#include "../../inc/minishell.h"
+#include "executor.h"
+#include "minishell.h"
 
 volatile sig_atomic_t	g_exit_status = 0;
 
@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
 			break ;
+		dprintf(2, "DEBUG - Exit status saved: %d\n", shell.last_exit_status);
 	}
 	free_array(shell.env);
 	free_array(shell.export);
