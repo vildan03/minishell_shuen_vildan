@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
 			break ;
+		dprintf(2, "DEBUG - Exit status saved: %d\n", shell.last_exit_status);
 	}
 	free_array(shell.env);
 	free_array(shell.export);

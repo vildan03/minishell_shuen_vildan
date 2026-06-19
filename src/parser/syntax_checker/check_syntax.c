@@ -6,7 +6,10 @@ static bool	is_valid_combo(t_token *token, int *paren_count)
 	int	next;
 
 	type = token->type;
-	next = TOKEN_EOF;
+	if(token->next)
+		next = token->next->type;
+	else
+		next = TOKEN_EOF;
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
@@ -36,11 +39,11 @@ int	check_valid_syntax(t_token *token)
 				token->value), 1);
 	while (current->type != TOKEN_EOF)
 	{
-		if (is_valid_combo(current, &paren_count) == false)
+		if (current->type == TOKEN_AMP || is_valid_combo(current, &paren_count) == false)
 		{
-			if (current->next->type == TOKEN_EOF)
+			if (!current->next || current->next->type == TOKEN_EOF)
 				return (print_syntax_err("syntax error near unexpected token ",
-						"newline"), 1);
+						"newline"), 2);
 			return (print_syntax_err("syntax error near unexpected token ",
 					current->next->value), 1);
 		}
