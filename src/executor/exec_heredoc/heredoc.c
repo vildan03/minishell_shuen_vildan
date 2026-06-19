@@ -73,9 +73,3 @@ int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 	return (finish_heredoc(0, NULL, old_quit));
 }
 
-int	process_heredoc(t_redir *redir, t_shell *shell)
-{
-	if (!redir || redir->type != REDIR_HEREDOC)
-		return (-1);
-	return (create_heredoc_fd(redir, shell));
-}

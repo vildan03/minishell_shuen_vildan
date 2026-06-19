@@ -1,6 +1,12 @@
 #include "../../../inc/executor.h"
 #include "../../../inc/expander.h"
 
+int	process_heredoc(t_redir *redir, t_shell *shell)
+{
+	if (!redir || redir->type != REDIR_HEREDOC)
+		return (-1);
+	return (create_heredoc_fd(redir, shell));
+}
 static char	*expand_heredoc_var(char *line, int *i, char **env, int status)
 {
 	int		start;

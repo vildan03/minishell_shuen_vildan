@@ -2,6 +2,12 @@
 #include "executor.h"
 #include "minishell.h"
 
+static void	print_error_prefix(void)
+{
+	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+		ft_putstr_fd("minishell: ", 2);
+}
+
 static int	is_directory(char *path)
 {
 	struct stat	st;
@@ -13,7 +19,7 @@ static int	is_directory(char *path)
 
 void	print_cmd_error(char *cmd, char *msg)
 {
-	ft_putstr_fd("minishell: ", 2);
+	print_error_prefix();
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(msg, 2);
