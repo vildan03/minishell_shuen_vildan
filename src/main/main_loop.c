@@ -24,6 +24,7 @@ static void	print_syntax_input(char *input, int interactive)
 {
 	if (interactive || !input)
 		return ;
+	ft_putstr_fd("minishell: line 1: ", 2);
 	ft_putstr_fd("`", 2);
 	ft_putstr_fd(input, 2);
 	ft_putendl_fd("'", 2);

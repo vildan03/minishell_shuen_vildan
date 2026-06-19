@@ -6,6 +6,8 @@ static void	print_error_prefix(void)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 		ft_putstr_fd("minishell: ", 2);
+	else
+		ft_putstr_fd("minishell: line 1: ", 2);
 }
 
 static int	is_directory(char *path)
