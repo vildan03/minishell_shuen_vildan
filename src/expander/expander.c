@@ -39,16 +39,26 @@ char	*expand_string(char *raw, char **env, int status)
 	int		sq;
 	int		dq;
 	int		i;
+	int		has_quotes;
 	char	*res;
 
 	sq = 0;
 	dq = 0;
 	i = 0;
+	has_quotes = 0;
 	res = ft_strdup("");
 	while (raw[i])
 	{
 		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
+		{
+			has_quotes = 1;
 			toggle_quotes(raw[i], &sq, &dq);
+		}
+		else if(raw[i] == '$' && !sq && (raw[i + 1] == '"' || raw[i + 1] == '\''))
+		{
+			i++;
+			continue;
+		}
 		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
 		{
 			res = process_var(res, raw, &i, env, status);
@@ -59,6 +69,11 @@ char	*expand_string(char *raw, char **env, int status)
 		else
 			res = append_char(res, raw[i]);
 		i++;
+	}
+	if(res[0] == '\0' && has_quotes)
+	{
+		free(res);
+		res = ft_strdup("\2");
 	}
 	return (res);
 }
@@ -96,6 +111,8 @@ static void	unmask_args(char **args)
 		{
 			if (args[i][j] == 1)
 				args[i][j] = '*';
+			else if(args[i][j] == 2)
+				args[i][j] = '\0';
 			j++;
 		}
 		i++;
