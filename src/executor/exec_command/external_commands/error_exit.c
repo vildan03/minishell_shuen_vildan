@@ -1,6 +1,7 @@
 
 #include "executor.h"
 #include "minishell.h"
+#include <errno.h>
 
 static void	print_error_prefix(void)
 {
@@ -27,21 +28,20 @@ void	print_cmd_error(char *cmd, char *msg)
 	ft_putendl_fd(msg, 2);
 }
 
-static int	command_error(char *cmd, char *msg, int status)
+void	print_errno_error(char *cmd)
 {
-	print_cmd_error(cmd, msg);
-	return (status);
+	print_cmd_error(cmd, strerror(errno));
 }
 
 int	validate_exec_path(char *cmd, char *path)
 {
 	if (!path)
-		return (command_error(cmd, "command not found", 127));
+		return (print_cmd_error(cmd, "command not found"), 127);
 	if (access(path, F_OK) != 0)
-		return (command_error(cmd, "No such file or directory", 127));
+		return (print_cmd_error(cmd, "No such file or directory"), 127);
 	if (is_directory(path))
-		return (command_error(path, "Is a directory", 126));
+		return (print_cmd_error(path, "Is a directory"), 126);
 	if (access(path, X_OK) != 0)
-		return (command_error(path, "Permission denied", 126));
+		return (print_cmd_error(path, "Permission denied"), 126);
 	return (0);
 }

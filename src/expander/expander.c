@@ -45,14 +45,20 @@ char	*expand_string(char *raw, char **env, int status)
 	dq = 0;
 	i = 0;
 	res = ft_strdup("");
-	while (raw[i])
-	{
-		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-			toggle_quotes(raw[i], &sq, &dq);
-		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
+		while (raw[i])
 		{
-			res = process_var(res, raw, &i, env, status);
-			continue ;
+			if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
+				toggle_quotes(raw[i], &sq, &dq);
+			else if (raw[i] == '$' && raw[i + 1] == '"' && !sq
+				&& (i == 0 || raw[i - 1] != '$'))
+			{
+				i++;
+				continue ;
+			}
+			else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
+			{
+				res = process_var(res, raw, &i, env, status);
+				continue ;
 		}
 		else if (raw[i] == '*' && (sq || dq))
 			res = append_char(res, 1);

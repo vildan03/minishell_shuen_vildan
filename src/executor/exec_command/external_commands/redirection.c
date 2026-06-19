@@ -36,7 +36,7 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
 	{
 		clear_heredoc_fds(*heredoc_fds);
 		if (redir->type != REDIR_HEREDOC)
-			perror(redir->file);
+			print_errno_error(redir->file);
 		return (-1);
 	}
 	target_fd = get_target_fd(redir->type);
