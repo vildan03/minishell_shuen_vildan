@@ -13,6 +13,8 @@ static char	*extract_and_replace_var(char *str, int *i, char **env,
 		(*i)++;
 		return (ft_itoa(last_status));
 	}
+	if(ft_isdigit(str[*i]))
+		return((*i)++, ft_strdup(""));
 	start = *i;
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;

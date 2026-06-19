@@ -82,7 +82,7 @@ int	get_token_value(char *input, int *i, t_token *token)
 	}
 	else if (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT
 		|| type == TOKEN_PIPE || type == TOKEN_LEFT_PAREN
-		|| type == TOKEN_RIGHT_PAREN)
+		|| type == TOKEN_RIGHT_PAREN || type == TOKEN_AMP)
 	{
 		token->value = ft_substr(input, *i, 1);
 		(*i)++;
