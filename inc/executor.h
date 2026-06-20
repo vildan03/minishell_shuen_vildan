@@ -45,8 +45,10 @@ char							*expand_heredoc_line(char *line, char **env,
 
 // exec_simple_command.c
 int								get_child_status(int status);
+void							exec_external_child(t_ast_node *node,
+										t_shell *shell);
 int								exec_simple_command(t_ast_node *node,
-									t_shell *shell);
+										t_shell *shell);
 char							*find_command_path(char *cmd, char **envp);
 
 // redirection.c
