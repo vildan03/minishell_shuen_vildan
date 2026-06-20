@@ -17,8 +17,6 @@ t_token					*construct_token_list(char *inpit, t_token *token_list);
 // token_list_utils.c
 bool					ft_isspace(char a);
 bool					is_word(char x);
-int						append_word_char(char **value, char *input, int *i,
-							char in_quotes);
 void					free_token_list(t_token *token);
 
 // SYNTAX_CHECKER ---------------------------------------------------
