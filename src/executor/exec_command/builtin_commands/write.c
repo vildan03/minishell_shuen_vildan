@@ -13,6 +13,8 @@ int	print_env_error(char *arg)
 
 int	print_write_error(char *name)
 {
+	if (errno == EPIPE)
+		return (1);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(name, 2);
 	ft_putstr_fd(": write error: ", 2);

@@ -20,6 +20,16 @@ static void	cleanup_syntax_error(t_shell *shell, t_token *token_list)
 	shell->token_list = NULL;
 }
 
+static void	print_syntax_input(char *input, int interactive)
+{
+	if (interactive || !input)
+		return ;
+	ft_putstr_fd("minishell: line 1: ", 2);
+	ft_putstr_fd("`", 2);
+	ft_putstr_fd(input, 2);
+	ft_putendl_fd("'", 2);
+}
+
 static void	execute_command(t_shell *shell, t_ast_node *ast_root)
 {
 	expand_entire_tree(ast_root, shell->env, shell->last_exit_status);
@@ -42,7 +52,10 @@ void	process_command(t_shell *shell, char *input, int interactive)
 		return ;
 	shell->token_list = token_list;
 	if (check_valid_syntax(token_list) != 0)
+	{
+		print_syntax_input(input, interactive);
 		return (cleanup_syntax_error(shell, token_list));
+	}
 	ast_root = parse_logic(token_list, NULL);
 	if (ast_root)
 	{

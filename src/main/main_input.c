@@ -42,7 +42,11 @@ char	*read_noninteractive_line(void)
 	while (bytes > 0)
 	{
 		if (c == '\n')
-			return (line);
+		{
+			if (line)
+				return (line);
+			return (ft_strdup(""));
+		}
 		line = append_input_char(line, len++, c);
 		if (!line)
 			return (NULL);

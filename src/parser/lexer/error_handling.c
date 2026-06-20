@@ -1,8 +1,16 @@
 #include "parser.h"
 
+static void	print_syntax_prefix(void)
+{
+	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+		ft_putstr_fd("minishell: ", 2);
+	else
+		ft_putstr_fd("minishell: line 1: ", 2);
+}
+
 void	print_syntax_err(char *error_msg, char *additional_msg)
 {
-	ft_putstr_fd("minishell: ", 2);
+	print_syntax_prefix();
 	ft_putstr_fd(error_msg, 2);
 	if (additional_msg != NULL)
 	{

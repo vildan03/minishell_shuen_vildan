@@ -110,6 +110,7 @@ int								is_valid_identifier(char *str);
 
 // error_exit.c
 void							print_cmd_error(char *cmd, char *msg);
+void							print_errno_error(char *cmd);
 int								validate_exec_path(char *cmd, char *path);
 
 // free.c
