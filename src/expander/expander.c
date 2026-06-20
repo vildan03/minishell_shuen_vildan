@@ -97,6 +97,8 @@ static void	unmask_args(char **args)
 	i = 0;
 	while (args && args[i])
 	{
+		if (args[i][0] == 2 && args[i][1] == '\0')
+			args[i][0] = '\0';
 		j = 0;
 		while (args[i][j])
 		{
@@ -111,6 +113,7 @@ static void	unmask_args(char **args)
 void	expand_command_args(t_ast_node *node, char **env, int last_status)
 {
 	int		i;
+	char	*raw;
 	char	*expanded;
 	char	**new_args;
 
@@ -119,8 +122,15 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	i = -1;
 	while (node->args[++i] != NULL)
 	{
-		expanded = expand_string(node->args[i], env, last_status);
-		free(node->args[i]);
+		raw = node->args[i];
+		expanded = expand_string(raw, env, last_status);
+		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"'))
+			&& expanded && expanded[0] == '\0')
+		{
+			free(expanded);
+			expanded = ft_strdup("\2");
+		}
+		free(raw);
 		node->args[i] = expanded;
 	}
 	expand_wildcards(node);
