@@ -13,8 +13,8 @@ static char	*extract_and_replace_var(char *str, int *i, char **env,
 		(*i)++;
 		return (ft_itoa(last_status));
 	}
-	if(ft_isdigit(str[*i]))
-		return((*i)++, ft_strdup(""));
+	if (ft_isdigit(str[*i]))
+		return ((*i)++, ft_strdup(""));
 	start = *i;
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
@@ -34,8 +34,8 @@ static char	*process_var(char *res, char *raw, int *i, char **env, int status)
 	return (res);
 }
 
-char	*expand_string_2(char *raw, char **env, int status, char *res,
-		int *i, int sq, int dq, int *skip_inc)
+char	*expand_string_2(char *raw, char **env, int status, char *res, int *i,
+		int sq, int dq, int *skip_inc)
 {
 	*skip_inc = 0;
 	if (raw[*i] == '$' && !sq && is_env_char(raw[*i + 1]))

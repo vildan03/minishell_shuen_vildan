@@ -33,7 +33,8 @@ static int	handle_heredoc_line(int write_fd, char *line, t_redir *redir,
 
 	content = line;
 	if (!redir->quoted)
-		content = expand_heredoc_line(line, shell->env, shell->last_exit_status);
+		content = expand_heredoc_line(line, shell->env,
+				shell->last_exit_status);
 	if (!content)
 		return (1);
 	if (write_heredoc_line(write_fd, content) != 0)
@@ -72,4 +73,3 @@ int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 	print_heredoc_warning(redir->file);
 	return (finish_heredoc(0, NULL, old_quit));
 }
-

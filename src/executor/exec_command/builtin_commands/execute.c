@@ -21,7 +21,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)
 		return (exec_builtin_exit(node->args, shell, -1, -1));
 	if (ft_strncmp(node->args[0], ":", 2) == 0)
-        	return (0);
+		return (0);
 	return (1);
 }
 

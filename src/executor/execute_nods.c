@@ -53,9 +53,9 @@ int	exec_subshell(t_ast_node *node, t_shell *shell)
 		return (perror("minishell: subshell fork"), 1);
 	if (pid == 0)
 	{
-			if (node->redir && apply_redirections(node->redir, shell) != 0)
-			{
-				cleanup_shell(shell);
+		if (node->redir && apply_redirections(node->redir, shell) != 0)
+		{
+			cleanup_shell(shell);
 			exit(1);
 		}
 		exit_code = exec_ast(node->left, shell);

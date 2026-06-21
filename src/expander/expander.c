@@ -8,15 +8,17 @@ char	*expand_string(char *raw, char **env, int status)
 	int		skip_inc;
 	char	*res;
 
-	sq = 0; dq = 0; i = 0;
+	sq = 0;
+	dq = 0;
+	i = 0;
 	res = ft_strdup("");
 	while (raw[i])
 	{
 		skip_inc = 0;
 		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
 			toggle_quotes(raw[i], &sq, &dq);
-		else if (raw[i] == '$' && raw[i + 1] == '"' && !sq
-			&& (i == 0 || raw[i - 1] != '$'))
+		else if (raw[i] == '$' && raw[i + 1] == '"' && !sq && (i == 0 || raw[i
+				- 1] != '$'))
 		{
 			i++;
 			continue ;
@@ -54,8 +56,8 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	{
 		raw = node->args[i];
 		expanded = expand_string(raw, env, last_status);
-		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"'))
-			&& expanded && expanded[0] == '\0')
+		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"')) && expanded
+					&& expanded[0] == '\0')
 		{
 			free(expanded);
 			expanded = ft_strdup("\2");

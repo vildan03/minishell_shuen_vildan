@@ -2,12 +2,12 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <stdbool.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -72,12 +72,12 @@ typedef struct s_ast_node
 
 typedef struct s_shell
 {
-	char					**env;
-	char					**export;
-	char					*current_input;
-	int						last_exit_status;
-	t_token					*token_list;
-	t_ast_node				*ast_root;
-}							t_shell;
+	char				**env;
+	char				**export;
+	char				*current_input;
+	int					last_exit_status;
+	t_token				*token_list;
+	t_ast_node			*ast_root;
+}						t_shell;
 
 #endif

@@ -35,7 +35,7 @@ int	get_word_value(char *input, int *i, t_token *token)
 		return (1);
 	if (in_quotes)
 		return (token->type = TOKEN_EOF,
-					print_syntax_err("unexpected EOF while looking for matching ",
+			print_syntax_err("unexpected EOF while looking for matching ",
 				&in_quotes), 1);
 	return (0);
 }
