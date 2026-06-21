@@ -28,6 +28,8 @@ int								exec_redir_only(t_ast_node *node, t_shell *shell);
 
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
+void							setup_pipe_child_2(int fd[2], t_shell *shell,
+										int is_left);
 
 // heredoc.c
 int								process_heredoc(t_redir *redir, t_shell *shell);

@@ -41,6 +41,8 @@ t_token					*find_top_op(t_token *start, t_token *end, int op1,
 							int op2);
 t_token					*find_matching_paren(t_token *start, t_token *end);
 void					append_redir_node(t_redir **head, t_redir *new_node);
+
+// build_ast_utils_3.c
 t_ast_node				*create_ast_node(t_node_type type);
 int						is_redir_ast(int type);
 t_redir_type			translate_token_to_redir(t_token_type type);
