@@ -1,45 +1,12 @@
 #include "expander.h"
 
-static char	*extract_and_replace_var(char *str, int *i, char **env,
-		int last_status)
-{
-	int		start;
-	char	*key;
-	char	*val_dup;
-
-	(*i)++;
-	if (str[*i] == '?')
-	{
-		(*i)++;
-		return (ft_itoa(last_status));
-	}
-	if(ft_isdigit(str[*i]))
-		return((*i)++, ft_strdup(""));
-	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
-		(*i)++;
-	key = ft_substr(str, start, *i - start);
-	val_dup = ft_strdup(get_env_value(env, key));
-	free(key);
-	return (val_dup);
-}
-
-static char	*process_var(char *res, char *raw, int *i, char **env, int status)
-{
-	char	*tmp;
-
-	tmp = extract_and_replace_var(raw, i, env, status);
-	res = append_string(res, tmp);
-	free(tmp);
-	return (res);
-}
-
 char	*expand_string(char *raw, char **env, int status)
 {
 	int		sq;
 	int		dq;
 	int		i;
 	int		has_quotes;
+	int		skip_inc;
 	char	*res;
 
 	sq = 0;
@@ -47,9 +14,6 @@ char	*expand_string(char *raw, char **env, int status)
 	i = 0;
 	has_quotes = 0;
 	res = ft_strdup("");
-<<<<<<< HEAD
-		while (raw[i])
-=======
 	while (raw[i])
 	{
 		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
@@ -63,26 +27,21 @@ char	*expand_string(char *raw, char **env, int status)
 			continue;
 		}
 		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
->>>>>>> 96a796bf19c4b55764eed544c83a8a4dff4f53d6
+	while (raw[i])
+	{
+		skip_inc = 0;
+		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
+			toggle_quotes(raw[i], &sq, &dq);
+		else if (raw[i] == '$' && raw[i + 1] == '"' && !sq && (i == 0 || raw[i
+				- 1] != '$'))
 		{
-			if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-				toggle_quotes(raw[i], &sq, &dq);
-			else if (raw[i] == '$' && raw[i + 1] == '"' && !sq
-				&& (i == 0 || raw[i - 1] != '$'))
-			{
-				i++;
-				continue ;
-			}
-			else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
-			{
-				res = process_var(res, raw, &i, env, status);
-				continue ;
+			i++;
+			continue ;
 		}
-		else if (raw[i] == '*' && (sq || dq))
-			res = append_char(res, 1);
 		else
-			res = append_char(res, raw[i]);
-		i++;
+			res = expand_string_2(raw, env, status, res, &i, sq, dq, &skip_inc);
+		if (!skip_inc)
+			i++;
 	}
 	if(res[0] == '\0' && has_quotes)
 	{
@@ -92,47 +51,16 @@ char	*expand_string(char *raw, char **env, int status)
 	return (res);
 }
 
-static void	filter_empty_args(t_ast_node *node, char **new_args)
+static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,
+		char **new_args)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (node->args[i] != NULL)
-	{
-		if (node->args[i][0] != '\0')
-			new_args[j++] = node->args[i];
-		else
-			free(node->args[i]);
-		i++;
-	}
-	new_args[j] = NULL;
-	free(node->args);
-	node->args = new_args;
-}
-
-static void	unmask_args(char **args)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (args && args[i])
-	{
-		if (args[i][0] == 2 && args[i][1] == '\0')
-			args[i][0] = '\0';
-		j = 0;
-		while (args[i][j])
-		{
-			if (args[i][j] == 1)
-				args[i][j] = '*';
-			else if(args[i][j] == 2)
-				args[i][j] = '\0';
-			j++;
-		}
-		i++;
-	}
+	expand_wildcards(node);
+	expand_redirections(node->redir, env, last_status);
+	new_args = malloc(sizeof(char *) * (count_valid_args(node->args) + 1));
+	if (!new_args)
+		return ;
+	filter_empty_args(node, new_args);
+	unmask_args(new_args);
 }
 
 void	expand_command_args(t_ast_node *node, char **env, int last_status)
@@ -140,7 +68,6 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	int		i;
 	char	*raw;
 	char	*expanded;
-	char	**new_args;
 
 	if (!node || !node->args)
 		return ;
@@ -149,8 +76,8 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	{
 		raw = node->args[i];
 		expanded = expand_string(raw, env, last_status);
-		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"'))
-			&& expanded && expanded[0] == '\0')
+		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"')) && expanded
+					&& expanded[0] == '\0')
 		{
 			free(expanded);
 			expanded = ft_strdup("\2");
@@ -158,11 +85,5 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 		free(raw);
 		node->args[i] = expanded;
 	}
-	expand_wildcards(node);
-	expand_redirections(node->redir, env, last_status);
-	new_args = malloc(sizeof(char *) * (count_valid_args(node->args) + 1));
-	if (!new_args)
-		return ;
-	filter_empty_args(node, new_args);
-	unmask_args(new_args);
+	expand_command_args_2(node, env, last_status, NULL);
 }

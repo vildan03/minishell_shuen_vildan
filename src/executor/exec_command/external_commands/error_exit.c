@@ -3,12 +3,11 @@
 #include "minishell.h"
 #include <errno.h>
 
-static void	print_error_prefix(void)
+static char	*print_error_prefix(void)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
-		ft_putstr_fd("minishell: ", 2);
-	else
-		ft_putstr_fd("minishell: line 1: ", 2);
+		return ("minishell: ");
+	return ("minishell: line 1: ");
 }
 
 static int	is_directory(char *path)
@@ -22,10 +21,22 @@ static int	is_directory(char *path)
 
 void	print_cmd_error(char *cmd, char *msg)
 {
-	print_error_prefix();
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(msg, 2);
+	char	*prefix;
+	size_t	len;
+	char	*line;
+
+	prefix = print_error_prefix();
+	len = ft_strlen(prefix) + ft_strlen(cmd) + ft_strlen(msg) + 4;
+	line = malloc(len);
+	if (!line)
+		return ;
+	ft_strlcpy(line, prefix, len);
+	ft_strlcat(line, cmd, len);
+	ft_strlcat(line, ": ", len);
+	ft_strlcat(line, msg, len);
+	ft_strlcat(line, "\n", len);
+	write(2, line, ft_strlen(line));
+	free(line);
 }
 
 void	print_errno_error(char *cmd)

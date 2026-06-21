@@ -11,7 +11,7 @@ char	**free_partial_copy(char **copy, int count)
 
 static void	handle_sigint(int sig)
 {
-	int return_val;
+	int	return_val;
 
 	(void)sig;
 	g_exit_status = 130;

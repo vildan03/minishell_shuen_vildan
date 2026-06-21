@@ -15,25 +15,14 @@ int	get_child_status(int status)
 	return (1);
 }
 
-static void	handle_child_error(char *path, t_ast_node *node, t_shell *shell,
-		t_ast_node *ast_root, t_token *token_list)
-{
-	perror(node->args[0]);
-	free(path);
-	cleanup_process_state(shell, ast_root, token_list);
-	exit(126);
-}
-
-static void	exit_invalid_path(char *path, t_shell *shell, t_ast_node *ast_root,
-		t_token *token_list, int status)
+static void	cleanup_external_child(t_shell *shell, char *path, int status)
 {
 	free(path);
-	cleanup_process_state(shell, ast_root, token_list);
+	cleanup_process_state(shell, shell->ast_root, shell->token_list);
 	exit(status);
 }
 
-static void	run_child_command(t_ast_node *node, t_shell *shell,
-		t_ast_node *ast_root, t_token *token_list)
+void	exec_external_child(t_ast_node *node, t_shell *shell)
 {
 	char	*path;
 	int		status;
@@ -43,13 +32,14 @@ static void	run_child_command(t_ast_node *node, t_shell *shell,
 	free(shell->current_input);
 	shell->current_input = NULL;
 	if (apply_redirections(node->redir, shell) == -1)
-		(cleanup_process_state(shell, ast_root, token_list), exit(1));
+		cleanup_external_child(shell, NULL, 1);
 	path = find_command_path(node->args[0], shell->env);
 	status = validate_exec_path(node->args[0], path);
 	if (status != 0)
-		exit_invalid_path(path, shell, ast_root, token_list, status);
+		cleanup_external_child(shell, path, status);
 	execve(path, node->args, shell->env);
-	handle_child_error(path, node, shell, ast_root, token_list);
+	perror(node->args[0]);
+	cleanup_external_child(shell, path, 126);
 }
 
 static int	wait_simple_command(pid_t pid)
@@ -63,20 +53,16 @@ static int	wait_simple_command(pid_t pid)
 
 int	exec_simple_command(t_ast_node *node, t_shell *shell)
 {
-	pid_t		pid;
-	t_ast_node	*ast_root;
-	t_token		*token_list;
+	pid_t	pid;
 
 	if (!node || !node->args || !node->args[0])
 		return (0);
-	if(ft_strncmp(node->args[0], "!", 2) == 0 && node->args[1] == NULL)
-		return(shell->last_exit_status = 1, 1);
-	ast_root = shell->ast_root;
-	token_list = shell->token_list;
+	if (ft_strncmp(node->args[0], "!", 2) == 0 && node->args[1] == NULL)
+		return (shell->last_exit_status = 1, 1);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);
 	if (pid == 0)
-		run_child_command(node, shell, ast_root, token_list);
+		exec_external_child(node, shell);
 	return (wait_simple_command(pid));
 }

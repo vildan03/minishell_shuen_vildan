@@ -38,11 +38,13 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_command/external_commands/redirection.c \
 			  src/executor/exec_command/external_commands/error_exit.c \
 			  src/executor/exec_pipe/pipe.c \
+			  src/executor/exec_pipe/pipe_2.c \
 			  src/executor/exec_heredoc/heredoc.c \
 			  src/executor/exec_heredoc/heredoc_expand.c \
 			  src/executor/exec_heredoc/heredoc_fds.c \
 			  src/parser/ast_tools/build_ast_utils.c \
 			  src/parser/ast_tools/build_ast_utils_2.c \
+			  src/parser/ast_tools/build_ast_utils_3.c \
 			  src/parser/ast_tools/build_ast.c \
 			  src/parser/ast_tools/free_ast.c \
 			  src/parser/lexer/build_token_list.c \
@@ -51,6 +53,7 @@ SRCS		= src/main/main.c \
 			  src/expander/expander_utils.c \
 			  src/expander/expander_utils_2.c \
 			  src/expander/expander.c \
+			  src/expander/expander_2.c \
 			  src/expander/wildcards_utils.c \
 			  src/expander/wildcards_utils_2.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
