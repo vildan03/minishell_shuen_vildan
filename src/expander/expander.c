@@ -1,5 +1,21 @@
 #include "expander.h"
 
+static int	should_skip_dollar_quote(char *raw, int i, int sq)
+{
+	return (raw[i] == '$' && !sq && (raw[i + 1] == '"'
+			|| raw[i + 1] == '\''));
+}
+
+static char	*finalize_expanded_string(char *res, int has_quotes)
+{
+	if (!res)
+		return (NULL);
+	if (res[0] != '\0' || !has_quotes)
+		return (res);
+	free(res);
+	return (ft_strdup("\3"));
+}
+
 char	*expand_string(char *raw, char **env, int status)
 {
 	int		sq;
@@ -14,41 +30,31 @@ char	*expand_string(char *raw, char **env, int status)
 	i = 0;
 	has_quotes = 0;
 	res = ft_strdup("");
+	if (!res)
+		return (NULL);
 	while (raw[i])
 	{
+		skip_inc = 0;
 		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
 		{
 			has_quotes = 1;
 			toggle_quotes(raw[i], &sq, &dq);
 		}
-		else if(raw[i] == '$' && !sq && (raw[i + 1] == '"' || raw[i + 1] == '\''))
-		{
-			i++;
-			continue;
-		}
-		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
-	while (raw[i])
-	{
-		skip_inc = 0;
-		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-			toggle_quotes(raw[i], &sq, &dq);
-		else if (raw[i] == '$' && raw[i + 1] == '"' && !sq && (i == 0 || raw[i
-				- 1] != '$'))
+		else if (should_skip_dollar_quote(raw, i, sq))
 		{
 			i++;
 			continue ;
 		}
 		else
+		{
 			res = expand_string_2(raw, env, status, res, &i, sq, dq, &skip_inc);
+			if (!res)
+				return (NULL);
+		}
 		if (!skip_inc)
 			i++;
 	}
-	if(res[0] == '\0' && has_quotes)
-	{
-		free(res);
-		res = ft_strdup("\2");
-	}
-	return (res);
+	return (finalize_expanded_string(res, has_quotes));
 }
 
 static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,
@@ -76,12 +82,8 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	{
 		raw = node->args[i];
 		expanded = expand_string(raw, env, last_status);
-		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"')) && expanded
-					&& expanded[0] == '\0')
-		{
-			free(expanded);
-			expanded = ft_strdup("\2");
-		}
+		if (!expanded)
+			return ;
 		free(raw);
 		node->args[i] = expanded;
 	}

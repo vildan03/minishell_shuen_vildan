@@ -5,7 +5,7 @@
 minishell
 a.out
 *.a
-*.txt
+//*.txt
 
 # OS generated files
 .DS_Store

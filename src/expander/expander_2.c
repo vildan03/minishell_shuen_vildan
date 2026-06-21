@@ -76,7 +76,7 @@ void	unmask_args(char **args)
 	i = 0;
 	while (args && args[i])
 	{
-		if (args[i][0] == 2 && args[i][1] == '\0')
+		if (args[i][0] == 3 && args[i][1] == '\0')
 			args[i][0] = '\0';
 		j = 0;
 		while (args[i][j])
