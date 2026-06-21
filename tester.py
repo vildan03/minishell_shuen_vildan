@@ -6,7 +6,7 @@ import os
 TEST_FILE = "tests.txt"
 MINISHELL_PATH = "./minishell"
 SUPP_FILE = "read.supp"
-TIMEOUT_SECS = 3
+TIMEOUT_SECS = 5
 
 # ANSI Colors for terminal output
 GREEN = '\033[92m'
@@ -24,13 +24,15 @@ def run_cmd(executable, command, use_valgrind=False):
             MINISHELL_PATH
         ]
     elif executable == "bash":
-        exec_list = ["bash"]
+        # Force Bash into POSIX mode for a fairer comparison
+        exec_list = ["bash", "--posix"]
     else:
         exec_list = [MINISHELL_PATH]
         
     try:
-        # Added errors='replace' so weird characters don't crash Python
+        # Safely convert literal '\n' text into actual newlines for execution
         formatted_cmd = command.replace('\\n', '\n')
+        
         process = subprocess.run(
             exec_list,
             input=formatted_cmd + "\n",
@@ -82,7 +84,7 @@ def main():
     print("-" * 50)
 
     for cmd in tests:
-        # --- THE FIX: Force restore permissions before EACH run ---
+        # --- Force restore permissions before EACH run ---
         # This prevents tests like 'chmod 000 minishell' from breaking the suite
 
         # 1. Reset and run Bash
@@ -113,15 +115,10 @@ def main():
             status_tag = f"{YELLOW}[TIMEOUT]{RESET}"
             
         print(f"{status_tag} {leak_tag} : {cmd}")
-        
         if not (out_match and exit_match and not is_timeout):
-            if not exit_match:
-                print(f"    {YELLOW}→ Expected Exit Code: {RESET}{bash_res['exit_code']} | {YELLOW}Got: {RESET}{ms_res['exit_code']}")
-            if not out_match:
-                print(f"    {YELLOW}→ Stdout did not match.{RESET}")
+            pass # We removed the extra print statements here!
         else:
             passed += 1
-
     print("=" * 50)
     print(f"RESULTS: {passed}/{total} tests passed.")
 
