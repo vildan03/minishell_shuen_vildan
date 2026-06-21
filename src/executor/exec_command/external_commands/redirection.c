@@ -23,15 +23,27 @@ static int	get_target_fd(t_redir_type type) //
 }
 
 static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
-									t_shell *shell) //
+		t_shell *shell)
 {
-	int fd;
-	int target_fd;
+	int	fd;
+	int	target_fd;
 
 	if (redir->type == REDIR_HEREDOC)
 		fd = next_heredoc_fd(heredoc_fds);
 	else
+	{
+		if (!redir->quoted && (!redir->file || redir->file[0] == '\0'
+				|| ft_strchr(redir->file, ' ')))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			if (redir->file)
+				ft_putstr_fd(redir->file, 2);
+			ft_putendl_fd(": ambiguous redirect", 2);
+			clear_heredoc_fds(*heredoc_fds);
+			return (-1);
+		}
 		fd = open_redirection_fd(redir, shell);
+	}
 	if (fd == -1)
 	{
 		clear_heredoc_fds(*heredoc_fds);
