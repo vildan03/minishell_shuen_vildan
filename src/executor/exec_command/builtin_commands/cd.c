@@ -37,6 +37,8 @@ static char	*get_cd_target(char **args, t_shell *shell)
 		target = get_env_value_executor(shell->env, "HOME");
 		if (!target)
 			print_cd_error(NULL, "HOME not set");
+		else if (*target == '\0')
+			return (".");
 		return (target);
 	}
 	if (ft_strncmp(args[1], "-", 2) == 0)
