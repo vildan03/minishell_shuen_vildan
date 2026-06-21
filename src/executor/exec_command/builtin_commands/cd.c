@@ -90,10 +90,10 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 		return (free(old_pwd), print_cd_errno(target));
 	if (cwd_missing)
 		ft_putendl_fd("cd: error retrieving current directory: getcwd: "
-			"cannot access parent directories: No such file or directory", 2);
+						"cannot access parent directories: No such file or directory",
+						2);
 	new_pwd = getcwd(NULL, 0);
-	if (new_pwd && ft_strcmp(target, "//") == 0
-		&& ft_strcmp(new_pwd, "/") == 0)
+	if (new_pwd && ft_strcmp(target, "//") == 0 && ft_strcmp(new_pwd, "/") == 0)
 	{
 		free(new_pwd);
 		new_pwd = ft_strdup("//");
