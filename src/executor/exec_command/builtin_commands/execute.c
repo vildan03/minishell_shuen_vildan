@@ -28,6 +28,7 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 int	exec_builtin_pwd(t_shell *shell)
 {
 	char	*cwd;
+	char	*pwd;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
@@ -38,6 +39,16 @@ int	exec_builtin_pwd(t_shell *shell)
 		if (!cwd)
 			return (1);
 		cwd = ft_strdup(cwd);
+		if (!cwd)
+			return (1);
+	}
+	pwd = NULL;
+	if (shell && shell->env)
+		pwd = get_env_value_executor(shell->env, "PWD");
+	if (pwd && ft_strcmp(cwd, "/") == 0 && ft_strcmp(pwd, "//") == 0)
+	{
+		free(cwd);
+		cwd = ft_strdup("//");
 		if (!cwd)
 			return (1);
 	}
