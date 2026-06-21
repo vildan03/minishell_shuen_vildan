@@ -69,7 +69,7 @@ int								update_env_value(t_shell *shell, char *key,
 
 // execute.c
 int								exec_builtin(t_ast_node *node, t_shell *shell);
-int								exec_builtin_pwd(void);
+int								exec_builtin_pwd(t_shell *shell);
 int								exec_builtin_echo(char **args, t_shell *shell);
 int								exec_builtin_export(char **args,
 									t_shell *shell);
