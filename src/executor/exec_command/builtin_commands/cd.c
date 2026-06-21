@@ -70,11 +70,18 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	char	*target;
 	char	*old_pwd;
 	char	*new_pwd;
+	char	*pwd_value;
 
 	target = get_cd_target(args, shell);
 	if (!target)
 		return (1);
 	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd && shell && shell->env)
+	{
+		pwd_value = get_env_value_executor(shell->env, "PWD");
+		if (pwd_value)
+			old_pwd = ft_strdup(pwd_value);
+	}
 	if (chdir(target) != 0)
 		return (free(old_pwd), print_cd_errno(target));
 	new_pwd = getcwd(NULL, 0);
