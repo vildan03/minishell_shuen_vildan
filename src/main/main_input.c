@@ -56,6 +56,35 @@ char	*read_noninteractive_line(void)
 		return (NULL);
 	return (line);
 }
+
+static void	increment_shlvl(char **copy)
+{
+	int		i;
+	int		level;
+	char	*value;
+	char	*entry;
+
+	i = 0;
+	while (copy[i])
+	{
+		if (ft_strncmp(copy[i], "SHLVL=", 6) == 0)
+		{
+			level = ft_atoi(copy[i] + 6) + 1;
+			value = ft_itoa(level);
+			if (!value)
+				return ;
+			entry = ft_strjoin("SHLVL=", value);
+			free(value);
+			if (!entry)
+				return ;
+			free(copy[i]);
+			copy[i] = entry;
+			return ;
+		}
+		i++;
+	}
+}
+
 char	**copy_envp(char **envp)
 {
 	char	**copy;
@@ -76,5 +105,6 @@ char	**copy_envp(char **envp)
 		i++;
 	}
 	copy[i] = NULL;
+	increment_shlvl(copy);
 	return (copy);
 }

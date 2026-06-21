@@ -37,6 +37,8 @@ static char	*get_cd_target(char **args, t_shell *shell)
 		target = get_env_value_executor(shell->env, "HOME");
 		if (!target)
 			print_cd_error(NULL, "HOME not set");
+		else if (*target == '\0')
+			return (".");
 		return (target);
 	}
 	if (ft_strncmp(args[1], "-", 2) == 0)
@@ -70,14 +72,32 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	char	*target;
 	char	*old_pwd;
 	char	*new_pwd;
+	char	*pwd_value;
+	int		cwd_missing;
 
 	target = get_cd_target(args, shell);
 	if (!target)
 		return (1);
 	old_pwd = getcwd(NULL, 0);
+	cwd_missing = (!old_pwd && errno == ENOENT);
+	if (!old_pwd && shell && shell->env)
+	{
+		pwd_value = get_env_value_executor(shell->env, "PWD");
+		if (pwd_value)
+			old_pwd = ft_strdup(pwd_value);
+	}
 	if (chdir(target) != 0)
 		return (free(old_pwd), print_cd_errno(target));
+	if (cwd_missing)
+		ft_putendl_fd("cd: error retrieving current directory: getcwd: "
+						"cannot access parent directories: No such file or directory",
+						2);
 	new_pwd = getcwd(NULL, 0);
+	if (new_pwd && ft_strcmp(target, "//") == 0 && ft_strcmp(new_pwd, "/") == 0)
+	{
+		free(new_pwd);
+		new_pwd = ft_strdup("//");
+	}
 	if (update_cd_state(shell, args, old_pwd, new_pwd) != 0)
 		return (free(old_pwd), free(new_pwd), 1);
 	free(old_pwd);

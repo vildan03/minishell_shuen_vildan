@@ -23,7 +23,7 @@ static int	get_target_fd(t_redir_type type) //
 }
 
 static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
-		t_shell *shell) //
+									t_shell *shell) //
 {
 	int fd;
 	int target_fd;

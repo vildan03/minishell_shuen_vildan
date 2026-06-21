@@ -1,13 +1,19 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-#include "minishell.h"
+# include "minishell.h"
 # include <dirent.h>
 # include <sys/types.h>
 
 // expander.c
 char	*expand_string(char *raw, char **env, int status);
 void	expand_command_args(t_ast_node *node, char **env, int status);
+
+// expander_2.c
+char	*expand_string_2(char *raw, char **env, int status, char *res, int *i,
+			int sq, int dq, int *skip_inc);
+void	filter_empty_args(t_ast_node *node, char **new_args);
+void	unmask_args(char **args);
 
 // expander_utils.c
 int		is_env_char(char c);

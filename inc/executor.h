@@ -1,7 +1,7 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-#include "minishell.h"
+# include "minishell.h"
 # include <signal.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
@@ -10,8 +10,8 @@ extern volatile sig_atomic_t	g_exit_status;
 
 typedef struct s_hd_fd
 {
-	int fd;
-	struct s_hd_fd *next;
+	int							fd;
+	struct s_hd_fd				*next;
 }								t_hd_fd;
 
 // exec_ast.c
@@ -24,33 +24,40 @@ int								exec_or(t_ast_node *node, t_shell *shell);
 int								exec_subshell(t_ast_node *node, t_shell *shell);
 
 // exec_redir_only.c
-int								exec_redir_only(t_ast_node *node, t_shell *shell);
+int								exec_redir_only(t_ast_node *node,
+									t_shell *shell);
 
 // pipe.c
 int								exec_pipe(t_ast_node *node, t_shell *shell);
+void							setup_pipe_child_2(int fd[2], t_shell *shell,
+									int is_left);
 
 // heredoc.c
 int								process_heredoc(t_redir *redir, t_shell *shell);
 
 // heredoc_fds.c
-int								create_heredoc_fd(t_redir *redir, t_shell *shell);
+int								create_heredoc_fd(t_redir *redir,
+									t_shell *shell);
 int								fill_heredoc_pipe(int write_fd, t_redir *redir,
-										t_shell *shell);
+									t_shell *shell);
 void							clear_heredoc_fds(t_hd_fd *head);
 int								collect_heredoc_fds(t_redir *redir,
-										t_hd_fd **head, t_shell *shell);
+									t_hd_fd **head, t_shell *shell);
 int								next_heredoc_fd(t_hd_fd **head);
 char							*expand_heredoc_line(char *line, char **env,
-										int status);
+									int status);
 
 // exec_simple_command.c
 int								get_child_status(int status);
+void							exec_external_child(t_ast_node *node,
+									t_shell *shell);
 int								exec_simple_command(t_ast_node *node,
 									t_shell *shell);
 char							*find_command_path(char *cmd, char **envp);
 
 // redirection.c
-int								apply_redirections(t_redir *redir, t_shell *shell);
+int								apply_redirections(t_redir *redir,
+									t_shell *shell);
 
 // cd.c
 int								exec_builtin_cd(char **args, t_shell *shell);
@@ -62,7 +69,7 @@ int								update_env_value(t_shell *shell, char *key,
 
 // execute.c
 int								exec_builtin(t_ast_node *node, t_shell *shell);
-int								exec_builtin_pwd(void);
+int								exec_builtin_pwd(t_shell *shell);
 int								exec_builtin_echo(char **args, t_shell *shell);
 int								exec_builtin_export(char **args,
 									t_shell *shell);

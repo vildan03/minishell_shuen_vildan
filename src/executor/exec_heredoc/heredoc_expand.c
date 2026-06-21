@@ -25,10 +25,22 @@ static char	*expand_heredoc_var(char *line, int *i, char **env, int status)
 	return (value);
 }
 
+static char	*expand_heredoc_line_2(char *expanded, char *line, int *i,
+		char **env, int status)
+{
+	char	*value;
+
+	value = expand_heredoc_var(line, i, env, status);
+	if (!value)
+		return (free(expanded), NULL);
+	expanded = append_string(expanded, value);
+	free(value);
+	return (expanded);
+}
+
 char	*expand_heredoc_line(char *line, char **env, int status)
 {
 	int		i;
-	char	*value;
 	char	*expanded;
 
 	i = 0;
@@ -39,11 +51,7 @@ char	*expand_heredoc_line(char *line, char **env, int status)
 	{
 		if (line[i] == '$' && is_env_char(line[i + 1]))
 		{
-			value = expand_heredoc_var(line, &i, env, status);
-			if (!value)
-				return (free(expanded), NULL);
-			expanded = append_string(expanded, value);
-			free(value);
+			expanded = expand_heredoc_line_2(expanded, line, &i, env, status);
 			if (!expanded)
 				return (NULL);
 			continue ;
