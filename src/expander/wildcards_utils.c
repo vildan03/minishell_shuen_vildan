@@ -62,6 +62,35 @@ bool	has_unquoted_star(char *str)
 	return (false);
 }
 
+static int	wildcard_compare(char *s1, char *s2)
+{
+	char	*orig1;
+	char	*orig2;
+	int		c1;
+	int		c2;
+
+	orig1 = s1;
+	orig2 = s2;
+	while (*s1 || *s2)
+	{
+		while (*s1 && !ft_isalnum(*s1))
+			s1++;
+		while (*s2 && !ft_isalnum(*s2))
+			s2++;
+		if (!*s1 || !*s2)
+			break ;
+		c1 = ft_tolower(*s1++);
+		c2 = ft_tolower(*s2++);
+		if (c1 != c2)
+			return (c1 - c2);
+	}
+	if (!*s1 && *s2)
+		return (-1);
+	if (*s1 && !*s2)
+		return (1);
+	return (ft_strcmp(orig1, orig2));
+}
+
 static char	**add_match_to_array(char **matches, char *new_match)
 {
 	int		target_index;
@@ -73,7 +102,7 @@ static char	**add_match_to_array(char **matches, char *new_match)
 	count = 0;
 	while (matches && matches[count])
 		count++;
-	while (target_index < count && ft_strcmp(matches[target_index],
+	while (target_index < count && wildcard_compare(matches[target_index],
 			new_match) < 0)
 		target_index++;
 	new_array = malloc(sizeof(char *) * (count + 2));

@@ -39,8 +39,6 @@ static char	*get_cd_target(char **args, t_shell *shell)
 
 	if (!shell || !shell->env)
 		return (NULL);
-	if (args[1] && args[2])
-		return (print_cd_error(NULL, "too many arguments"), NULL);
 	if (!args[1])
 	{
 		target = get_env_value_executor(shell->env, "HOME");
@@ -82,6 +80,8 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	char	*old_pwd;
 	char	*new_pwd;
 
+	if (args[1] && args[2])
+		return (print_cd_error(NULL, "too many arguments"), 2);
 	target = get_cd_target(args, shell);
 	if (!target)
 		return (1);

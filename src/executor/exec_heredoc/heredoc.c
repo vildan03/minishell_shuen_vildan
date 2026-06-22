@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:52:51 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 15:18:43 by vildan           ###   ########.fr       */
+/*   Updated: 2026/06/22 16:18:09 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	handle_heredoc_sigint(int sig)
 {
 	(void)sig;
 	g_exit_status = 130;
+	close(STDIN_FILENO);
 }
 
 static int	finish_heredoc(int status, char *line, void (*old_sigint)(int),

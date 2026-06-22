@@ -17,6 +17,7 @@ static char	*extract_and_replace_var(t_expand_ctx *ctx)
 	int		start;
 	char	*key;
 	char	*val_dup;
+	int		j;
 
 	ctx->i++;
 	if (ctx->raw[ctx->i] == '?')
@@ -33,6 +34,12 @@ static char	*extract_and_replace_var(t_expand_ctx *ctx)
 	key = ft_substr(ctx->raw, start, ctx->i - start);
 	val_dup = ft_strdup(get_env_value(ctx->env, key));
 	free(key);
+	j = -1;
+	while (!ctx->dq && val_dup && val_dup[++j])
+	{
+		if (val_dup[j] == ' ' || val_dup[j] == '\t' || val_dup[j] == '\n')
+			val_dup[j] = 2;
+	}
 	return (val_dup);
 }
 

@@ -33,10 +33,16 @@ int	exec_and(t_ast_node *node, t_shell *shell)
 
 	if (!node || !node->left || !node->right)
 		return (1);
+	shell->in_list++;
 	left_status = exec_ast(node->left, shell);
 	shell->last_exit_status = left_status;
 	if (left_status == 0)
-		return (exec_ast(node->right, shell));
+	{
+		left_status = exec_ast(node->right, shell);
+		shell->in_list--;
+		return (left_status);
+	}
+	shell->in_list--;
 	return (left_status);
 }
 
@@ -46,10 +52,16 @@ int	exec_or(t_ast_node *node, t_shell *shell)
 
 	if (!node || !node->left || !node->right)
 		return (1);
+	shell->in_list++;
 	left_status = exec_ast(node->left, shell);
 	shell->last_exit_status = left_status;
 	if (left_status != 0)
-		return (exec_ast(node->right, shell));
+	{
+		left_status = exec_ast(node->right, shell);
+		shell->in_list--;
+		return (left_status);
+	}
+	shell->in_list--;
 	return (left_status);
 }
 

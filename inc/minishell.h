@@ -88,6 +88,7 @@ typedef struct s_shell
 	char				**export;
 	char				*current_input;
 	int					last_exit_status;
+	int					in_list;
 	t_token				*token_list;
 	t_ast_node			*ast_root;
 }						t_shell;

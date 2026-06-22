@@ -49,7 +49,11 @@ int	exec_builtin_exit(char **args, t_shell *shell, int saved_stdout,
 			saved_stdin);
 	arg_status = handle_exit_arg(args, shell, &parsed_value);
 	if (arg_status == 1)
-		return (restore_exit_fds(saved_stdout, saved_stdin, 1));
+	{
+		if (!isatty(STDIN_FILENO))
+			exit_with_cleanup(shell, 2, saved_stdout, saved_stdin);
+		return (restore_exit_fds(saved_stdout, saved_stdin, 2));
+	}
 	if (arg_status == 2)
 		exit_with_cleanup(shell, 2, saved_stdout, saved_stdin);
 	exit_code = parsed_value % 256;
