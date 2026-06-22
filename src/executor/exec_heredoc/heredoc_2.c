@@ -47,4 +47,3 @@ void	write_newline(void)
 	r_val = write(2, "\n", 1);
 	(void)r_val;
 }
-
