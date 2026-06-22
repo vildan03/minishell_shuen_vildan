@@ -76,9 +76,15 @@ SRCS		= src/main/main.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c
 
-OBJS        = $(SRCS:.c=.o)
+BONUS_SRCS	= src/bonus/executor/execute_bonus.c \
+			  src/bonus/parser/build_ast_bonus.c
+
+ALL_SRCS    = $(SRCS) $(BONUS_SRCS)
+OBJS        = $(ALL_SRCS:.c=.o)
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(LIBFT): $(LIBFT_SRCS) $(LIBFT_HDRS) $(LIBFT_DIR)/Makefile
 	@echo "Compiling libft..."
@@ -103,4 +109,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
