@@ -37,13 +37,32 @@ void	sort_export(char **export)
 	}
 }
 
+static int	write_escaped_val(char *val)
+{
+	int	i;
+
+	i = 0;
+	while (val[i])
+	{
+		if (val[i] == '\\' || val[i] == '"' || val[i] == '$' || val[i] == '`')
+		{
+			if (write(1, "\\", 1) < 0)
+				return (1);
+		}
+		if (write(1, &val[i], 1) < 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	print_export_line(char *entry)
 {
 	char	*eq;
 	int		key_len;
 
 	eq = ft_strchr(entry, '=');
-	if (write_export_str("declare -x ") != 0)
+	if (write_export_str("export ") != 0)
 		return (1);
 	if (!eq)
 	{
@@ -54,7 +73,7 @@ int	print_export_line(char *entry)
 	key_len = eq - entry;
 	if (write(1, entry, key_len) < 0)
 		return (print_write_error("export"));
-	if (write_export_str("=\"") != 0 || write_export_str(eq + 1) != 0
+	if (write_export_str("=\"") != 0 || write_escaped_val(eq + 1) != 0
 		|| write_export_str("\"\n") != 0)
 		return (1);
 	return (0);

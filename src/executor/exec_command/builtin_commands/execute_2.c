@@ -39,10 +39,8 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 	saved_stdin = dup(STDIN_FILENO);
 	if (saved_stdout == -1 || saved_stdin == -1)
 	{
-		if (saved_stdout != -1)
-			close(saved_stdout);
-		if (saved_stdin != -1)
-			close(saved_stdin);
+		close(saved_stdout);
+		close(saved_stdin);
 		return (perror("dup"), 1);
 	}
 	if (apply_redirections(node->redir, shell) == -1)
@@ -51,5 +49,13 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 		return (exec_builtin_exit(node->args, shell, saved_stdout,
 				saved_stdin));
 	status = exec_builtin(node, shell);
+	if (status != 0 && !isatty(STDIN_FILENO) && !shell->in_list
+		&& (ft_strncmp(node->args[0], "export", 7) == 0
+			|| ft_strncmp(node->args[0], "unset", 6) == 0))
+	{
+		status = restore_builtin_fds(saved_stdout, saved_stdin, status);
+		cleanup_shell(shell);
+		exit(status);
+	}
 	return (restore_builtin_fds(saved_stdout, saved_stdin, status));
 }

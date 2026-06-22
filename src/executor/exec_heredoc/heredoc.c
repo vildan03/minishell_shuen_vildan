@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:52:51 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:52:52 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 09:06:54 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	handle_heredoc_sigint(int sig)
 {
 	(void)sig;
 	g_exit_status = 130;
+	close(STDIN_FILENO);
 }
 
 static int	finish_heredoc(int status, char *line, void (*old_sigint)(int),

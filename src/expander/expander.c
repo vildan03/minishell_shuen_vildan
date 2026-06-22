@@ -29,6 +29,7 @@ static char	*process_expand_char(t_expand_ctx *ctx)
 char	*expand_string(char *raw, char **env, int status)
 {
 	t_expand_ctx	ctx;
+	int				has_quotes;
 
 	ctx.raw = raw;
 	ctx.env = env;
@@ -40,6 +41,7 @@ char	*expand_string(char *raw, char **env, int status)
 	ctx.res = ft_strdup("");
 	if (!ctx.res)
 		return (NULL);
+	has_quotes = (ft_strchr(raw, '\'') != NULL || ft_strchr(raw, '"') != NULL);
 	while (ctx.raw[ctx.i])
 	{
 		ctx.skip_inc = 0;
@@ -47,7 +49,62 @@ char	*expand_string(char *raw, char **env, int status)
 		if (!ctx.skip_inc)
 			ctx.i++;
 	}
+	if (ctx.res && ctx.res[0] == '\0' && has_quotes)
+		return (free(ctx.res), ft_strdup("\3"));
 	return (ctx.res);
+}
+
+static int	count_split_args(char **args)
+{
+	int		i;
+	int		count;
+	char	**split;
+	int		j;
+
+	i = 0;
+	count = 0;
+	while (args && args[i])
+	{
+		split = ft_split(args[i], 2);
+		j = 0;
+		while (split && split[j])
+		{
+			free(split[j]);
+			count++;
+			j++;
+		}
+		free(split);
+		i++;
+	}
+	return (count);
+}
+
+static char	**split_all_args(char **args)
+{
+	char	**new_args;
+	char	**split;
+	int		i;
+	int		j;
+	int		k;
+
+	new_args = malloc(sizeof(char *) * (count_split_args(args) + 1));
+	if (!new_args)
+		return (NULL);
+	i = 0;
+	k = 0;
+	while (args && args[i])
+	{
+		split = ft_split(args[i], 2);
+		j = 0;
+		while (split && split[j])
+			new_args[k++] = split[j++];
+		free(split);
+		free(args[i]);
+		i++;
+	}
+	new_args[k] = NULL;
+	free(args);
+	return (new_args);
 }
 
 static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,
@@ -80,5 +137,6 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 		free(raw);
 		node->args[i] = expanded;
 	}
+	node->args = split_all_args(node->args);
 	expand_command_args_2(node, env, last_status, NULL);
 }

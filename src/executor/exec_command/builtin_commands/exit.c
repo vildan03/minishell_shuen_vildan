@@ -86,7 +86,7 @@ int	handle_exit_arg(char **args, t_shell *shell, long long *parsed_value)
 	if (args[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
-		shell->last_exit_status = 1;
+		shell->last_exit_status = 2;
 		return (1);
 	}
 	return (0);

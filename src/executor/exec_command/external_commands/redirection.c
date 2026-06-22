@@ -36,12 +36,23 @@ static int	get_target_fd(t_redir_type type) //
 
 static int	check_ambiguous(t_redir *redir, t_hd_fd *heredoc_fds)
 {
+	int	i;
+
 	if (!redir->quoted && (!redir->file || redir->file[0] == '\0'
-			|| ft_strchr(redir->file, ' ')))
+			|| ft_strchr(redir->file, ' ') || ft_strchr(redir->file, 2)))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		if (redir->file)
+		{
+			i = 0;
+			while (redir->file[i])
+			{
+				if (redir->file[i] == 2)
+					redir->file[i] = ' ';
+				i++;
+			}
 			ft_putstr_fd(redir->file, 2);
+		}
 		ft_putendl_fd(": ambiguous redirect", 2);
 		clear_heredoc_fds(heredoc_fds);
 		return (1);

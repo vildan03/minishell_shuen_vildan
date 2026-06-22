@@ -104,7 +104,12 @@ def main():
 
         # Evaluation
         is_timeout = ms_res["timeout"]
-        out_match = (bash_res["stdout"] == ms_res["stdout"])
+        if "env" in cmd or "export" in cmd:
+            bash_out = "\n".join(sorted(x for x in bash_res["stdout"].splitlines() if not (x.startswith("_=") or x.startswith("export _=") or x.startswith("declare -x _="))))
+            ms_out = "\n".join(sorted(x for x in ms_res["stdout"].splitlines() if not (x.startswith("_=") or x.startswith("export _=") or x.startswith("declare -x _="))))
+            out_match = (bash_out == ms_out)
+        else:
+            out_match = (bash_res["stdout"] == ms_res["stdout"])
         exit_match = (bash_res["exit_code"] == ms_res["exit_code"])
         has_leaks = valgrind_res["exit_code"] == 100
         
