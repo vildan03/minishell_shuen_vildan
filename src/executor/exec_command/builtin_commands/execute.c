@@ -25,7 +25,8 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 	if (ft_strncmp(node->args[0], ":", 2) == 0)
 		return (0);
 	if (ft_strncmp(node->args[0], ".", 2) == 0)
-		return (ft_putendl_fd("minishell: .: filename argument required", 2), ft_putendl_fd(".: usage: . filename [arguments]", 2), 2);
+		return (ft_putendl_fd("minishell: .: filename argument required", 2),
+			ft_putendl_fd(".: usage: . filename [arguments]", 2), 2);
 	return (1);
 }
 

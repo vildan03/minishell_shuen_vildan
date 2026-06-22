@@ -44,7 +44,6 @@ char	*find_command_path(char *cmd, char **envp)
 
 	if (!cmd || cmd[0] == '\0' || !envp)
 		return (NULL);
-        
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
 	if (ft_strchr(cmd, '/'))

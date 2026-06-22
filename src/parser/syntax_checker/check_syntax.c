@@ -24,7 +24,8 @@ static bool	is_valid_combo(t_token *token, int *paren_count)
 		return (false);
 	if (type == TOKEN_LEFT_PAREN && is_binary_op(next))
 		return (false);
-	if (type == TOKEN_RIGHT_PAREN && (next == TOKEN_WORD || next == TOKEN_LEFT_PAREN))
+	if (type == TOKEN_RIGHT_PAREN && (next == TOKEN_WORD
+			|| next == TOKEN_LEFT_PAREN))
 		return (false);
 	return (true);
 }

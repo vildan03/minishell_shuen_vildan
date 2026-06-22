@@ -42,6 +42,7 @@ void	expand_wildcards(t_ast_node *node)
 {
 	int		i;
 	char	**matches;
+	int		matches_count;
 
 	i = 0;
 	if (!node || !node->args)
@@ -53,7 +54,7 @@ void	expand_wildcards(t_ast_node *node)
 			matches = get_wildcard_matches(node->args[i]);
 			if (matches && matches[0] != NULL)
 			{
-				int matches_count = count_contents(matches);
+				matches_count = count_contents(matches);
 				node->args = splice_wildcard_matches(node->args, matches, i);
 				i += matches_count - 1;
 			}

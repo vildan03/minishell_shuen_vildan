@@ -5,7 +5,7 @@ static char	*process_expand_char(char *raw, char **env, int status, char *res,
 {
 	if ((raw[*i] == '\'' && !*dq) || (raw[*i] == '"' && !*sq))
 		toggle_quotes(raw[*i], sq, dq);
-	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'') 
+	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'')
 			&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
 		(*i)++;
 	else
@@ -30,7 +30,8 @@ char	*expand_string(char *raw, char **env, int status)
 	while (raw[i])
 	{
 		skip_inc = 0;
-		res = process_expand_char(raw, env, status, res, &i, &sq, &dq, &skip_inc);
+		res = process_expand_char(raw, env, status, res, &i, &sq, &dq,
+				&skip_inc);
 		if (!skip_inc)
 			i++;
 	}

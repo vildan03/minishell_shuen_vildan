@@ -23,7 +23,7 @@ int	is_builtin(char *cmd)
 	if (ft_strncmp(cmd, ":", 2) == 0)
 		return (1);
 	if (ft_strncmp(cmd, ".", 2) == 0) // <--- ADD THIS!
-        	return (1);
+		return (1);
 	return (0);
 }
 
