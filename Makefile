@@ -27,12 +27,14 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_command/builtin_commands/execute_2.c \
 			  src/executor/exec_command/builtin_commands/write.c \
 			  src/executor/exec_command/builtin_commands/cd.c \
+			  src/executor/exec_command/builtin_commands/cd_2.c \
 			  src/executor/exec_command/builtin_commands/exit.c \
 			  src/executor/exec_command/builtin_commands/exit_2.c \
 			  src/executor/exec_command/builtin_commands/export.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
+			  src/executor/exec_command/builtin_commands/execute_3.c \
 			  src/executor/exec_command/external_commands/exec_command_path.c \
 			  src/executor/exec_command/external_commands/exec_simple_command.c \
 			  src/executor/exec_command/external_commands/redirection.c \
@@ -40,8 +42,11 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_pipe/pipe.c \
 			  src/executor/exec_pipe/pipe_2.c \
 			  src/executor/exec_heredoc/heredoc.c \
+			  src/executor/exec_heredoc/heredoc_2.c \
+			  src/executor/exec_heredoc/heredoc_3.c \
 			  src/executor/exec_heredoc/heredoc_expand.c \
 			  src/executor/exec_heredoc/heredoc_fds.c \
+			  src/executor/exec_heredoc/heredoc_fds_2.c \
 			  src/parser/ast_tools/build_ast_utils.c \
 			  src/parser/ast_tools/build_ast_utils_2.c \
 			  src/parser/ast_tools/build_ast_utils_3.c \
