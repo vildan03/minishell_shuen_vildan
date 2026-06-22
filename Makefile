@@ -78,6 +78,10 @@ SRCS		= src/main/main.c \
 
 OBJS        = $(SRCS:.c=.o)
 
+BONUS_DIR   = bonus
+BONUS_SRCS  = $(addprefix $(BONUS_DIR)/, $(addsuffix _bonus.c, $(notdir $(basename $(SRCS)))))
+BONUS_OBJS  = $(BONUS_SRCS:.c=.o)
+
 all: $(NAME)
 
 $(LIBFT): $(LIBFT_SRCS) $(LIBFT_HDRS) $(LIBFT_DIR)/Makefile
@@ -91,10 +95,17 @@ $(NAME): $(OBJS) $(LIBFT)
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+$(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
+	$(CC) $(CFLAGS) -I$(BONUS_DIR) -I$(LIBFT_DIR) -c $< -o $@
+
+bonus: $(BONUS_OBJS) $(LIBFT)
+	@echo "Linking $(NAME) (bonus)..."
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT_FLAGS) -lreadline -o $(NAME)
+
 clean:
 	@echo "Cleaning object files..."
 	@make clean -C $(LIBFT_DIR)
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	@echo "Cleaning executable..."
@@ -103,4 +114,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
