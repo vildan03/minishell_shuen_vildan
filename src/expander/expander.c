@@ -1,52 +1,36 @@
 #include "expander.h"
 
+static char	*process_expand_char(char *raw, char **env, int status, char *res,
+		int *i, int *sq, int *dq, int *skip_inc)
+{
+	if ((raw[*i] == '\'' && !*dq) || (raw[*i] == '"' && !*sq))
+		toggle_quotes(raw[*i], sq, dq);
+	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'') 
+			&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
+		(*i)++;
+	else
+		res = expand_string_2(raw, env, status, res, i, *sq, *dq, skip_inc);
+	return (res);
+}
+
 char	*expand_string(char *raw, char **env, int status)
 {
 	int		sq;
 	int		dq;
 	int		i;
-	int		has_quotes;
 	int		skip_inc;
 	char	*res;
 
 	sq = 0;
 	dq = 0;
 	i = 0;
-	has_quotes = 0;
 	res = ft_strdup("");
 	while (raw[i])
 	{
-		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-		{
-			has_quotes = 1;
-			toggle_quotes(raw[i], &sq, &dq);
-		}
-		else if(raw[i] == '$' && !sq && (raw[i + 1] == '"' || raw[i + 1] == '\''))
-		{
-			i++;
-			continue;
-		}
-		else if (raw[i] == '$' && !sq && is_env_char(raw[i + 1]))
-	while (raw[i])
-	{
 		skip_inc = 0;
-		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-			toggle_quotes(raw[i], &sq, &dq);
-		else if (raw[i] == '$' && raw[i + 1] == '"' && !sq && (i == 0 || raw[i
-				- 1] != '$'))
-		{
-			i++;
-			continue ;
-		}
-		else
-			res = expand_string_2(raw, env, status, res, &i, sq, dq, &skip_inc);
+		res = process_expand_char(raw, env, status, res, &i, &sq, &dq, &skip_inc);
 		if (!skip_inc)
 			i++;
-	}
-	if(res[0] == '\0' && has_quotes)
-	{
-		free(res);
-		res = ft_strdup("\2");
 	}
 	return (res);
 }

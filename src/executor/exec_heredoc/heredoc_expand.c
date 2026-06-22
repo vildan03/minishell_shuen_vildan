@@ -38,9 +38,23 @@ static char	*expand_heredoc_line_2(char *expanded, char *line, int *i,
 	return (expanded);
 }
 
+static char	*append_substring(char *str, char *line, int start, int len)
+{
+	char	*sub;
+	char	*new_str;
+
+	sub = ft_substr(line, start, len);
+	if (!sub)
+		return (NULL);
+	new_str = append_string(str, sub);
+	free(sub);
+	return (new_str);
+}
+
 char	*expand_heredoc_line(char *line, char **env, int status)
 {
 	int		i;
+	int		start;
 	char	*expanded;
 
 	i = 0;
@@ -49,14 +63,13 @@ char	*expand_heredoc_line(char *line, char **env, int status)
 		return (NULL);
 	while (line[i])
 	{
+		start = i;
+		while (line[i] && !(line[i] == '$' && is_env_char(line[i + 1])))
+			i++;
+		if (i > start)
+			expanded = append_substring(expanded, line, start, i - start);
 		if (line[i] == '$' && is_env_char(line[i + 1]))
-		{
 			expanded = expand_heredoc_line_2(expanded, line, &i, env, status);
-			if (!expanded)
-				return (NULL);
-			continue ;
-		}
-		expanded = append_char(expanded, line[i++]);
 		if (!expanded)
 			return (NULL);
 	}
