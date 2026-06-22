@@ -1,19 +1,16 @@
 #include "expander.h"
 
-static int	should_skip_dollar_quote(char *raw, int i, int sq)
+static char	*process_expand_char(char *raw, char **env, int status, char *res,
+		int *i, int *sq, int *dq, int *skip_inc)
 {
-	return (raw[i] == '$' && !sq && (raw[i + 1] == '"'
-			|| raw[i + 1] == '\''));
-}
-
-static char	*finalize_expanded_string(char *res, int has_quotes)
-{
-	if (!res)
-		return (NULL);
-	if (res[0] != '\0' || !has_quotes)
-		return (res);
-	free(res);
-	return (ft_strdup("\3"));
+	if ((raw[*i] == '\'' && !*dq) || (raw[*i] == '"' && !*sq))
+		toggle_quotes(raw[*i], sq, dq);
+	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'') 
+			&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
+		(*i)++;
+	else
+		res = expand_string_2(raw, env, status, res, i, *sq, *dq, skip_inc);
+	return (res);
 }
 
 char	*expand_string(char *raw, char **env, int status)
@@ -21,40 +18,23 @@ char	*expand_string(char *raw, char **env, int status)
 	int		sq;
 	int		dq;
 	int		i;
-	int		has_quotes;
 	int		skip_inc;
 	char	*res;
 
 	sq = 0;
 	dq = 0;
 	i = 0;
-	has_quotes = 0;
 	res = ft_strdup("");
 	if (!res)
 		return (NULL);
 	while (raw[i])
 	{
 		skip_inc = 0;
-		if ((raw[i] == '\'' && !dq) || (raw[i] == '"' && !sq))
-		{
-			has_quotes = 1;
-			toggle_quotes(raw[i], &sq, &dq);
-		}
-		else if (should_skip_dollar_quote(raw, i, sq))
-		{
-			i++;
-			continue ;
-		}
-		else
-		{
-			res = expand_string_2(raw, env, status, res, &i, sq, dq, &skip_inc);
-			if (!res)
-				return (NULL);
-		}
+		res = process_expand_char(raw, env, status, res, &i, &sq, &dq, &skip_inc);
 		if (!skip_inc)
 			i++;
 	}
-	return (finalize_expanded_string(res, has_quotes));
+	return (res);
 }
 
 static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,

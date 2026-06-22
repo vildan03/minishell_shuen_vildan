@@ -52,7 +52,11 @@ void	expand_wildcards(t_ast_node *node)
 		{
 			matches = get_wildcard_matches(node->args[i]);
 			if (matches && matches[0] != NULL)
+			{
+				int matches_count = count_contents(matches);
 				node->args = splice_wildcard_matches(node->args, matches, i);
+				i += matches_count - 1;
+			}
 			else if (matches)
 				free(matches);
 		}

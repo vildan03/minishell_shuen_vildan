@@ -22,36 +22,44 @@ int	exec_builtin(t_ast_node *node, t_shell *shell)
 		return (exec_builtin_exit(node->args, shell, -1, -1));
 	if (ft_strncmp(node->args[0], ":", 2) == 0)
 		return (0);
+	if (ft_strncmp(node->args[0], ":", 2) == 0)
+		return (0);
+	if (ft_strncmp(node->args[0], ".", 2) == 0)
+		return (ft_putendl_fd("minishell: .: filename argument required", 2), ft_putendl_fd(".: usage: . filename [arguments]", 2), 2);
 	return (1);
 }
 
-int	exec_builtin_pwd(t_shell *shell)
+static char	*get_pwd_cwd(t_shell *shell)
 {
 	char	*cwd;
 	char	*pwd;
 
 	cwd = getcwd(NULL, 0);
-	if (!cwd)
+	if (!cwd && shell && shell->env)
 	{
-		if (!shell || !shell->env)
-			return (1);
-		cwd = get_env_value_executor(shell->env, "PWD");
-		if (!cwd)
-			return (1);
-		cwd = ft_strdup(cwd);
-		if (!cwd)
-			return (1);
-	}
-	pwd = NULL;
-	if (shell && shell->env)
 		pwd = get_env_value_executor(shell->env, "PWD");
-	if (pwd && ft_strcmp(cwd, "/") == 0 && ft_strcmp(pwd, "//") == 0)
-	{
-		free(cwd);
-		cwd = ft_strdup("//");
-		if (!cwd)
-			return (1);
+		if (pwd)
+			cwd = ft_strdup(pwd);
 	}
+	if (cwd && shell && shell->env)
+	{
+		pwd = get_env_value_executor(shell->env, "PWD");
+		if (pwd && ft_strcmp(cwd, "/") == 0 && ft_strcmp(pwd, "//") == 0)
+		{
+			free(cwd);
+			cwd = ft_strdup("//");
+		}
+	}
+	return (cwd);
+}
+
+int	exec_builtin_pwd(t_shell *shell)
+{
+	char	*cwd;
+
+	cwd = get_pwd_cwd(shell);
+	if (!cwd)
+		return (1);
 	if (write_builtin_str(cwd, "pwd") != 0 || write_builtin_char('\n',
 			"pwd") != 0)
 		return (free(cwd), 1);

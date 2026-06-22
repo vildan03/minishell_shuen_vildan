@@ -24,6 +24,7 @@ void	print_cmd_error(char *cmd, char *msg)
 	char	*prefix;
 	size_t	len;
 	char	*line;
+	int		unused;
 
 	prefix = print_error_prefix();
 	len = ft_strlen(prefix) + ft_strlen(cmd) + ft_strlen(msg) + 4;
@@ -35,7 +36,8 @@ void	print_cmd_error(char *cmd, char *msg)
 	ft_strlcat(line, ": ", len);
 	ft_strlcat(line, msg, len);
 	ft_strlcat(line, "\n", len);
-	write(2, line, ft_strlen(line));
+	unused = write(2, line, ft_strlen(line));
+	(void)unused;
 	free(line);
 }
 
