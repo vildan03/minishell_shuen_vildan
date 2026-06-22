@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:39 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:40 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:38:23 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	main(int argc, char **argv, char **envp)
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
 			break ;
-		// printf(2, "DEBUG - Exit status saved: %d\n",
-		// shell.last_exit_status);
 	}
 	free_array(shell.env);
 	free_array(shell.export);

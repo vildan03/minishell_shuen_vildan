@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:20 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:21 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:17:55 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*process_expand_char(char *raw, char **env, int status, char *res,
 	if ((raw[*i] == '\'' && !*dq) || (raw[*i] == '"' && !*sq))
 		toggle_quotes(raw[*i], sq, dq);
 	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'')
-			&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
+		&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
 		(*i)++;
 	else
 		res = expand_string_2(raw, env, status, res, i, *sq, *dq, skip_inc);

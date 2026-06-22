@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:05 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:06 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:38:12 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 
-extern volatile sig_atomic_t	g_exit_status;
+extern volatile sig_atomic_t	g_exit_status = 0;
 
 typedef struct s_hd_fd
 {

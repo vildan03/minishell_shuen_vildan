@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:52:02 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:52:03 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:17:34 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	process_heredoc(t_redir *redir, t_shell *shell)
 		return (-1);
 	return (create_heredoc_fd(redir, shell));
 }
+
 static char	*expand_heredoc_var(char *line, int *i, char **env, int status)
 {
 	int		start;

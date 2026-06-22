@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:27 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:28 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:25:36 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ static char	**add_match_to_array(char **matches, char *new_match)
 	new_array = malloc(sizeof(char *) * (count + 2));
 	if (!new_array)
 		return (NULL);
-	j = 0;
-	while (j < target_index)
-		new_array[j] = matches[j], j++;
-	new_array[j++] = ft_strdup(new_match);
-	while (j <= count)
-		new_array[j] = matches[j - 1], j++;
+	j = -1;
+	while (++j < target_index)
+		new_array[j] = matches[j];
+	new_array[j] = ft_strdup(new_match);
+	while (j++ <= count)
+		new_array[j] = matches[j - 1];
 	new_array[count + 1] = NULL;
 	free(matches);
 	return (new_array);
