@@ -22,6 +22,21 @@ static int	get_target_fd(t_redir_type type) //
 	return (STDOUT_FILENO);
 }
 
+static int	check_ambiguous(t_redir *redir, t_hd_fd *heredoc_fds)
+{
+	if (!redir->quoted && (!redir->file || redir->file[0] == '\0'
+			|| ft_strchr(redir->file, ' ')))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		if (redir->file)
+			ft_putstr_fd(redir->file, 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+		clear_heredoc_fds(heredoc_fds);
+		return (1);
+	}
+	return (0);
+}
+
 static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
 		t_shell *shell)
 {
@@ -32,16 +47,8 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
 		fd = next_heredoc_fd(heredoc_fds);
 	else
 	{
-		if (!redir->quoted && (!redir->file || redir->file[0] == '\0'
-				|| ft_strchr(redir->file, ' ')))
-		{
-			ft_putstr_fd("minishell: ", 2);
-			if (redir->file)
-				ft_putstr_fd(redir->file, 2);
-			ft_putendl_fd(": ambiguous redirect", 2);
-			clear_heredoc_fds(*heredoc_fds);
+		if (check_ambiguous(redir, *heredoc_fds))
 			return (-1);
-		}
 		fd = open_redirection_fd(redir, shell);
 	}
 	if (fd == -1)

@@ -1,20 +1,44 @@
 #include "executor.h"
 #include "minishell.h"
 
+static char	*get_tmp_filename(void)
+{
+	static int	counter = 0;
+	char		*cnt_str;
+	char		*filename;
+
+	cnt_str = ft_itoa(counter++);
+	if (!cnt_str)
+		return (NULL);
+	filename = ft_strjoin("/tmp/.minishell_hd_", cnt_str);
+	free(cnt_str);
+	return (filename);
+}
+
 int	create_heredoc_fd(t_redir *redir, t_shell *shell)
 {
-	int	fd[2];
+	int		write_fd;
+	int		read_fd;
+	char	*filename;
 
-	if (pipe(fd) == -1)
-		return (perror("pipe"), -1);
-	if (fill_heredoc_pipe(fd[1], redir, shell) != 0)
+	filename = get_tmp_filename();
+	if (!filename)
+		return (-1);
+	write_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (write_fd == -1)
+		return (free(filename), -1);
+	if (fill_heredoc_pipe(write_fd, redir, shell) != 0)
 	{
-		close(fd[0]);
-		close(fd[1]);
+		close(write_fd);
+		unlink(filename);
+		free(filename);
 		return (-1);
 	}
-	close(fd[1]);
-	return (fd[0]);
+	close(write_fd);
+	read_fd = open(filename, O_RDONLY);
+	unlink(filename);
+	free(filename);
+	return (read_fd);
 }
 
 void	clear_heredoc_fds(t_hd_fd *head)
