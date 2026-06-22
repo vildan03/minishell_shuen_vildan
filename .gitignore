@@ -5,9 +5,9 @@
 minishell
 a.out
 *.a
-*.txt
-*.md
-*.py
+//*.txt
+//*.md
+//*.py
 *.html
 
 # OS generated files

@@ -25,6 +25,8 @@ char	*expand_string(char *raw, char **env, int status)
 	dq = 0;
 	i = 0;
 	res = ft_strdup("");
+	if (!res)
+		return (NULL);
 	while (raw[i])
 	{
 		skip_inc = 0;
@@ -60,12 +62,8 @@ void	expand_command_args(t_ast_node *node, char **env, int last_status)
 	{
 		raw = node->args[i];
 		expanded = expand_string(raw, env, last_status);
-		if ((ft_strchr(raw, '\'') || ft_strchr(raw, '"')) && expanded
-					&& expanded[0] == '\0')
-		{
-			free(expanded);
-			expanded = ft_strdup("\2");
-		}
+		if (!expanded)
+			return ;
 		free(raw);
 		node->args[i] = expanded;
 	}
