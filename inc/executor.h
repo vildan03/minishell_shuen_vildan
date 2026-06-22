@@ -40,6 +40,11 @@ int								create_heredoc_fd(t_redir *redir,
 									t_shell *shell);
 int								fill_heredoc_pipe(int write_fd, t_redir *redir,
 									t_shell *shell);
+int								handle_heredoc_line(int write_fd, char *line,
+									t_redir *redir, t_shell *shell);
+void							print_heredoc_warning(char *delimiter);
+void							write_newline(void);
+char							*read_line_from_fd(int fd);
 void							clear_heredoc_fds(t_hd_fd *head);
 int								collect_heredoc_fds(t_redir *redir,
 									t_hd_fd **head, t_shell *shell);
@@ -60,6 +65,8 @@ int								apply_redirections(t_redir *redir,
 									t_shell *shell);
 
 // cd.c
+char							*get_old_pwd(t_shell *shell);
+char							*get_new_pwd(char *target);
 int								exec_builtin_cd(char **args, t_shell *shell);
 
 // env_utils.c
