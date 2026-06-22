@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:50:04 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:50:05 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:57:31 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strncmp(cmd, ":", 2) == 0)
 		return (1);
-	if (ft_strncmp(cmd, ".", 2) == 0) // <--- ADD THIS!
+	if (ft_strncmp(cmd, ".", 2) == 0)
 		return (1);
 	return (0);
 }
@@ -55,6 +55,7 @@ int	is_valid_identifier(char *str)
 	}
 	return (1);
 }
+
 int	is_n_flag(char *arg)
 {
 	int	i;
