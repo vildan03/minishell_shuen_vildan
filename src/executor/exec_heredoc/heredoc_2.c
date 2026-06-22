@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:51:55 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:51:56 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 14:16:22 by vildan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	write_newline(void)
 
 	r_val = write(2, "\n", 1);
 	(void)r_val;
+}
+
+int	process_heredoc(t_redir *redir, t_shell *shell)
+{
+	if (!redir || redir->type != REDIR_HEREDOC)
+		return (-1);
+	return (create_heredoc_fd(redir, shell));
 }
