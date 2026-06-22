@@ -6,12 +6,12 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:14 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:04:55 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/22 19:56:50 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_BONUS_H
-#define EXPANDER_BONUS_H
+# define EXPANDER_BONUS_H
 
 # include "minishell_bonus.h"
 # include <dirent.h>

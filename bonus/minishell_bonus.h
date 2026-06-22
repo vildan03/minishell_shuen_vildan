@@ -6,12 +6,12 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:18 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:04:37 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/22 19:57:00 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_BONUS_H
-#define MINISHELL_BONUS_H
+# define MINISHELL_BONUS_H
 
 # include "libft.h"
 # include <fcntl.h>

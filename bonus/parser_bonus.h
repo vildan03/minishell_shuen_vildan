@@ -6,12 +6,12 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:20 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:05:08 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/22 19:57:16 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_BONUS_H
-#define PARSER_BONUS_H
+# define PARSER_BONUS_H
 
 # include "minishell_bonus.h"
 
