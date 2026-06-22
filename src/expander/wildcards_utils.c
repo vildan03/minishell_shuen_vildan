@@ -83,7 +83,7 @@ static char	**add_match_to_array(char **matches, char *new_match)
 	while (++j < target_index)
 		new_array[j] = matches[j];
 	new_array[j] = ft_strdup(new_match);
-	while (j++ <= count)
+	while (++j <= count)
 		new_array[j] = matches[j - 1];
 	new_array[count + 1] = NULL;
 	free(matches);

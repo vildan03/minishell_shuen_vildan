@@ -66,7 +66,7 @@ int	check_valid_syntax(t_token *token)
 		current = current->next;
 	}
 	if (paren_count != 0)
-		return (print_syntax_err("unexpected EOF while looking for
-			matching ')'", NULL), 1);
+		return (print_syntax_err("unexpected EOF while looking for "
+				"matching ')'", NULL), 1);
 	return (0);
 }

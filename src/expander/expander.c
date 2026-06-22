@@ -12,42 +12,42 @@
 
 #include "expander.h"
 
-static char	*process_expand_char(char *raw, char **env, int status, char *res,
-		int *i, int *sq, int *dq, int *skip_inc)
+static char	*process_expand_char(t_expand_ctx *ctx)
 {
-	if ((raw[*i] == '\'' && !*dq) || (raw[*i] == '"' && !*sq))
-		toggle_quotes(raw[*i], sq, dq);
-	else if (raw[*i] == '$' && (raw[*i + 1] == '"' || raw[*i + 1] == '\'')
-		&& !*sq && !*dq && (*i == 0 || raw[*i - 1] != '$'))
-		(*i)++;
+	if ((ctx->raw[ctx->i] == '\'' && !ctx->dq) || (ctx->raw[ctx->i] == '"'
+			&& !ctx->sq))
+		toggle_quotes(ctx->raw[ctx->i], &ctx->sq, &ctx->dq);
+	else if (ctx->raw[ctx->i] == '$' && (ctx->raw[ctx->i + 1] == '"'
+			|| ctx->raw[ctx->i + 1] == '\'') && !ctx->sq && !ctx->dq
+		&& (ctx->i == 0 || ctx->raw[ctx->i - 1] != '$'))
+		ctx->i++;
 	else
-		res = expand_string_2(raw, env, status, res, i, *sq, *dq, skip_inc);
-	return (res);
+		ctx->res = expand_string_2(ctx);
+	return (ctx->res);
 }
 
 char	*expand_string(char *raw, char **env, int status)
 {
-	int		sq;
-	int		dq;
-	int		i;
-	int		skip_inc;
-	char	*res;
+	t_expand_ctx	ctx;
 
-	sq = 0;
-	dq = 0;
-	i = 0;
-	res = ft_strdup("");
-	if (!res)
+	ctx.raw = raw;
+	ctx.env = env;
+	ctx.status = status;
+	ctx.i = 0;
+	ctx.sq = 0;
+	ctx.dq = 0;
+	ctx.skip_inc = 0;
+	ctx.res = ft_strdup("");
+	if (!ctx.res)
 		return (NULL);
-	while (raw[i])
+	while (ctx.raw[ctx.i])
 	{
-		skip_inc = 0;
-		res = process_expand_char(raw, env, status, res, &i, &sq, &dq,
-				&skip_inc);
-		if (!skip_inc)
-			i++;
+		ctx.skip_inc = 0;
+		ctx.res = process_expand_char(&ctx);
+		if (!ctx.skip_inc)
+			ctx.i++;
 	}
-	return (res);
+	return (ctx.res);
 }
 
 static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,

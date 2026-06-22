@@ -17,13 +17,24 @@
 # include <dirent.h>
 # include <sys/types.h>
 
+typedef struct s_expand_ctx
+{
+	char	*raw;
+	char	**env;
+	int		status;
+	char	*res;
+	int		i;
+	int		sq;
+	int		dq;
+	int		skip_inc;
+}			t_expand_ctx;
+
 // expander.c
 char	*expand_string(char *raw, char **env, int status);
 void	expand_command_args(t_ast_node *node, char **env, int status);
 
 // expander_2.c
-char	*expand_string_2(char *raw, char **env, int status, char *res, int *i,
-			int sq, int dq, int *skip_inc);
+char	*expand_string_2(t_expand_ctx *ctx);
 void	filter_empty_args(t_ast_node *node, char **new_args);
 void	unmask_args(char **args);
 

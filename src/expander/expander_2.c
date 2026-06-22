@@ -12,52 +12,52 @@
 
 #include "expander.h"
 
-static char	*extract_and_replace_var(char *str, int *i, char **env,
-		int last_status)
+static char	*extract_and_replace_var(t_expand_ctx *ctx)
 {
 	int		start;
 	char	*key;
 	char	*val_dup;
 
-	(*i)++;
-	if (str[*i] == '?')
+	ctx->i++;
+	if (ctx->raw[ctx->i] == '?')
 	{
-		(*i)++;
-		return (ft_itoa(last_status));
+		ctx->i++;
+		return (ft_itoa(ctx->status));
 	}
-	if (ft_isdigit(str[*i]))
-		return ((*i)++, ft_strdup(""));
-	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
-		(*i)++;
-	key = ft_substr(str, start, *i - start);
-	val_dup = ft_strdup(get_env_value(env, key));
+	if (ft_isdigit(ctx->raw[ctx->i]))
+		return (ctx->i++, ft_strdup(""));
+	start = ctx->i;
+	while (ctx->raw[ctx->i] && (ft_isalnum(ctx->raw[ctx->i])
+			|| ctx->raw[ctx->i] == '_'))
+		ctx->i++;
+	key = ft_substr(ctx->raw, start, ctx->i - start);
+	val_dup = ft_strdup(get_env_value(ctx->env, key));
 	free(key);
 	return (val_dup);
 }
 
-static char	*process_var(char *res, char *raw, int *i, char **env, int status)
+static char	*process_var(t_expand_ctx *ctx)
 {
 	char	*tmp;
 
-	tmp = extract_and_replace_var(raw, i, env, status);
-	res = append_string(res, tmp);
+	tmp = extract_and_replace_var(ctx);
+	ctx->res = append_string(ctx->res, tmp);
 	free(tmp);
-	return (res);
+	return (ctx->res);
 }
 
-char	*expand_string_2(char *raw, char **env, int status, char *res, int *i,
-		int sq, int dq, int *skip_inc)
+char	*expand_string_2(t_expand_ctx *ctx)
 {
-	*skip_inc = 0;
-	if (raw[*i] == '$' && !sq && is_env_char(raw[*i + 1]))
+	ctx->skip_inc = 0;
+	if (ctx->raw[ctx->i] == '$' && !ctx->sq
+		&& is_env_char(ctx->raw[ctx->i + 1]))
 	{
-		*skip_inc = 1;
-		return (process_var(res, raw, i, env, status));
+		ctx->skip_inc = 1;
+		return (process_var(ctx));
 	}
-	if (raw[*i] == '*' && (sq || dq))
-		return (append_char(res, 1));
-	return (append_char(res, raw[*i]));
+	if (ctx->raw[ctx->i] == '*' && (ctx->sq || ctx->dq))
+		return (append_char(ctx->res, 1));
+	return (append_char(ctx->res, ctx->raw[ctx->i]));
 }
 
 void	filter_empty_args(t_ast_node *node, char **new_args)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:05 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:38:12 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:52:01 by vildan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,21 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 
-extern volatile sig_atomic_t	g_exit_status = 0;
+extern volatile sig_atomic_t	g_exit_status;
 
 typedef struct s_hd_fd
 {
 	int							fd;
 	struct s_hd_fd				*next;
 }								t_hd_fd;
+
+typedef struct s_hd_expand
+{
+	char						*line;
+	char						**env;
+	int							status;
+	int							i;
+}								t_hd_expand;
 
 // exec_ast.c
 int								exec_ast(t_ast_node *node, t_shell *shell);
