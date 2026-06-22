@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:51:23 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:51:24 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 20:52:54 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	print_errno_error(char *cmd)
 int	validate_exec_path(char *cmd, char *path)
 {
 	if (!path)
+	{
+		if (ft_strchr(cmd, '/') || get_env_value_executor(env, "PATH") == NULL)
+			return (print_cmd_error(cmd, "No such file or directory"), 127);
 		return (print_cmd_error(cmd, "command not found"), 127);
+	}
 	if (access(path, F_OK) != 0)
 		return (print_cmd_error(cmd, "No such file or directory"), 127);
 	if (is_directory(path))
