@@ -6,22 +6,14 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:54:21 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:54:22 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:36:07 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static bool	is_valid_combo(t_token *token, int *paren_count)
+static bool	check_paren_combo(int type, int next, int *paren_count)
 {
-	int	type;
-	int	next;
-
-	type = token->type;
-	if (token->next)
-		next = token->next->type;
-	else
-		next = TOKEN_EOF;
 	if (type == TOKEN_LEFT_PAREN)
 		(*paren_count)++;
 	else if (type == TOKEN_RIGHT_PAREN)
@@ -33,6 +25,21 @@ static bool	is_valid_combo(t_token *token, int *paren_count)
 		return (false);
 	if (is_binary_op(type) && (next == TOKEN_RIGHT_PAREN || next == TOKEN_EOF
 			|| is_binary_op(next)))
+		return (false);
+	return (true);
+}
+
+static bool	is_valid_combo(t_token *token, int *paren_count)
+{
+	int	type;
+	int	next;
+
+	type = token->type;
+	if (token->next)
+		next = token->next->type;
+	else
+		next = TOKEN_EOF;
+	if (check_paren_combo(type, next, paren_count) == false)
 		return (false);
 	if (type == TOKEN_LEFT_PAREN && is_binary_op(next))
 		return (false);
@@ -66,7 +73,7 @@ int	check_valid_syntax(t_token *token)
 		current = current->next;
 	}
 	if (paren_count != 0)
-		return (print_syntax_err("unexpected EOF while looking for matching ')'",
-				NULL), 1);
+		return (print_syntax_err("unexpected EOF while looking for "
+				"matching ')'", NULL), 1);
 	return (0);
 }

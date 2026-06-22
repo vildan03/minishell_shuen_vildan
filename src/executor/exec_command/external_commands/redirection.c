@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:51:36 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:51:37 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:58:11 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
 
 int	apply_redirections(t_redir *redir, t_shell *shell) //
 {
-	t_hd_fd *heredoc_fds;
+	t_hd_fd	*heredoc_fds;
 
 	heredoc_fds = NULL;
 	if (collect_heredoc_fds(redir, &heredoc_fds, shell) != 0)

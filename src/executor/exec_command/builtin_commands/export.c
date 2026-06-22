@@ -6,10 +6,9 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:59 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:50:00 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:55:50 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "executor.h"
 #include "minishell.h"
@@ -41,7 +40,7 @@ static int	replace_export_value(t_shell *shell, char *key, char *value)
 	{
 		if (ft_strncmp(shell->export[i], key, key_len) == 0
 			&& (shell->export[i][key_len] == '='
-				|| shell->export[i][key_len] == '\0'))
+			|| shell->export[i][key_len] == '\0'))
 		{
 			if (!value)
 				return (0);

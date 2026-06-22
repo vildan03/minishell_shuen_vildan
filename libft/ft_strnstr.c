@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 18:09:01 by vikaradu          #+#    #+#             */
-/*   Updated: 2025/11/23 13:19:59 by vildan           ###   ########.fr       */
+/*   Updated: 2026/06/22 11:49:19 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		}
 		++b;
 	}
-	return ((char *)NULL);
+	return ((char *) NULL);
 }
 
 /*

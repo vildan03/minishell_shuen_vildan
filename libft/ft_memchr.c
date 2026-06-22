@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 18:07:55 by vikaradu          #+#    #+#             */
-/*   Updated: 2025/11/20 18:37:39 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:50:13 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 			return ((void *)(str + i));
 		i++;
 	}
-	return ((void *)NULL);
+	return ((void *) NULL);
 }
 
 /*

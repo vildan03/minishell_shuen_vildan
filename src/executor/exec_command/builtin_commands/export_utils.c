@@ -6,10 +6,9 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:56 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:57 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:56:07 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "executor.h"
 #include "minishell.h"
@@ -56,7 +55,7 @@ int	print_export_line(char *entry)
 	if (write(1, entry, key_len) < 0)
 		return (print_write_error("export"));
 	if (write_export_str("=\"") != 0 || write_export_str(eq + 1) != 0
-			|| write_export_str("\"\n") != 0)
+		|| write_export_str("\"\n") != 0)
 		return (1);
 	return (0);
 }

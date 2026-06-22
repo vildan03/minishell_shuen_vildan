@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:05 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:06 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:51:27 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	exec_or(t_ast_node *node, t_shell *shell)
 		return (exec_ast(node->right, shell));
 	return (left_status);
 }
+
 int	exec_subshell(t_ast_node *node, t_shell *shell)
 {
 	pid_t	pid;

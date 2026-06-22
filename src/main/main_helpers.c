@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:31 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:32 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 13:32:49 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ static void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
+
 void	interactive_signals(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
+
 void	execution_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
