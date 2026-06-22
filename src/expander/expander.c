@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:20 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:17:55 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:46:32 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,6 @@ static char	*process_expand_char(t_expand_ctx *ctx)
 	else
 		ctx->res = expand_string_2(ctx);
 	return (ctx->res);
-}
-
-char	*expand_string(char *raw, char **env, int status)
-{
-	t_expand_ctx	ctx;
-	int				has_quotes;
-
-	ctx.raw = raw;
-	ctx.env = env;
-	ctx.status = status;
-	ctx.i = 0;
-	ctx.sq = 0;
-	ctx.dq = 0;
-	ctx.skip_inc = 0;
-	ctx.res = ft_strdup("");
-	if (!ctx.res)
-		return (NULL);
-	has_quotes = (ft_strchr(raw, '\'') != NULL || ft_strchr(raw, '"') != NULL);
-	while (ctx.raw[ctx.i])
-	{
-		ctx.skip_inc = 0;
-		ctx.res = process_expand_char(&ctx);
-		if (!ctx.skip_inc)
-			ctx.i++;
-	}
-	if (ctx.res && ctx.res[0] == '\0' && has_quotes)
-		return (free(ctx.res), ft_strdup("\3"));
-	return (ctx.res);
 }
 
 static int	count_split_args(char **args)

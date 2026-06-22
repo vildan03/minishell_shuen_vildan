@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 17:24:28 by kerlee           ###   ########.fr        #
+#    Updated: 2026/06/22 17:50:24 by vikaradu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS		= src/main/main.c \
 			  src/expander/expander_2.c \
 			  src/expander/wildcards_utils.c \
 			  src/expander/wildcards_utils_2.c \
+			  src/expander/wildcards_utils_3.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c
 
