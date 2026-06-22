@@ -38,7 +38,11 @@ static int	read_char(int fd, char *c)
 		return (-1);
 	bytes = read(fd, c, 1);
 	if (bytes == -1 && errno == EINTR)
+	{
+		if (g_exit_status == 130)
+			return (-1);
 		return (read_char(fd, c));
+	}
 	return ((int)bytes);
 }
 
