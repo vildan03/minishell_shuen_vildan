@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 18:09:04 by vikaradu          #+#    #+#             */
-/*   Updated: 2025/11/23 13:42:30 by vildan           ###   ########.fr       */
+/*   Updated: 2026/06/22 11:50:42 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strrchr(const char *str, int c)
 		}
 		len--;
 	}
-	return ((char *)NULL);
+	return ((char *) NULL);
 }
 
 /*

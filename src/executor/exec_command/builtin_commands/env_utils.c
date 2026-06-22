@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:36 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:37 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 11:55:29 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ int	update_env_value(t_shell *shell, char *key, char *new_value)
 		return (0);
 	return (add_env_value(shell, key, new_value));
 }
+
 char	*get_env_value_executor(char **envp, char *key)
 {
-	int i;
-	int key_len;
+	int	i;
+	int	key_len;
 
 	if (!envp || !key)
 		return (NULL);
