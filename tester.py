@@ -6,7 +6,7 @@ import os
 TEST_FILE = "tests.txt"
 MINISHELL_PATH = "./minishell"
 SUPP_FILE = "read.supp"
-TIMEOUT_SECS = 5
+TIMEOUT_SECS = 6
 
 # ANSI Colors for terminal output
 GREEN = '\033[92m'

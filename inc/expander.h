@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:14 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:15 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 18:20:33 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ char	*append_string(char *str, char *append);
 void	toggle_quotes(char c, int *sq, int *dq);
 void	expand_redirections(t_redir *redir_list, char **env, int status);
 int		count_valid_args(char **args);
+char	*process_expand_char(t_expand_ctx *ctx);
 
 // wildcard_utils.c
 bool	match_pattern(char *pattern, char *filename);
 bool	has_unquoted_star(char *str);
 char	**get_wildcard_matches(char *pattern);
+bool	match_pattern_recursive(char *pattern, char *filename);
+int		count_contents(char **args);
 
 // wildcard_utils_2.c
 char	**splice_wildcard_matches(char **args, char **matches, int target_idx);

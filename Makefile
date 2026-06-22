@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 10:54:34 by vikaradu         ###   ########.fr        #
+#    Updated: 2026/06/22 18:17:20 by vikaradu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
-LIBFT_SRCS  = $(wildcard $(LIBFT_DIR)/*.c)
-LIBFT_HDRS  = $(wildcard $(LIBFT_DIR)/*.h)
 
 SRCS		= src/main/main.c \
 					src/main/main_helpers.c \
@@ -44,6 +42,7 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_command/builtin_commands/exit_2.c \
 			  src/executor/exec_command/builtin_commands/export.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
+			  src/executor/exec_command/builtin_commands/export_utils_2.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
 			  src/executor/exec_command/builtin_commands/execute_3.c \
@@ -73,10 +72,12 @@ SRCS		= src/main/main.c \
 			  src/expander/expander_2.c \
 			  src/expander/wildcards_utils.c \
 			  src/expander/wildcards_utils_2.c \
+			  src/expander/wildcards_utils_3.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c
 
-OBJS        = $(SRCS:.c=.o)
+
+OBJS  		= $(SRCS:.c=.o)
 
 BONUS_DIR   = bonus
 BONUS_SRCS  = $(addprefix $(BONUS_DIR)/, $(addsuffix _bonus.c, $(notdir $(basename $(SRCS)))))

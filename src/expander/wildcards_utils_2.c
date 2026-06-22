@@ -6,21 +6,11 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:23 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:24 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:50:03 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-int	count_contents(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i] != NULL)
-		i++;
-	return (i);
-}
 
 char	**splice_wildcard_matches(char **args, char **matches, int target_index)
 {

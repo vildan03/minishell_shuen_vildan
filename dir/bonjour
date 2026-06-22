@@ -1,0 +1,28 @@
+total 188
+drwxr-xr-x.  7 vikaradu vikaradu  4096 Jun 22 18:19 .
+drwx------  35 vikaradu vikaradu  8192 Jun 22 18:19 ..
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:19 a
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:19 b
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:19 bonjour hello
+-rw-r--r--.  1 vikaradu vikaradu     5 Jun 22 18:19 c
+-rw-r--r--.  1 vikaradu vikaradu   155 Jun 22 18:19 d
+drwxr-xr-x.  2 vikaradu vikaradu    21 Jun 22 17:40 dir
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 17:40 e
+drwxr-xr-x.  7 vikaradu vikaradu  4096 Jun 22 17:52 .git
+-rw-r--r--.  1 vikaradu vikaradu   137 Jun 22 10:46 .gitignore
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:19 hey
+-rw-r--r--.  1 vikaradu vikaradu     9 Jun 22 18:18 hola
+-rw-r--r--.  1 vikaradu vikaradu     8 Jun 22 18:18 hola1
+-rw-r--r--.  1 vikaradu vikaradu     2 Jun 22 18:18 hola2
+drwxr-xr-x.  2 vikaradu vikaradu    77 Jun 22 16:17 inc
+drwxr-xr-x.  2 vikaradu vikaradu  4096 Jun 22 16:21 libft
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:18 ls1
+-rw-r--r--.  1 vikaradu vikaradu  4125 Jun 22 18:17 Makefile
+-rwxr-xr-x.  1 vikaradu vikaradu 74584 Jun 22 18:17 minishell
+-rw-r--r--.  1 vikaradu vikaradu     0 Jun 22 18:18 pwd
+-rw-r--r--.  1 vikaradu vikaradu   362 Jun 22 10:46 readline.supp
+-rw-r--r--.  1 vikaradu vikaradu  2333 Jun 22 10:46 README.md
+drwxr-xr-x.  6 vikaradu vikaradu    64 Jun 22 18:16 src
+-rw-r--r--.  1 vikaradu vikaradu  4739 Jun 22 17:40 tester.py
+-rw-r--r--.  1 vikaradu vikaradu 18295 Jun 22 17:40 tests.txt
+-rwxr-xr-x.  1 vikaradu vikaradu 17016 Jun 22 16:16 test_wildcards_utils
