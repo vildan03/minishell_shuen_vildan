@@ -46,6 +46,11 @@ void	exec_external_child(t_ast_node *node, t_shell *shell)
 	if (apply_redirections(node->redir, shell) == -1)
 		cleanup_external_child(shell, NULL, 1);
 	path = find_command_path(node->args[0], shell->env);
+	if (!path && !get_env_value_executor(shell->env, "PATH"))
+	{
+		print_cmd_error(node->args[0], "No such file or directory");
+		cleanup_external_child(shell, NULL, 127);
+	}
 	status = validate_exec_path(node->args[0], path);
 	if (status != 0)
 		cleanup_external_child(shell, path, status);
