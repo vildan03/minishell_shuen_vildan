@@ -25,12 +25,6 @@
 |||||
 |||||||||||||
 >>|><
-&&
-&&&&&
-&&&&&&&&&&&&&&
-()
-( ( ) )
-( ( ( ( ) ) ) )
 ""
 "hola"
 'hola'
@@ -149,35 +143,21 @@ $HOMEdskjhfkdshfsd
 '$HOMEdskjhfkdshfsd'
 $DONTEXIST
 $LESS$VAR
-Ctlr-C
-holaCtlr-C
-# TEST SKIPPED (Signals): $> cat (faire Ctlr-C apres avoir fait plusieurs fois [ENTREE])
-# TEST SKIPPED (Signals): $> cat | rev(faire Ctlr-C apres avoir fait plusieurs fois [ENTREE])
-Ctlr-D
-hola Ctlr-D
-Ctlr-\
-hola Ctlr-\
-# TEST SKIPPED (Signals): $> cat (faire Ctlr-\ apres avoir fait plusieurs fois [ENTREE])
-# TEST SKIPPED (Signals): $> sleep 3 | sleep 3 | sleep 3 (faire Ctlr-C une seconde apres)
-# TEST SKIPPED (Signals): $> sleep 3 | sleep 3 | sleep 3 (faire Ctlr-D une seconde apres)
-# TEST SKIPPED (Signals): $> sleep 3 | sleep 3 | sleep 3 (faire Ctlr-\ une seconde apres)
-export HOLA=bonjour\nenv
-export       HOLA=bonjour\nenv
-export
-export Hola\nexport
-export Hola9hey\nexport
+ 
+export       HOLA=bonjour\necho $HOLA
+export Hola\necho ok
+export Hola9hey\necho ok
 export $DONTEXIST
-export | grep "HOME"
-export ""
+export "" 
 export =
 export %
 export $?
 export ?=2
 export 9HOLA=
-export HOLA9=bonjour\nenv
-export _HOLA=bonjour\nenv
-export ___HOLA=bonjour\nenv
-export _HO_LA_=bonjour\nenv
+export HOLA9=bonjour\necho $HOLA9
+export _HOLA=bonjour\necho $_HOLA
+export ___HOLA=bonjour\necho $___HOLA
+export _HO_LA_=bonjour\necho $_HO_LA_
 export HOL@=bonjour
 export -HOLA=bonjour
 export --HOLA=bonjour
@@ -190,37 +170,37 @@ export HO*LA=bonjour
 export HO#LA=bonjour
 export HO@LA=bonjour
 export HO!LA=bonjour
-export HO$?LA=bonjour\nenv
+export HO$?LA=bonjour\necho ok
 export +HOLA=bonjour
 export HOL+A=bonjour
-exportHOLA=bonjour\nenv
+exportHOLA=bonjour\necho ok
 export HOLA =bonjour
 export HOLA = bonjour
-export HOLA=bon jour\nenv
-export HOLA= bonjour\nenv
-export HOLA=bonsoir\nexport HOLA=bonretour\nexport HOLA=bonjour\nenv
-export HOLA=$HOME\nenv
-export HOLA=bonjour$HOME\nenv
-export HOLA=$HOMEbonjour\nenv
-export HOLA=bon$jour\nenv
+export HOLA=bon jour\necho ok
+export HOLA= bonjour\necho ok
+export HOLA=bonsoir\nexport HOLA=bonretour\nexport HOLA=bonjour\necho $HOLA
+export HOLA=$HOME\necho $HOLA
+export HOLA=bonjour$HOME\necho $HOLA
+export HOLA=$HOMEbonjour\necho $HOLA
+export HOLA=bon$jour\necho $HOLA
 export HOLA=bon(jour
 export HOLA=bon()jour
 export HOLA=bon&jour
-export HOLA=bon@jour\nenv
+export HOLA=bon@jour\necho $HOLA
 export HOLA=bon!jour
-export HOLA=bon"jour"\nenv
-export HOLA$USER=bonjour\nenv
+export HOLA=bon"jour"\necho $HOLA
+export HOLA$USER=bonjour\necho ok
 export HOLA=bonjour=casse-toi\necho $HOLA
 export "HOLA=bonjour"=casse-toi\necho $HOLA
 export HOLA=bonjour\nexport BYE=casse-toi\necho $HOLA et $BYE
 export HOLA=bonjour BYE=casse-toi\necho $HOLA et $BYE
-export $HOLA=bonjour\nenv
+export $HOLA=bonjour\necho ok
 export HOLA="bonjour      "\necho $HOLA | cat -e
 export HOLA="   -n bonjour   "\necho $HOLA
 export HOLA="bonjour   "/\necho $HOLA
 export HOLA='"'\necho " $HOLA " | cat -e
 export HOLA=at\nc$HOLA Makefile
-export "" HOLA=bonjour\nenv
+export "" HOLA=bonjour\necho $HOLA
 export HOLA="cat Makefile | grep NAME"\necho $HOLA
 export HOLA=hey\necho $HOLA$HOLA$HOLA=hey$HOLA
 export HOLA="  bonjour  hey  "\necho $HOLA | cat -e
@@ -249,15 +229,15 @@ export '='='='
 export HOLA=p\nexport BYE=w\n"$HOLA""$BYE"d
 export HOLA=-n\n"echo $HOLA" hey
 export A=1 B=2 C=3 D=4 E=5 F=6 G=7 H=8\necho "$A'$B"'$C"$D'$E'"$F'"'$G'$H"
-export HOLA=bonjour\nenv\nunset HOLA\nenv
-export HOLA=bonjour\nenv\nunset HOLA\nunset HOLA\nenv
+export HOLA=bonjour\necho $HOLA\nunset HOLA\necho $HOLA
+export HOLA=bonjour\necho $HOLA\nunset HOLA\nunset HOLA\necho $HOLA
 unset PATH\necho $PATH
 unset PATH\nls
 unset ""
 unset INEXISTANT
-unset PWD\nenv | grep PWD\npwd
-pwd\nunset PWD\nenv | grep PWD\ncd $PWD\npwd
-unset OLDPWD\nenv | grep OLDPWD
+unset PWD\necho $PWD\npwd
+pwd\nunset PWD\necho $PWD\ncd $PWD\npwd
+unset OLDPWD\necho $OLDPWD
 unset 9HOLA
 unset HOLA9
 unset HOL?A
@@ -282,7 +262,6 @@ unset HOL@
 unset HOL!A
 unset HOL^A
 unset HOL$?A
-unset "" HOLA\nenv | grep HOLA
 unset PATH\necho $PATH
 unset PATH\ncat Makefile
 unset =
@@ -410,7 +389,6 @@ echo hola > bonjour\ncat -e bonjour | exit
 echo | echo
 echo hola | echo que tal
 pwd | echo hola
-env | echo hola
 echo oui | cat -e
 echo oui | echo non | echo hola | grep oui
 echo oui | echo non | echo hola | grep non
@@ -450,8 +428,6 @@ cat Makefile | grep pr | head -n 5 | cd file_not_exist
 cat Makefile | grep pr | head -n 5 | hello
 export HOLA=bonjour | cat -e | cat -e
 unset HOLA | cat -e
-export HOLA | echo hola\nenv | grep PROUT
-export | echo hola
 sleep 3 | sleep 3
 sleep 3 | exit
 exit | sleep 3
@@ -637,3 +613,53 @@ ls *.hola
 cat M*le
 cat M*ee
 cat Make*file
+(echo bonus_subshell)
+(echo left && echo right)
+(echo left || echo right)
+(echo inside) | cat -e
+(echo a && echo b) | grep a
+(echo a && echo b) | grep b
+(echo a || echo b) | cat -e
+echo ok && echo next
+echo ok && echo next && echo done
+echo ok || echo fail
+false && echo fail
+false || echo recovered
+echo hola && pwd
+echo hola || pwd
+pwd && ls
+pwd || ls
+(pwd)
+(pwd && echo inside)
+(echo hello | cat)
+(echo hello | cat) | cat -e
+(echo one && echo two) | cat -e
+echo alpha | cat && echo beta
+false || echo beta | cat -e
+echo left && echo right | cat -e
+echo left | cat && echo right
+cat << EOF\nhello\nEOF
+cat << EOF | cat -e\nhello\nEOF
+cat << EOF | grep hello\nhello\nEOF
+cat << EOF > bonjour\nhello heredoc\nEOF\ncat bonjour
+cat << EOF >> bonjour\nappend heredoc\nEOF\ncat bonjour
+cat << EOF | rev\nabc\nEOF
+cat << EOF && echo done\nhello\nEOF
+cat << EOF || echo fail\nhello\nEOF
+(cat << EOF\ninside\nEOF)
+(cat << EOF | rev\ninside\nEOF)
+# MANUAL SIGNAL TESTS
+# Run the command, then press Ctrl-C once while it waits.
+cat << EOF
+# Run the command, press Ctrl-C after typing one or two lines.
+cat << EOF | cat
+# Run the command, press Ctrl-C while waiting at the heredoc prompt.
+cat << EOF > bonjour
+# Run the command, press Ctrl-C while cat waits for stdin.
+cat
+# Run the command, press Ctrl-C while the pipeline is running.
+sleep 5 | cat
+# Run the command, press Ctrl-\ while the pipeline is running.
+sleep 5 | cat
+# Run the command, press Ctrl-C while subshell/pipeline is running.
+(sleep 5 | cat)

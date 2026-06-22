@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 10:54:34 by vikaradu         ###   ########.fr        #
+#    Updated: 2026/06/22 17:24:28 by kerlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS		= src/main/main.c \
 			  src/executor/exec_command/builtin_commands/exit_2.c \
 			  src/executor/exec_command/builtin_commands/export.c \
 			  src/executor/exec_command/builtin_commands/export_utils.c \
+			  src/executor/exec_command/builtin_commands/export_utils_2.c \
 			  src/executor/exec_command/builtin_commands/unset.c \
 			  src/executor/exec_command/builtin_commands/env_utils.c \
 			  src/executor/exec_command/builtin_commands/execute_3.c \

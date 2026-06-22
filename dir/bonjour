@@ -1,0 +1,28 @@
+total 180
+drwxr-xr-x.  7 kerlee kerlee  4096 Jun 22 17:34 .
+drwx------  37 kerlee kerlee  4096 Jun 22 17:34 ..
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 a
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 b
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 bonjour hello
+-rw-r--r--.  1 kerlee kerlee     5 Jun 22 17:34 c
+-rw-r--r--.  1 kerlee kerlee   155 Jun 22 17:34 d
+drwxr-xr-x.  2 kerlee kerlee    21 Jun 22 17:10 dir
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:10 e
+drwxr-xr-x.  7 kerlee kerlee  4096 Jun 22 17:32 .git
+-rw-r--r--.  1 kerlee kerlee   137 Jun 22 16:11 .gitignore
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 hey
+-rw-r--r--.  1 kerlee kerlee     9 Jun 22 17:34 hola
+-rw-r--r--.  1 kerlee kerlee     8 Jun 22 17:34 hola1
+-rw-r--r--.  1 kerlee kerlee     2 Jun 22 17:34 hola2
+drwxr-xr-x.  2 kerlee kerlee    77 Jun 22 16:17 inc
+drwxr-xr-x.  2 kerlee kerlee  4096 Jun 22 17:34 libft
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 ls1
+-rw-r--r--.  1 kerlee kerlee  4327 Jun 22 17:24 Makefile
+-rwxr-xr-x.  1 kerlee kerlee 74624 Jun 22 17:34 minishell
+-rw-r--r--.  1 kerlee kerlee     0 Jun 22 17:34 pwd
+-rw-r--r--.  1 kerlee kerlee   362 Jun 18 16:43 readline.supp
+-rw-r--r--.  1 kerlee kerlee  2333 Jun 22 16:52 README.md
+drwxr-xr-x.  7 kerlee kerlee    77 Jun 22 17:04 src
+-rw-r--r--.  1 kerlee kerlee  4739 Jun 22 16:27 tester.py
+-rw-r--r--.  1 kerlee kerlee 18295 Jun 22 16:25 tests.txt
+-rwxr-xr-x.  1 kerlee kerlee 17016 Jun 22 16:11 test_wildcards_utils

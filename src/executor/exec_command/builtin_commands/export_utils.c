@@ -6,36 +6,12 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:56 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 11:56:07 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:23:24 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "minishell.h"
-
-void	sort_export(char **export)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	i = 0;
-	while (export[i])
-	{
-		j = i + 1;
-		while (export[j])
-		{
-			if (ft_strcmp(export[i], export[j]) > 0)
-			{
-				tmp = export[i];
-				export[i] = export[j];
-				export[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
 
 static int	write_escaped_val(char *val)
 {
