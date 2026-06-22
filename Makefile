@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 17:50:24 by vikaradu         ###   ########.fr        #
+#    Updated: 2026/06/22 18:17:20 by vikaradu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)
-LIBFT_SRCS  = $(wildcard $(LIBFT_DIR)/*.c)
-LIBFT_HDRS  = $(wildcard $(LIBFT_DIR)/*.h)
 
 SRCS		= src/main/main.c \
 					src/main/main_helpers.c \
@@ -78,15 +76,10 @@ SRCS		= src/main/main.c \
 			  src/parser/syntax_checker/check_syntax_utils.c \
 			  src/parser/syntax_checker/check_syntax.c
 
-BONUS_SRCS	= src/bonus/executor/execute_bonus.c \
-			  src/bonus/parser/build_ast_bonus.c
 
-ALL_SRCS    = $(SRCS) $(BONUS_SRCS)
-OBJS        = $(ALL_SRCS:.c=.o)
+OBJS  		= $(SRCS:.c=.o)
 
 all: $(NAME)
-
-bonus: $(NAME)
 
 $(LIBFT): $(LIBFT_SRCS) $(LIBFT_HDRS) $(LIBFT_DIR)/Makefile
 	@echo "Compiling libft..."
@@ -111,4 +104,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re

@@ -6,13 +6,13 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:20 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 17:46:32 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 18:04:48 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static char	*process_expand_char(t_expand_ctx *ctx)
+char	*process_expand_char(t_expand_ctx *ctx)
 {
 	if ((ctx->raw[ctx->i] == '\'' && !ctx->dq) || (ctx->raw[ctx->i] == '"'
 			&& !ctx->sq))

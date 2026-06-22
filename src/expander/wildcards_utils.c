@@ -6,13 +6,13 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:27 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 17:51:50 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 18:05:29 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static bool	match_pattern_recursive(char *pattern, char *filename)
+bool	match_pattern_recursive(char *pattern, char *filename)
 {
 	if (*pattern == '\0')
 		return (*filename == '\0');
