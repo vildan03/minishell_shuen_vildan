@@ -6,13 +6,13 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:27 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:25:36 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 18:05:29 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expander_bonus.h"
+#include "expander_bonus.h"
 
-static bool	match_pattern_recursive(char *pattern, char *filename)
+bool	match_pattern_recursive(char *pattern, char *filename)
 {
 	if (*pattern == '\0')
 		return (*filename == '\0');
@@ -32,18 +32,6 @@ static bool	match_pattern_recursive(char *pattern, char *filename)
 	if (*filename != '\0' && *pattern == *filename)
 		return (match_pattern_recursive(pattern + 1, filename + 1));
 	return (false);
-}
-
-bool	match_pattern(char *pattern, char *filename)
-{
-	if (!pattern || !filename)
-		return (false);
-	if ((filename[0] == '.' && filename[1] == '\0') || (filename[0] == '.'
-			&& filename[1] == '.' && filename[2] == '\0'))
-		return (false);
-	if (filename[0] == '.' && pattern[0] != '.')
-		return (false);
-	return (match_pattern_recursive(pattern, filename));
 }
 
 bool	has_unquoted_star(char *str)

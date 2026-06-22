@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 18:17:20 by vikaradu         ###   ########.fr        #
+#    Updated: 2026/06/22 13:11:46 by kerlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,7 @@ clean:
 fclean: clean
 	@echo "Cleaning executable..."
 	@make fclean -C $(LIBFT_DIR)
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME)_bonus
 
 re: fclean all
 

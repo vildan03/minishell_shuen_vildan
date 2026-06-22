@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_expand.c                                   :+:      :+:    :+:   */
+/*   heredoc_expand_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vildan <vildan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:52:02 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 14:16:35 by vildan           ###   ########.fr       */
+/*   Updated: 2026/06/22 13:05:34 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "executor_bonus.h"
-# include "expander_bonus.h"
+#include "executor_bonus.h"
+#include "expander_bonus.h"
 
 static char	*expand_heredoc_var(t_hd_expand *ctx)
 {

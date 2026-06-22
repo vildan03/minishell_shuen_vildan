@@ -34,7 +34,8 @@ parentheses and wildcard expansion in the current working directory.
 ### Build
 
 ```bash
-make
+make \\ For mandatory
+make bonus \\ For Bonuses
 ```
 
 ### Run
@@ -48,13 +49,38 @@ make
 ```bash
 make clean
 make fclean
-make re
+make re \\ Only for Mandatory
 ```
 
 ### Valgrind
 
 ```bash
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./minishell
+```
+
+(Please use the provided readline.supp to hide all readline memory leak errors)
+- readline.supp:
+```
+{
+    Ignore_Readline_Leaks
+    Memcheck:Leak
+    match-leak-kinds: reachable,definite,indirect,possible
+    ...
+    obj:*/libreadline.so*
+}
+{
+    Ignore_Add_History_Leaks
+    Memcheck:Leak
+    match-leak-kinds: reachable,definite,indirect,possible
+    ...
+    fun:add_history
+}
+{
+    Ignore_LibHistory_Leaks
+    Memcheck:Leak
+    ...
+    obj:*/libhistory.so*
+}
 ```
 
 ## Project Structure
@@ -83,6 +109,3 @@ AI tools were used as support during the project for:
 - checking edge cases and comparing behaviors with Bash
 - clarifying system-call behavior and signal handling
 - improving explanations
-
-All AI-generated suggestions were reviewed manually, discussed between teammates,
-adapted to the codebase, and tested before being kept in the project.

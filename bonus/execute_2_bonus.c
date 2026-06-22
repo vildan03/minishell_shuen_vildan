@@ -6,12 +6,12 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:39 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:40 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:17:50 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "executor_bonus.h"
-# include "minishell_bonus.h"
+#include "executor_bonus.h"
+#include "minishell_bonus.h"
 
 static int	restore_builtin_fds(int saved_stdout, int saved_stdin, int status)
 {
@@ -38,11 +38,7 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	if (saved_stdout == -1 || saved_stdin == -1)
-	{
-		close(saved_stdout);
-		close(saved_stdin);
-		return (perror("dup"), 1);
-	}
+		return (close(saved_stdout), close(saved_stdin), perror("dup"), 1);
 	if (apply_redirections(node->redir, shell) == -1)
 		return (restore_builtin_fds(saved_stdout, saved_stdin, 1));
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)

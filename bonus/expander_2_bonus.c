@@ -6,11 +6,11 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:12 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:53:13 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/22 17:19:11 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "expander_bonus.h"
+#include "expander_bonus.h"
 
 static char	*extract_and_replace_var(t_expand_ctx *ctx)
 {
@@ -21,10 +21,7 @@ static char	*extract_and_replace_var(t_expand_ctx *ctx)
 
 	ctx->i++;
 	if (ctx->raw[ctx->i] == '?')
-	{
-		ctx->i++;
-		return (ft_itoa(ctx->status));
-	}
+		return (ctx->i++, ft_itoa(ctx->status));
 	if (ft_isdigit(ctx->raw[ctx->i]))
 		return (ctx->i++, ft_strdup(""));
 	start = ctx->i;
