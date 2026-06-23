@@ -6,7 +6,7 @@
 #    By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/22 10:54:33 by vikaradu          #+#    #+#              #
-#    Updated: 2026/06/22 13:11:46 by kerlee           ###   ########.fr        #
+#    Updated: 2026/06/23 13:52:15 by kerlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,19 +99,22 @@ $(NAME): $(OBJS) $(LIBFT)
 $(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
 	$(CC) $(CFLAGS) -I$(BONUS_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
-bonus: $(BONUS_OBJS) $(LIBFT)
+bonus: .bonus
+
+.bonus: $(BONUS_OBJS) $(LIBFT)
 	@echo "Linking $(NAME) (bonus)..."
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT_FLAGS) -lreadline -o $(NAME)
+	@touch .bonus
 
 clean:
 	@echo "Cleaning object files..."
 	@make clean -C $(LIBFT_DIR)
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS) .bonus
 
 fclean: clean
 	@echo "Cleaning executable..."
 	@make fclean -C $(LIBFT_DIR)
-	$(RM) $(NAME) $(NAME)_bonus
+	$(RM) $(NAME)
 
 re: fclean all
 
