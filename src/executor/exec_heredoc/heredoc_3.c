@@ -28,7 +28,7 @@ int	finish_heredoc(int status, char *line, t_hd_state *state)
 void	init_heredoc_state(t_hd_state *state, void (*sigint_handler)(int))
 {
 	struct sigaction	new_action;
-	struct termios	new_term;
+	struct termios		new_term;
 
 	new_action.sa_handler = sigint_handler;
 	sigemptyset(&new_action.sa_mask);

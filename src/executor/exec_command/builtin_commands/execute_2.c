@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:39 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 17:17:50 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/23 17:46:36 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ static int	restore_builtin_fds(int saved_stdout, int saved_stdin, int status)
 	if (restore_failed)
 		return (perror("dup2"), 1);
 	return (status);
+}
+
+static void	helper_func(t_shell *shell, int *saved_stdout, int *saved_stdin,
+		int *status)
+{
+	*status = restore_builtin_fds(*saved_stdout, *saved_stdin, *status);
+	cleanup_shell(shell);
+	exit(*status);
 }
 
 int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
@@ -54,10 +62,6 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 	if (status != 0 && !isatty(STDIN_FILENO) && !shell->in_list
 		&& (ft_strncmp(node->args[0], "export", 7) == 0
 			|| ft_strncmp(node->args[0], "unset", 6) == 0))
-	{
-		status = restore_builtin_fds(saved_stdout, saved_stdin, status);
-		cleanup_shell(shell);
-		exit(status);
-	}
+		helper_func(shell, &saved_stdout, &saved_stdin, &status);
 	return (restore_builtin_fds(saved_stdout, saved_stdin, status));
 }
