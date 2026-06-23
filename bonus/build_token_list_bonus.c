@@ -125,7 +125,7 @@ t_token	*construct_token_list(char *input, t_token *token_list)
 			break ;
 		current->type = get_token_type(input, i);
 		if (get_token_value(input, &i, current) != 0)
-			return (free_token_list(current), NULL);
+			return (free_token_list(token_list), NULL);
 		current->next = create_new_token();
 		current = current->next;
 		if (input[i] == '\0')
