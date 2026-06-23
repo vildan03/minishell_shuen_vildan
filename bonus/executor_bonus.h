@@ -16,6 +16,7 @@
 # include "minishell_bonus.h"
 # include <signal.h>
 # include <sys/stat.h>
+# include <termios.h>
 # include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_exit_status;
@@ -33,6 +34,14 @@ typedef struct s_hd_expand
 	int							status;
 	int							i;
 }								t_hd_expand;
+
+typedef struct s_hd_state
+{
+	struct termios				old_term;
+	int							term_set;
+	void						(*old_sigint)(int);
+	void						(*old_sigquit)(int);
+}								t_hd_state;
 
 // exec_ast.c
 int								exec_ast(t_ast_node *node, t_shell *shell);
@@ -65,6 +74,10 @@ int								handle_heredoc_line(int write_fd, char *line,
 void							print_heredoc_warning(char *delimiter);
 void							write_newline(void);
 char							*read_line_from_fd(int fd);
+int								finish_heredoc(int status, char *line,
+									t_hd_state *state);
+void							init_heredoc_state(t_hd_state *state,
+									void (*sigint_handler)(int));
 void							clear_heredoc_fds(t_hd_fd *head);
 int								collect_heredoc_fds(t_redir *redir,
 									t_hd_fd **head, t_shell *shell);

@@ -12,23 +12,16 @@
 
 #include "executor.h"
 #include "minishell.h"
-#include <errno.h>
 
 static void	handle_heredoc_sigint(int sig)
 {
+	int	r_val;
+
 	(void)sig;
 	g_exit_status = 130;
+	r_val = write(2, "^C\n", 3);
+	(void)r_val;
 	close(STDIN_FILENO);
-}
-
-static int	finish_heredoc(int status, char *line, void (*old_sigint)(int),
-		void (*old_sigquit)(int))
-{
-	if (line)
-		free(line);
-	signal(SIGINT, old_sigint);
-	signal(SIGQUIT, old_sigquit);
-	return (status);
 }
 
 static void	write_prompt(void)
@@ -46,30 +39,33 @@ static char	*get_heredoc_line(void)
 	return (read_line_from_fd(STDIN_FILENO));
 }
 
-int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
+static int	process_heredoc_input(int write_fd, t_redir *redir,
+	t_shell *shell, t_hd_state *state)
 {
 	char	*line;
-	void	(*old_sigint)(int);
-	void	(*old_sigquit)(int);
 
-	old_sigint = signal(SIGINT, handle_heredoc_sigint);
-	old_sigquit = signal(SIGQUIT, SIG_IGN);
 	line = get_heredoc_line();
 	while (line)
 	{
 		if (g_exit_status == 130)
-			return (write_newline(), finish_heredoc(130, line, old_sigint,
-					old_sigquit));
+			return (finish_heredoc(130, line, state));
 		if (ft_strncmp(line, redir->file, ft_strlen(redir->file) + 1) == 0)
-			return (finish_heredoc(0, line, old_sigint, old_sigquit));
+			return (finish_heredoc(0, line, state));
 		if (handle_heredoc_line(write_fd, line, redir, shell) != 0)
-			return (finish_heredoc(1, line, old_sigint, old_sigquit));
+			return (finish_heredoc(1, line, state));
 		free(line);
 		line = get_heredoc_line();
 	}
 	if (g_exit_status == 130)
-		return (write_newline(), finish_heredoc(130, NULL, old_sigint,
-				old_sigquit));
+		return (finish_heredoc(130, NULL, state));
 	print_heredoc_warning(redir->file);
-	return (finish_heredoc(0, NULL, old_sigint, old_sigquit));
+	return (finish_heredoc(0, NULL, state));
+}
+
+int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
+{
+	t_hd_state	state;
+
+	init_heredoc_state(&state, handle_heredoc_sigint);
+	return (process_heredoc_input(write_fd, redir, shell, &state));
 }
