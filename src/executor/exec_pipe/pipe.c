@@ -76,7 +76,8 @@ static int	fork_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
 	return (pid);
 }
 
-static int	wait_pipe_children(t_ast_node *node, pid_t left_pid, pid_t right_pid)
+static int	wait_pipe_children(t_ast_node *node, pid_t left_pid,
+		pid_t right_pid)
 {
 	int	status;
 	int	exit_status;

@@ -90,7 +90,7 @@ static int	apply_one_redirection(t_redir *redir, t_hd_fd **heredoc_fds,
 
 int	apply_redirections(t_redir *redir, t_shell *shell) //
 {
-	t_hd_fd	*heredoc_fds;
+	t_hd_fd *heredoc_fds;
 
 	heredoc_fds = NULL;
 	if (collect_heredoc_fds(redir, &heredoc_fds, shell) != 0)

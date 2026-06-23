@@ -50,7 +50,7 @@ int	print_export_line(char *entry)
 	if (write(1, entry, key_len) < 0)
 		return (print_write_error("export"));
 	if (write_export_str("=\"") != 0 || write_escaped_val(eq + 1) != 0
-		|| write_export_str("\"\n") != 0)
+			|| write_export_str("\"\n") != 0)
 		return (1);
 	return (0);
 }

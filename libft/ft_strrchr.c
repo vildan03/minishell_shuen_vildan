@@ -31,7 +31,7 @@ char	*ft_strrchr(const char *str, int c)
 		}
 		len--;
 	}
-	return ((char *) NULL);
+	return ((char *)NULL);
 }
 
 /*

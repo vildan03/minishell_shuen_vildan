@@ -40,7 +40,7 @@ static int	replace_export_value(t_shell *shell, char *key, char *value)
 	{
 		if (ft_strncmp(shell->export[i], key, key_len) == 0
 			&& (shell->export[i][key_len] == '='
-			|| shell->export[i][key_len] == '\0'))
+				|| shell->export[i][key_len] == '\0'))
 		{
 			if (!value)
 				return (0);

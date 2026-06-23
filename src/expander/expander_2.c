@@ -53,8 +53,8 @@ static char	*process_var(t_expand_ctx *ctx)
 char	*expand_string_2(t_expand_ctx *ctx)
 {
 	ctx->skip_inc = 0;
-	if (ctx->raw[ctx->i] == '$' && !ctx->sq
-		&& is_env_char(ctx->raw[ctx->i + 1]))
+	if (ctx->raw[ctx->i] == '$' && !ctx->sq && is_env_char(ctx->raw[ctx->i
+			+ 1]))
 	{
 		ctx->skip_inc = 1;
 		return (process_var(ctx));

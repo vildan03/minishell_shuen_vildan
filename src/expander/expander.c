@@ -19,7 +19,7 @@ char	*process_expand_char(t_expand_ctx *ctx)
 		toggle_quotes(ctx->raw[ctx->i], &ctx->sq, &ctx->dq);
 	else if (ctx->raw[ctx->i] == '$' && (ctx->raw[ctx->i + 1] == '"'
 			|| ctx->raw[ctx->i + 1] == '\'') && !ctx->sq && !ctx->dq
-		&& (ctx->i == 0 || ctx->raw[ctx->i - 1] != '$'))
+			&& (ctx->i == 0 || ctx->raw[ctx->i - 1] != '$'))
 		ctx->i++;
 	else
 		ctx->res = expand_string_2(ctx);

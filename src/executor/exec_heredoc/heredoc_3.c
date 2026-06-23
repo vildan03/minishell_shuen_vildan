@@ -37,8 +37,7 @@ void	init_heredoc_state(t_hd_state *state, void (*sigint_handler)(int))
 	new_action.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &new_action, &state->old_sigquit);
 	state->term_set = 0;
-	if (isatty(STDIN_FILENO)
-		&& tcgetattr(STDIN_FILENO, &state->old_term) == 0)
+	if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &state->old_term) == 0)
 	{
 		new_term = state->old_term;
 		new_term.c_lflag &= ~ECHOCTL;

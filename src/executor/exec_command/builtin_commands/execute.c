@@ -82,9 +82,8 @@ int	exec_builtin_env(char **args, t_shell *shell)
 	{
 		if (ft_strncmp(shell->env[i], "_=", 2) == 0 && path)
 		{
-			if (write_builtin_str("_=", "env") != 0
-				|| write_builtin_str(path, "env") != 0
-				|| write_builtin_char('\n', "env") != 0)
+			if (write_builtin_str("_=", "env") != 0 || write_builtin_str(path,
+					"env") != 0 || write_builtin_char('\n', "env") != 0)
 				return (free(path), 125);
 		}
 		else if (write_builtin_str(shell->env[i], "env") != 0

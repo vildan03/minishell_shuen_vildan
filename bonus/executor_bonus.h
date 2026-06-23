@@ -16,8 +16,8 @@
 # include "minishell_bonus.h"
 # include <signal.h>
 # include <sys/stat.h>
-# include <termios.h>
 # include <sys/wait.h>
+# include <termios.h>
 
 extern volatile sig_atomic_t	g_exit_status;
 
