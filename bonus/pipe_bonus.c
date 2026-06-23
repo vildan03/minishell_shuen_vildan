@@ -30,6 +30,10 @@ static void	setup_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
 		&& child_node->args[0] && !is_builtin(child_node->args[0]))
 		exec_external_child(child_node, shell);
 	status = exec_ast(child_node, shell);
+	if (is_left)
+		close(STDOUT_FILENO);
+	else
+		close(STDIN_FILENO);
 	cleanup_shell(shell);
 	exit(status);
 }
