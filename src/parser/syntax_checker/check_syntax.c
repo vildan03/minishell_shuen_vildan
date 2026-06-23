@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:54:21 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:36:07 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/23 20:33:36 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static bool	check_paren_combo(int type, int next, int *paren_count)
 		(*paren_count)--;
 	if (*paren_count < 0 || (type == TOKEN_WORD && next == TOKEN_LEFT_PAREN)
 		|| (type == TOKEN_LEFT_PAREN && next == TOKEN_RIGHT_PAREN))
-		return (false);
-	if (is_redir(type) && next != TOKEN_WORD)
 		return (false);
 	if (is_binary_op(type) && (next == TOKEN_RIGHT_PAREN || next == TOKEN_EOF
 			|| is_binary_op(next)))
