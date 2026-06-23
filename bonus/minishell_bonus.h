@@ -16,10 +16,10 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
