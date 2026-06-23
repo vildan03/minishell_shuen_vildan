@@ -58,6 +58,8 @@ void	expand_redirections(t_redir *redir_list, char **env, int status)
 			expanded_file = strip_heredoc_quotes(current->file);
 		else
 			expanded_file = expand_string(current->file, env, status);
+		if (expanded_file && expanded_file[0] == 3 && expanded_file[1] == '\0')
+			expanded_file[0] = '\0';
 		free(current->file);
 		current->file = expanded_file;
 		current = current->next;

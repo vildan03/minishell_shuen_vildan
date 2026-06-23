@@ -81,7 +81,8 @@ int	main(int argc, char **argv, char **envp)
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
 			break ;
-		tcsetattr(STDIN_FILENO, TCSANOW, &shell.default_term);
+		if (interactive)
+			tcsetattr(STDIN_FILENO, TCSANOW, &shell.default_term);
 	}
 	free_array(shell.env);
 	free_array(shell.export);

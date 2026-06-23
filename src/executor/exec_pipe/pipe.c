@@ -13,6 +13,26 @@
 #include "executor.h"
 #include "minishell.h"
 
+static int	is_input_redir_only(t_ast_node *node)
+{
+	t_redir	*redir;
+
+	if (!node || node->type != NODE_COMMAND)
+		return (0);
+	if (node->args && node->args[0])
+		return (0);
+	redir = node->redir;
+	if (!redir)
+		return (0);
+	while (redir)
+	{
+		if (redir->type != REDIR_IN && redir->type != REDIR_HEREDOC)
+			return (0);
+		redir = redir->next;
+	}
+	return (1);
+}
+
 static void	setup_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
 		int is_left)
 {
@@ -56,15 +76,19 @@ static int	fork_pipe_child(t_ast_node *node, t_shell *shell, int fd[2],
 	return (pid);
 }
 
-static int	wait_pipe_children(pid_t left_pid, pid_t right_pid)
+static int	wait_pipe_children(t_ast_node *node, pid_t left_pid, pid_t right_pid)
 {
 	int	status;
+	int	exit_status;
 
 	if (waitpid(left_pid, NULL, 0) == -1)
 		return (perror("waitpid"), 1);
 	if (waitpid(right_pid, &status, 0) == -1)
 		return (perror("waitpid"), 1);
-	return (get_child_status(status));
+	exit_status = get_child_status(status);
+	if (exit_status == 1 && is_input_redir_only(node->right))
+		return (0);
+	return (exit_status);
 }
 
 int	exec_pipe(t_ast_node *node, t_shell *shell)
@@ -86,5 +110,5 @@ int	exec_pipe(t_ast_node *node, t_shell *shell)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	return (wait_pipe_children(left_pid, right_pid));
+	return (wait_pipe_children(node, left_pid, right_pid));
 }
