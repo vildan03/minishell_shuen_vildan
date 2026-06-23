@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:18 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:31:04 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/23 04:53:11 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <termios.h>
 
 typedef enum s_token_type
 {
@@ -91,6 +92,7 @@ typedef struct s_shell
 	int					in_list;
 	t_token				*token_list;
 	t_ast_node			*ast_root;
+   struct termios default_term;
 }						t_shell;
 
 #endif
