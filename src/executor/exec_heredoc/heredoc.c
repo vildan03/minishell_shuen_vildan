@@ -21,7 +21,6 @@ static void	handle_heredoc_sigint(int sig)
 	g_exit_status = 130;
 	r_val = write(2, "^C\n", 3);
 	(void)r_val;
-	close(STDIN_FILENO);
 }
 
 static void	write_prompt(void)

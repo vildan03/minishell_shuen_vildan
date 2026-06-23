@@ -20,17 +20,22 @@ int	finish_heredoc(int status, char *line, t_hd_state *state)
 		free(line);
 	if (state->term_set)
 		tcsetattr(STDIN_FILENO, TCSANOW, &state->old_term);
-	signal(SIGINT, state->old_sigint);
-	signal(SIGQUIT, state->old_sigquit);
+	sigaction(SIGINT, &state->old_sigint, NULL);
+	sigaction(SIGQUIT, &state->old_sigquit, NULL);
 	return (status);
 }
 
 void	init_heredoc_state(t_hd_state *state, void (*sigint_handler)(int))
 {
+	struct sigaction	new_action;
 	struct termios	new_term;
 
-	state->old_sigint = signal(SIGINT, sigint_handler);
-	state->old_sigquit = signal(SIGQUIT, SIG_IGN);
+	new_action.sa_handler = sigint_handler;
+	sigemptyset(&new_action.sa_mask);
+	new_action.sa_flags = 0;
+	sigaction(SIGINT, &new_action, &state->old_sigint);
+	new_action.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &new_action, &state->old_sigquit);
 	state->term_set = 0;
 	if (isatty(STDIN_FILENO)
 		&& tcgetattr(STDIN_FILENO, &state->old_term) == 0)

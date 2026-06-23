@@ -35,6 +35,8 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 	int	saved_stdin;
 	int	status;
 
+	if (!node->redir)
+		return (exec_builtin(node, shell));
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	if (saved_stdout == -1 || saved_stdin == -1)

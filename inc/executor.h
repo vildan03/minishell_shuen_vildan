@@ -39,8 +39,8 @@ typedef struct s_hd_state
 {
 	struct termios				old_term;
 	int							term_set;
-	void						(*old_sigint)(int);
-	void						(*old_sigquit)(int);
+	struct sigaction			old_sigint;
+	struct sigaction			old_sigquit;
 }								t_hd_state;
 
 // exec_ast.c
