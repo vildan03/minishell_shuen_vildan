@@ -9,6 +9,7 @@ a.out
 //*.md
 //*.py
 *.html
+*.swp
 
 # OS generated files
 .DS_Store

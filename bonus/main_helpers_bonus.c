@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:31 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:32:49 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/23 11:37:48 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int	init_shell(t_shell *shell, char **envp)
 		shell->current_input = NULL;
 		return (1);
 	}
+	tcgetattr(STDIN_FILENO, &shell->default_term);
 	return (0);
 }

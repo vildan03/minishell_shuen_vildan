@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:39 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 13:38:23 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/23 11:36:24 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		input = read_shell_input(interactive);
 		if (!handle_shell_input(&shell, input, interactive))
 			break ;
+		tcsetattr(STDIN_FILENO, TCSANOW, &shell.default_term);
 	}
 	free_array(shell.env);
 	free_array(shell.export);

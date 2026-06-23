@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:18 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 19:57:00 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/23 11:38:37 by kerlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <termios.h>
 # include <unistd.h>
 
 typedef enum s_token_type
@@ -91,6 +92,7 @@ typedef struct s_shell
 	int					in_list;
 	t_token				*token_list;
 	t_ast_node			*ast_root;
+	struct termios		default_term;
 }						t_shell;
 
 #endif
