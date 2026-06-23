@@ -21,6 +21,15 @@ static void	handle_heredoc_sigint(int sig)
 	close(STDIN_FILENO);
 }
 
+static void	handle_heredoc_sigquit(int sig)
+{
+	int	r_val;
+
+	(void)sig;
+	r_val = write(2, "\b\b  \b\b", 6);
+	(void)r_val;
+}
+
 static int	finish_heredoc(int status, char *line, void (*old_sigint)(int),
 		void (*old_sigquit)(int))
 {
@@ -53,7 +62,7 @@ int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 	void	(*old_sigquit)(int);
 
 	old_sigint = signal(SIGINT, handle_heredoc_sigint);
-	old_sigquit = signal(SIGQUIT, SIG_IGN);
+	old_sigquit = signal(SIGQUIT, handle_heredoc_sigquit);
 	line = get_heredoc_line();
 	while (line)
 	{

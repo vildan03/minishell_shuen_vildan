@@ -65,6 +65,7 @@ int								handle_heredoc_line(int write_fd, char *line,
 void							print_heredoc_warning(char *delimiter);
 void							write_newline(void);
 char							*read_line_from_fd(int fd);
+void							handle_heredoc_sigquit(int sig);
 void							clear_heredoc_fds(t_hd_fd *head);
 int								collect_heredoc_fds(t_redir *redir,
 									t_hd_fd **head, t_shell *shell);

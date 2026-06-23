@@ -53,7 +53,7 @@ int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 	void	(*old_sigquit)(int);
 
 	old_sigint = signal(SIGINT, handle_heredoc_sigint);
-	old_sigquit = signal(SIGQUIT, SIG_IGN);
+	old_sigquit = signal(SIGQUIT, handle_heredoc_sigquit);
 	line = get_heredoc_line();
 	while (line)
 	{

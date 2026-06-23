@@ -14,6 +14,15 @@
 #include "minishell.h"
 #include <errno.h>
 
+void	handle_heredoc_sigquit(int sig)
+{
+	int	r_val;
+
+	(void)sig;
+	r_val = write(2, "\b\b  \b\b", 6);
+	(void)r_val;
+}
+
 static char	*grow_buffer(char *buf, size_t *capacity, size_t len)
 {
 	char	*new_buf;
