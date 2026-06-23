@@ -42,7 +42,11 @@ int	exec_builtin_with_redir(t_ast_node *node, t_shell *shell)
 	if (saved_stdout == -1 || saved_stdin == -1)
 		return (close(saved_stdout), close(saved_stdin), perror("dup"), 1);
 	if (apply_redirections(node->redir, shell) == -1)
+	{
+		if (g_exit_status == 130)
+			return (close(saved_stdout), close(saved_stdin), 130);
 		return (restore_builtin_fds(saved_stdout, saved_stdin, 1));
+	}
 	if (ft_strncmp(node->args[0], "exit", 5) == 0)
 		return (exec_builtin_exit(node->args, shell, saved_stdout,
 				saved_stdin));

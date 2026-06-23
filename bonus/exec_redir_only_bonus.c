@@ -45,6 +45,10 @@ int	exec_redir_only(t_ast_node *node, t_shell *shell)
 		return (perror("dup"), 1);
 	}
 	if (apply_redirections(node->redir, shell) == -1)
+	{
+		if (g_exit_status == 130)
+			return (close(saved_stdout), close(saved_stdin), 130);
 		return (restore_redir_fds(saved_stdout, saved_stdin, 1));
+	}
 	return (restore_redir_fds(saved_stdout, saved_stdin, 0));
 }
