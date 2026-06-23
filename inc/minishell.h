@@ -16,13 +16,13 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <termios.h>
+# include <unistd.h>
 
 typedef enum s_token_type
 {
@@ -92,7 +92,7 @@ typedef struct s_shell
 	int					in_list;
 	t_token				*token_list;
 	t_ast_node			*ast_root;
-   struct termios default_term;
+	struct termios		default_term;
 }						t_shell;
 
 #endif
