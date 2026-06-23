@@ -13,11 +13,24 @@
 #include "executor_bonus.h"
 #include "minishell_bonus.h"
 #include <errno.h>
+#include <termios.h>
+
+typedef struct s_hd_state
+{
+	struct termios	old_term;
+	int				term_set;
+	void			(*old_sigint)(int);
+	void			(*old_sigquit)(int);
+}	t_hd_state;
 
 static void	handle_heredoc_sigint(int sig)
 {
+	int	r_val;
+
 	(void)sig;
 	g_exit_status = 130;
+	r_val = write(2, "^C\n", 3);
+	(void)r_val;
 	close(STDIN_FILENO);
 }
 
@@ -30,13 +43,14 @@ static void	handle_heredoc_sigquit(int sig)
 	(void)r_val;
 }
 
-static int	finish_heredoc(int status, char *line, void (*old_sigint)(int),
-		void (*old_sigquit)(int))
+static int	finish_heredoc(int status, char *line, t_hd_state *state)
 {
 	if (line)
 		free(line);
-	signal(SIGINT, old_sigint);
-	signal(SIGQUIT, old_sigquit);
+	if (state->term_set)
+		tcsetattr(STDIN_FILENO, TCSANOW, &state->old_term);
+	signal(SIGINT, state->old_sigint);
+	signal(SIGQUIT, state->old_sigquit);
 	return (status);
 }
 
@@ -57,28 +71,34 @@ static char	*get_heredoc_line(void)
 
 int	fill_heredoc_pipe(int write_fd, t_redir *redir, t_shell *shell)
 {
-	char	*line;
-	void	(*old_sigint)(int);
-	void	(*old_sigquit)(int);
+	char			*line;
+	struct termios	new_term;
+	t_hd_state		state;
 
-	old_sigint = signal(SIGINT, handle_heredoc_sigint);
-	old_sigquit = signal(SIGQUIT, handle_heredoc_sigquit);
+	state.old_sigint = signal(SIGINT, handle_heredoc_sigint);
+	state.old_sigquit = signal(SIGQUIT, SIG_IGN);
+	state.term_set = 0;
+	if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &state.old_term) == 0)
+	{
+		new_term = state.old_term;
+		new_term.c_lflag &= ~ECHOCTL;
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &new_term) == 0)
+			state.term_set = 1;
+	}
 	line = get_heredoc_line();
 	while (line)
 	{
 		if (g_exit_status == 130)
-			return (write_newline(), finish_heredoc(130, line, old_sigint,
-					old_sigquit));
+			return (finish_heredoc(130, line, &state));
 		if (ft_strncmp(line, redir->file, ft_strlen(redir->file) + 1) == 0)
-			return (finish_heredoc(0, line, old_sigint, old_sigquit));
+			return (finish_heredoc(0, line, &state));
 		if (handle_heredoc_line(write_fd, line, redir, shell) != 0)
-			return (finish_heredoc(1, line, old_sigint, old_sigquit));
+			return (finish_heredoc(1, line, &state));
 		free(line);
 		line = get_heredoc_line();
 	}
 	if (g_exit_status == 130)
-		return (write_newline(), finish_heredoc(130, NULL, old_sigint,
-				old_sigquit));
+		return (finish_heredoc(130, NULL, &state));
 	print_heredoc_warning(redir->file);
-	return (finish_heredoc(0, NULL, old_sigint, old_sigquit));
+	return (finish_heredoc(0, NULL, &state));
 }
