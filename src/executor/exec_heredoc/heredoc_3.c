@@ -14,13 +14,32 @@
 #include "minishell.h"
 #include <errno.h>
 
-void	handle_heredoc_sigquit(int sig)
+int	finish_heredoc(int status, char *line, t_hd_state *state)
 {
-	int	r_val;
+	if (line)
+		free(line);
+	if (state->term_set)
+		tcsetattr(STDIN_FILENO, TCSANOW, &state->old_term);
+	signal(SIGINT, state->old_sigint);
+	signal(SIGQUIT, state->old_sigquit);
+	return (status);
+}
 
-	(void)sig;
-	r_val = write(2, "\b\b  \b\b", 6);
-	(void)r_val;
+void	init_heredoc_state(t_hd_state *state, void (*sigint_handler)(int))
+{
+	struct termios	new_term;
+
+	state->old_sigint = signal(SIGINT, sigint_handler);
+	state->old_sigquit = signal(SIGQUIT, SIG_IGN);
+	state->term_set = 0;
+	if (isatty(STDIN_FILENO)
+		&& tcgetattr(STDIN_FILENO, &state->old_term) == 0)
+	{
+		new_term = state->old_term;
+		new_term.c_lflag &= ~ECHOCTL;
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &new_term) == 0)
+			state->term_set = 1;
+	}
 }
 
 static char	*grow_buffer(char *buf, size_t *capacity, size_t len)
