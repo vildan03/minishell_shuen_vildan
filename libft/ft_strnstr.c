@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 18:09:01 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 11:49:19 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/24 12:24:20 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		}
 		++b;
 	}
-	return ((char *)NULL);
+	return ((char *) NULL);
 }
 
 /*

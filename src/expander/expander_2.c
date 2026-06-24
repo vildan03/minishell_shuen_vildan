@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:12 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 17:19:11 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/24 12:20:40 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_string_2(t_expand_ctx *ctx)
 {
 	ctx->skip_inc = 0;
 	if (ctx->raw[ctx->i] == '$' && !ctx->sq && is_env_char(ctx->raw[ctx->i
-			+ 1]))
+				+ 1]))
 	{
 		ctx->skip_inc = 1;
 		return (process_var(ctx));
