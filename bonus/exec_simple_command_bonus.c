@@ -22,6 +22,8 @@ int	get_child_status(int status)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			ft_putendl_fd("Quit (core dumped)", 2);
+		else if (WTERMSIG(status) == SIGINT)
+			ft_putchar_fd('\n', 1);
 		return (128 + WTERMSIG(status));
 	}
 	return (1);

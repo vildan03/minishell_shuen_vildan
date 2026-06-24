@@ -88,7 +88,5 @@ int	exec_subshell(t_ast_node *node, t_shell *shell)
 		exit(exit_code);
 	}
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+	return (get_child_status(status));
 }
