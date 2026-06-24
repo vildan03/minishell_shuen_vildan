@@ -58,12 +58,6 @@ static int	print_combo_error(t_token *current)
 			current->next->value), 1);
 }
 
-static int	print_paren_error(void)
-{
-	return (print_syntax_err("unexpected EOF while looking for matching ')'",
-			NULL), 1);
-}
-
 int	check_valid_syntax(t_token *token)
 {
 	t_token	*current;
@@ -82,6 +76,8 @@ int	check_valid_syntax(t_token *token)
 		current = current->next;
 	}
 	if (paren_count != 0)
-		return (print_paren_error());
+		return (print_syntax_err(
+				"unexpected EOF while looking for matching ')'",
+				NULL), 1);
 	return (0);
 }
