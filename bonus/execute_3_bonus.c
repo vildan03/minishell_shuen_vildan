@@ -15,26 +15,20 @@
 
 static char	*get_pwd_cwd(t_shell *shell)
 {
-	char	*cwd;
-	char	*pwd;
+	char		*pwd;
+	struct stat	pwd_stat;
+	struct stat	dot_stat;
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd && shell && shell->env)
-	{
+	pwd = NULL;
+	if (shell && shell->env)
 		pwd = get_env_value_executor(shell->env, "PWD");
-		if (pwd)
-			cwd = ft_strdup(pwd);
-	}
-	if (cwd && shell && shell->env)
+	if (pwd && stat(pwd, &pwd_stat) == 0 && stat(".", &dot_stat) == 0)
 	{
-		pwd = get_env_value_executor(shell->env, "PWD");
-		if (pwd && ft_strcmp(cwd, "/") == 0 && ft_strcmp(pwd, "//") == 0)
-		{
-			free(cwd);
-			cwd = ft_strdup("//");
-		}
+		if (pwd_stat.st_dev == dot_stat.st_dev
+			&& pwd_stat.st_ino == dot_stat.st_ino)
+			return (ft_strdup(pwd));
 	}
-	return (cwd);
+	return (getcwd(NULL, 0));
 }
 
 int	exec_builtin_pwd(t_shell *shell)
