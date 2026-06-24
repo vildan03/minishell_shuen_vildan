@@ -91,6 +91,50 @@ valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=
 - `src/executor`: built-ins, external commands, pipes, redirections, and heredocs
 - `libft`: custom utility library used by the project
 
+## Additional Information
+
+### Why We Used Structs Instead of Linked Lists in Some Places
+
+We used `struct`s for grouped temporary state when the data belonged together and had
+a fixed shape. Examples include quote-tracking during expansion, heredoc state, and
+other helper contexts used inside one execution flow.
+
+We preferred `struct`s over linked lists there because:
+
+- the number of fields was fixed and known in advance
+- the data was short-lived and passed together between helper functions
+- access by field name is clearer than walking a node chain
+- it reduced argument count while keeping the logic readable and norm-friendly
+- memory management stayed simpler because there was no need for extra node allocation
+
+We still used linked-list-style structures where the data is naturally variable in size,
+such as token streams, AST relations, redirections, and heredoc fd tracking. In other
+words, we chose the data structure based on the shape of the problem, not by forcing a
+single pattern everywhere.
+
+### General Design Choices
+
+Our main choices in the project were guided by a few practical rules:
+
+- follow the subject first and avoid implementing behavior that is outside scope
+- use Bash as the reference whenever the subject leaves room for interpretation
+- prefer the simplest data structure that matches the job
+- keep parsing, expansion, and execution separated so bugs are easier to isolate
+- minimize global state and keep the single global variable limited to signal status
+- prioritize predictable cleanup paths for memory, fds, and child processes
+- adapt helper abstractions to the Norm when functions became too long or took too many
+  arguments
+
+For example:
+
+- environment data is kept in `char **` form because it matches `execve` directly
+- the parser builds an AST because pipes, parentheses, and logical operators are easier
+  to evaluate with a tree structure
+- temporary execution state is often stored in `struct`s because it is easier to pass
+  and maintain than many separate parameters
+- dynamic shell syntax elements such as tokens and redirections are represented with
+  linked structures because their size is not fixed
+
 ## Resources
 
 ### Classic References
