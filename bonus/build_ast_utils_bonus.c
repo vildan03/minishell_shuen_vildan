@@ -38,8 +38,7 @@ int	create_and_append_redir(t_ast_node *node, t_token *current)
 		return (0);
 	new_redir->type = translate_token_to_redir(current->type);
 	new_redir->file = ft_strdup(current->next->value);
-	new_redir->quoted = (new_redir->type == REDIR_HEREDOC
-			&& has_quotes(current->next->value));
+	new_redir->quoted = has_quotes(current->next->value);
 	if (!new_redir->file)
 	{
 		free(new_redir);

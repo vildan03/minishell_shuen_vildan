@@ -59,7 +59,7 @@ static char	*append_substring(char *str, char *line, int start, int len)
 
 static char	*expand_heredoc_line_2(char *expanded, t_hd_expand *ctx)
 {
-	int			start;
+	int	start;
 
 	while (ctx->line[ctx->i])
 	{

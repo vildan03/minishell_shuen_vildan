@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:12 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 17:19:11 by kerlee           ###   ########.fr       */
+/*   Updated: 2026/06/24 13:15:21 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static char	*process_var(t_expand_ctx *ctx)
 char	*expand_string_2(t_expand_ctx *ctx)
 {
 	ctx->skip_inc = 0;
-	if (ctx->raw[ctx->i] == '$' && !ctx->sq
-		&& is_env_char(ctx->raw[ctx->i + 1]))
+	if (ctx->raw[ctx->i] == '$' && !ctx->sq && is_env_char(ctx->raw[ctx->i
+				+ 1]))
 	{
 		ctx->skip_inc = 1;
 		return (process_var(ctx));
@@ -73,7 +73,12 @@ void	filter_empty_args(t_ast_node *node, char **new_args)
 	j = 0;
 	while (node->args[i] != NULL)
 	{
-		if (node->args[i][0] != '\0')
+		if (node->args[i][0] == 3 && node->args[i][1] == '\0')
+		{
+			node->args[i][0] = '\0';
+			new_args[j++] = node->args[i];
+		}
+		else if (node->args[i][0] != '\0')
 			new_args[j++] = node->args[i];
 		else
 			free(node->args[i]);
@@ -92,8 +97,6 @@ void	unmask_args(char **args)
 	i = 0;
 	while (args && args[i])
 	{
-		if (args[i][0] == 3 && args[i][1] == '\0')
-			args[i][0] = '\0';
 		j = 0;
 		while (args[i][j])
 		{

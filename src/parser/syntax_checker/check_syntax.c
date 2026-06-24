@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:54:21 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/23 20:40:40 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/24 12:19:37 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ static bool	is_valid_combo(t_token *token, int *paren_count)
 	return (true);
 }
 
+static int	print_combo_error(t_token *current)
+{
+	if (!current->next || current->next->type == TOKEN_EOF)
+		return (print_syntax_err("syntax error near unexpected token ",
+				"newline"), 2);
+	return (print_syntax_err("syntax error near unexpected token ",
+			current->next->value), 1);
+}
+
 int	check_valid_syntax(t_token *token)
 {
 	t_token	*current;
@@ -63,17 +72,11 @@ int	check_valid_syntax(t_token *token)
 	{
 		if (current->type == TOKEN_AMP || is_valid_combo(current,
 				&paren_count) == false)
-		{
-			if (!current->next || current->next->type == TOKEN_EOF)
-				return (print_syntax_err("syntax error near unexpected token ",
-						"newline"), 2);
-			return (print_syntax_err("syntax error near unexpected token ",
-					current->next->value), 1);
-		}
+			return (print_combo_error(current));
 		current = current->next;
 	}
 	if (paren_count != 0)
-		return (print_syntax_err("unexpected EOF while looking for "
-				"matching ')'", NULL), 1);
+		return (print_syntax_err("unexpected EOF while "
+				"looking for matching ')'", NULL), 1);
 	return (0);
 }

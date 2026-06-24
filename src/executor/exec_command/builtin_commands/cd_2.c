@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:49:30 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 10:49:31 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/24 12:18:44 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*get_old_pwd(t_shell *shell)
 	if (!old_pwd && shell && shell->env)
 	{
 		ft_putendl_fd("cd: error retrieving current directory: getcwd: "
-			"cannot access parent directories: No such file or directory",
-			2);
+			"cannot access parent directories: "
+			"No such file or directory", 2);
 		pwd_value = get_env_value_executor(shell->env, "PWD");
 		if (pwd_value)
 			old_pwd = ft_strdup(pwd_value);

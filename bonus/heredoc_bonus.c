@@ -38,8 +38,8 @@ static char	*get_heredoc_line(void)
 	return (read_line_from_fd(STDIN_FILENO));
 }
 
-static int	process_heredoc_input(int write_fd, t_redir *redir,
-	t_shell *shell, t_hd_state *state)
+static int	process_heredoc_input(int write_fd, t_redir *redir, t_shell *shell,
+		t_hd_state *state)
 {
 	char	*line;
 

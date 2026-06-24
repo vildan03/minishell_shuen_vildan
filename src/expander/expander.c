@@ -6,7 +6,7 @@
 /*   By: vikaradu <vikaradu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:53:20 by vikaradu          #+#    #+#             */
-/*   Updated: 2026/06/22 18:04:48 by vikaradu         ###   ########.fr       */
+/*   Updated: 2026/06/24 12:22:08 by vikaradu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ static char	**split_all_args(char **args)
 static void	expand_command_args_2(t_ast_node *node, char **env, int last_status,
 		char **new_args)
 {
-	expand_wildcards(node);
-	expand_redirections(node->redir, env, last_status);
 	new_args = malloc(sizeof(char *) * (count_valid_args(node->args) + 1));
 	if (!new_args)
 		return ;
 	filter_empty_args(node, new_args);
-	unmask_args(new_args);
+	expand_wildcards(node);
+	expand_redirections(node->redir, env, last_status);
+	unmask_args(node->args);
 }
 
 void	expand_command_args(t_ast_node *node, char **env, int last_status)
