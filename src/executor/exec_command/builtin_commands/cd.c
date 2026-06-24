@@ -86,9 +86,9 @@ int	exec_builtin_cd(char **args, t_shell *shell)
 	if (!target)
 		return (1);
 	old_pwd = get_old_pwd(shell);
-	if (chdir(target) != 0)
+	new_pwd = perform_chdir(target, shell);
+	if (!new_pwd)
 		return (free(old_pwd), print_cd_errno(target));
-	new_pwd = get_new_pwd(target, shell);
 	if (update_cd_state(shell, args, old_pwd, new_pwd) != 0)
 		return (free(old_pwd), free(new_pwd), 1);
 	return (free(old_pwd), free(new_pwd), 0);

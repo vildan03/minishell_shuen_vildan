@@ -99,7 +99,7 @@ int								apply_redirections(t_redir *redir,
 
 // cd.c
 char							*get_old_pwd(t_shell *shell);
-char							*get_new_pwd(char *target, t_shell *shell);
+char							*perform_chdir(char *target, t_shell *shell);
 int								exec_builtin_cd(char **args, t_shell *shell);
 
 // env_utils.c
