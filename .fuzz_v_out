@@ -1,1 +1,11 @@
 minishell: line 1: does_not_exist: No such file or directory
+==381643== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==381643== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==381643==    <inherited from parent>
+==381643== 
+==381643== 
+==381642== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==381642== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==381642==    <inherited from parent>
+==381642== 
+==381642== 
