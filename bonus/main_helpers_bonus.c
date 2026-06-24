@@ -64,6 +64,8 @@ int	init_shell(t_shell *shell, char **envp)
 		shell->current_input = NULL;
 		return (1);
 	}
-	tcgetattr(STDIN_FILENO, &shell->default_term);
+	ft_memset(&shell->default_term, 0, sizeof(struct termios));
+	if (isatty(STDIN_FILENO))
+		tcgetattr(STDIN_FILENO, &shell->default_term);
 	return (0);
 }
