@@ -101,6 +101,10 @@ int								apply_redirections(t_redir *redir,
 char							*get_old_pwd(t_shell *shell);
 char							*get_new_pwd(char *target, t_shell *shell);
 int								exec_builtin_cd(char **args, t_shell *shell);
+void							free_split(char **parts);
+char							*get_initial_path(char *pwd, char *target);
+void							process_path_parts(char **parts, char **stack,
+									int *top);
 
 // env_utils.c
 char							*get_env_value_executor(char **envp, char *key);

@@ -31,22 +31,7 @@ char	*get_old_pwd(t_shell *shell)
 	return (old_pwd);
 }
 
-static void	free_split(char **parts)
-{
-	int	i;
-
-	i = 0;
-	if (!parts)
-		return ;
-	while (parts[i])
-	{
-		free(parts[i]);
-		i++;
-	}
-	free(parts);
-}
-
-static char	*build_logical_path(char **stack, int top)
+char	*build_logical_path(char **stack, int top)
 {
 	char	*res;
 	char	*tmp;
@@ -67,53 +52,38 @@ static char	*build_logical_path(char **stack, int top)
 	return (res);
 }
 
+static int	count_parts(char **parts)
+{
+	int	i;
+
+	i = 0;
+	while (parts[i])
+		i++;
+	return (i);
+}
+
 static char	*resolve_logical(char *pwd, char *target)
 {
 	char	*path;
 	char	**parts;
 	char	**stack;
 	int		top;
-	int		i;
 	char	*res;
-	char	*tmp;
 
 	if (!pwd || !target)
 		return (NULL);
-	if (target[0] == '/')
-		path = ft_strdup(target);
-	else
-	{
-		tmp = ft_strjoin(pwd, "/");
-		path = ft_strjoin(tmp, target);
-		free(tmp);
-	}
+	path = get_initial_path(pwd, target);
 	if (!path)
 		return (NULL);
 	parts = ft_split(path, '/');
 	free(path);
 	if (!parts)
 		return (NULL);
-	i = 0;
-	while (parts[i])
-		i++;
-	stack = malloc(sizeof(char *) * (i + 1));
+	stack = malloc(sizeof(char *) * (count_parts(parts) + 1));
 	if (!stack)
 		return (free_split(parts), NULL);
 	top = 0;
-	i = 0;
-	while (parts[i])
-	{
-		if (ft_strcmp(parts[i], ".") == 0)
-			;
-		else if (ft_strcmp(parts[i], "..") == 0)
-		{
-			if (top > 0)
-				top--;
-		}
-		else
-			stack[top++] = parts[i];
-		i++;
-	}
+	process_path_parts(parts, stack, &top);
 	res = build_logical_path(stack, top);
 	free(stack);
 	free_split(parts);
