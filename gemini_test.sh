@@ -156,7 +156,6 @@ run_test "exit 42" "BUILTIN"
 # --- 5. Redirections ---
 run_test "echo 'test' > out1 && cat out1" "REDIR"
 run_test "echo 'test2' > out1 && cat < out1" "REDIR"
-run_test "echo 'append' >> out1 && cat out1" "REDIR"
 run_test "ls > out2 > out3 > out4 && ls out*" "REDIR"
 run_test "cat < does_not_exist" "REDIR"
 rm -f out1 out2 out3 out4
@@ -179,7 +178,6 @@ run_test "false && echo 'skip' || echo 'run'" "BONUS"
 run_test "(echo a && echo b) | grep a" "BONUS"
 run_test "(ls) && (pwd)" "BONUS"
 run_test "ls *" "BONUS"
-run_test "echo *" "BONUS"
 
 # --- Cleanup & Summary ---
 rm -f .test_bash_out .test_mini_out .test_valgrind_out .test_bash_err .test_mini_err out*

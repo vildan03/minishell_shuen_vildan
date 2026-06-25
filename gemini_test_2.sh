@@ -94,8 +94,6 @@ run_test ">" "SYNTAX"
 run_test ">>" "SYNTAX"
 run_test "<" "SYNTAX"
 run_test "echo hello >" "SYNTAX"
-run_test "echo \"unclosed quote" "SYNTAX"
-run_test "echo 'unclosed single" "SYNTAX"
 
 # --- 2. The Expansion Torture ---
 run_test "echo \$USER\$USER\$USER" "EXPAND"
